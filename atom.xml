@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://jerrychia.com/"/>
-  <updated>2016-11-16T11:18:28.789Z</updated>
+  <updated>2016-05-08T11:13:01.000Z</updated>
   <id>http://jerrychia.com/</id>
   
   <author>
@@ -16,29 +16,44 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
-    <title>Hello World</title>
-    <link href="http://jerrychia.com/2016/10/22/hello-world/"/>
-    <id>http://jerrychia.com/2016/10/22/hello-world/</id>
-    <published>2016-10-22T04:39:04.000Z</published>
-    <updated>2016-11-16T11:18:28.789Z</updated>
+    <title>Mysql数据库导入，备份，还原</title>
+    <link href="http://jerrychia.com/2015/11/11/mysql-the-backup-and-restore/"/>
+    <id>http://jerrychia.com/2015/11/11/mysql-the-backup-and-restore/</id>
+    <published>2015-11-11T04:27:22.000Z</published>
+    <updated>2016-05-08T11:13:01.000Z</updated>
     
-    <content type="html"><![CDATA[<p>Welcome to <a href="https://hexo.io/" target="_blank" rel="external">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="external">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="external">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="external">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo new <span class="string">"My New Post"</span></div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="external">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo server</div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="external">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo generate</div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="external">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo deploy</div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="external">Deployment</a></p>
+    <content type="html"><![CDATA[<p>记录mysql数据库导入txt文件，备份和还原操作</p>
+<a id="more"></a>
+<h2 id="MySql导入txt文件"><a href="#MySql导入txt文件" class="headerlink" title="MySql导入txt文件"></a>MySql导入txt文件</h2><p>导入txt文件到mysql里面，编码格式为：utf8<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">mysql&gt; LOAD DATA INFILE &apos;D:/test.txt&apos; INTO TABLE tablename CHARACTER SET utf8 FIELDS TERMINATED BY &apos;,&apos; LINES TERMINATED BY &apos; &apos; (id,field1,field3,field5,field2);</div><div class="line">LOAD DATA INFILE &apos;D:/tianchi/gd_weather_report.txt&apos; INTO TABLE gd_weather_report CHARACTER SET utf8 FIELDS TERMINATED BY &apos;,&apos;;</div></pre></td></tr></table></figure></p>
+<h2 id="Mysql导入导出"><a href="#Mysql导入导出" class="headerlink" title="Mysql导入导出"></a>Mysql导入导出</h2><p>MySQL备份和还原,都是利用mysqldump、mysql和source命令来完成的。 </p>
+<h3 id="Win32下MySQL的备份与还原"><a href="#Win32下MySQL的备份与还原" class="headerlink" title="Win32下MySQL的备份与还原"></a>Win32下MySQL的备份与还原</h3><ol>
+<li><p>备份<br>开始菜单 | 运行 | cmd |利用<code>cd /Program Files/MySQL/MySQL Server 5.0/bin</code>命令进入bin文件夹 | 利用<code>mysqldump  -u 用户名 -p databasename &gt;exportfilename</code>导出数据库到文件，如<code>mysqldump -u root -p voice&gt;voice.sql</code>，然后输入密码即可开始导出。 </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">C:\Program Files\MySQL\MySQL Server 5.1\bin&gt;mysqldump -uroot -proot test gd_lin_</div><div class="line">desc &gt; desc.sql</div></pre></td></tr></table></figure>
+</li>
+<li><p>还原<br>将要导入的.sql文件移至bin文件下，这样的路径比较方便，进入<code>MySQL Command Line Client</code>，输入密码，进入到<code>mysql&gt;</code>，输入命令<code>show databases；</code>，回车，看看有些什么数据库；建立你要还原的数据库，输入<code>create database voice；</code>，回车；切换到刚建立的数据库，输入<code>use voice；</code>，回车；导入数据，输入<code>source voice.sql；</code>，回车，开始导入，再次出现<code>mysql&gt;</code>并且没有提示错误即还原成功。 </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">C:\Program Files\MySQL\MySQL Server 5.1\bin&gt;mysqldump -uroot -proot test gd_lin_</div><div class="line">desc &gt; desc.sql</div></pre></td></tr></table></figure>
+</li>
+</ol>
+<h3 id="Linux下MySQL的备份与还原"><a href="#Linux下MySQL的备份与还原" class="headerlink" title="Linux下MySQL的备份与还原"></a>Linux下MySQL的备份与还原</h3><ol>
+<li><p>备份</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">[root@localhost ~]# cd /var/lib/mysql (进入到MySQL库目录，根据自己的MySQL的安装情况调整目录) </div><div class="line">[root@localhost mysql]# mysqldump -u root -p voice&gt;voice.sql，输入密码即可。</div></pre></td></tr></table></figure>
+</li>
+<li><p>还原</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">法一：</div><div class="line">[root@localhost ~]# mysql -u root -p 回车，输入密码，进入MySQL的控制台&quot;mysql&gt;&quot;,同Win32下MySQL的还原 </div><div class="line">法二：</div><div class="line">[root@localhost ~]# cd /var/lib/mysql (进入到MySQL库目录，根据自己的MySQL的安装情况调整目录) </div><div class="line">[root@localhost mysql]# mysql -u root -p voice&lt;voice.sql，输入密码即可。</div></pre></td></tr></table></figure>
+</li>
+</ol>
 ]]></content>
     
     <summary type="html">
     
-      &lt;p&gt;Welcome to &lt;a href=&quot;https://hexo.io/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;Hexo&lt;/a&gt;! This is your very first post. Check &lt;a href=&quot;https://hexo.
+      &lt;p&gt;记录mysql数据库导入txt文件，备份和还原操作&lt;/p&gt;
     
     </summary>
     
+      <category term="DataBase" scheme="http://jerrychia.com/categories/DataBase/"/>
+    
+    
+      <category term="MySql" scheme="http://jerrychia.com/tags/MySql/"/>
     
   </entry>
   
@@ -83,48 +98,6 @@
     
     
       <category term="Matlab" scheme="http://jerrychia.com/tags/Matlab/"/>
-    
-      <category term="MySql" scheme="http://jerrychia.com/tags/MySql/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Mysql数据库导入，备份，还原</title>
-    <link href="http://jerrychia.com/2015/11/11/mysql-the-backup-and-restore/"/>
-    <id>http://jerrychia.com/2015/11/11/mysql-the-backup-and-restore/</id>
-    <published>2015-11-11T04:27:22.000Z</published>
-    <updated>2016-05-08T11:13:01.000Z</updated>
-    
-    <content type="html"><![CDATA[<p>记录mysql数据库导入txt文件，备份和还原操作</p>
-<a id="more"></a>
-<h2 id="MySql导入txt文件"><a href="#MySql导入txt文件" class="headerlink" title="MySql导入txt文件"></a>MySql导入txt文件</h2><p>导入txt文件到mysql里面，编码格式为：utf8<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">mysql&gt; LOAD DATA INFILE &apos;D:/test.txt&apos; INTO TABLE tablename CHARACTER SET utf8 FIELDS TERMINATED BY &apos;,&apos; LINES TERMINATED BY &apos; &apos; (id,field1,field3,field5,field2);</div><div class="line">LOAD DATA INFILE &apos;D:/tianchi/gd_weather_report.txt&apos; INTO TABLE gd_weather_report CHARACTER SET utf8 FIELDS TERMINATED BY &apos;,&apos;;</div></pre></td></tr></table></figure></p>
-<h2 id="Mysql导入导出"><a href="#Mysql导入导出" class="headerlink" title="Mysql导入导出"></a>Mysql导入导出</h2><p>MySQL备份和还原,都是利用mysqldump、mysql和source命令来完成的。 </p>
-<h3 id="Win32下MySQL的备份与还原"><a href="#Win32下MySQL的备份与还原" class="headerlink" title="Win32下MySQL的备份与还原"></a>Win32下MySQL的备份与还原</h3><ol>
-<li><p>备份<br>开始菜单 | 运行 | cmd |利用<code>cd /Program Files/MySQL/MySQL Server 5.0/bin</code>命令进入bin文件夹 | 利用<code>mysqldump  -u 用户名 -p databasename &gt;exportfilename</code>导出数据库到文件，如<code>mysqldump -u root -p voice&gt;voice.sql</code>，然后输入密码即可开始导出。 </p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">C:\Program Files\MySQL\MySQL Server 5.1\bin&gt;mysqldump -uroot -proot test gd_lin_</div><div class="line">desc &gt; desc.sql</div></pre></td></tr></table></figure>
-</li>
-<li><p>还原<br>将要导入的.sql文件移至bin文件下，这样的路径比较方便，进入<code>MySQL Command Line Client</code>，输入密码，进入到<code>mysql&gt;</code>，输入命令<code>show databases；</code>，回车，看看有些什么数据库；建立你要还原的数据库，输入<code>create database voice；</code>，回车；切换到刚建立的数据库，输入<code>use voice；</code>，回车；导入数据，输入<code>source voice.sql；</code>，回车，开始导入，再次出现<code>mysql&gt;</code>并且没有提示错误即还原成功。 </p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">C:\Program Files\MySQL\MySQL Server 5.1\bin&gt;mysqldump -uroot -proot test gd_lin_</div><div class="line">desc &gt; desc.sql</div></pre></td></tr></table></figure>
-</li>
-</ol>
-<h3 id="Linux下MySQL的备份与还原"><a href="#Linux下MySQL的备份与还原" class="headerlink" title="Linux下MySQL的备份与还原"></a>Linux下MySQL的备份与还原</h3><ol>
-<li><p>备份</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">[root@localhost ~]# cd /var/lib/mysql (进入到MySQL库目录，根据自己的MySQL的安装情况调整目录) </div><div class="line">[root@localhost mysql]# mysqldump -u root -p voice&gt;voice.sql，输入密码即可。</div></pre></td></tr></table></figure>
-</li>
-<li><p>还原</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">法一：</div><div class="line">[root@localhost ~]# mysql -u root -p 回车，输入密码，进入MySQL的控制台&quot;mysql&gt;&quot;,同Win32下MySQL的还原 </div><div class="line">法二：</div><div class="line">[root@localhost ~]# cd /var/lib/mysql (进入到MySQL库目录，根据自己的MySQL的安装情况调整目录) </div><div class="line">[root@localhost mysql]# mysql -u root -p voice&lt;voice.sql，输入密码即可。</div></pre></td></tr></table></figure>
-</li>
-</ol>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;记录mysql数据库导入txt文件，备份和还原操作&lt;/p&gt;
-    
-    </summary>
-    
-      <category term="DataBase" scheme="http://jerrychia.com/categories/DataBase/"/>
-    
     
       <category term="MySql" scheme="http://jerrychia.com/tags/MySql/"/>
     
@@ -922,6 +895,41 @@
     
     
       <category term="Android" scheme="http://jerrychia.com/tags/Android/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>sublime书写markdown语法设置</title>
+    <link href="http://jerrychia.com/2015/01/10/hexo-sublime-markdown-preview/"/>
+    <id>http://jerrychia.com/2015/01/10/hexo-sublime-markdown-preview/</id>
+    <published>2015-01-10T11:54:59.000Z</published>
+    <updated>2015-04-02T13:33:40.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>作为Windows/Mac/Linux下强大的文本编辑器，st提供了对Markdown语言的支持。通过设置可实现markdown预览和转换功能。而本文介绍的Markdown Preview支持Mathjax语法和目录自动生成。(Windows下）</p>
+<h2 id="安装Package-Control"><a href="#安装Package-Control" class="headerlink" title="安装Package Control"></a>安装Package Control</h2><p>安装包控制扩展可以方便地为st添加拓展。<br>打开st，按下组合键Control + `，出现控制台，输入<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">import urllib2,os; pf=&apos;Package Control.sublime-package&apos;; ipp = sublime.installed_packages_path(); os.makedirs( ipp ) if not os.path.exists(ipp) else None; urllib2.install_opener( urllib2.build_opener( urllib2.ProxyHandler( ))); open( os.path.join( ipp, pf), &apos;wb&apos; ).write( urllib2.urlopen( &apos;http://sublime.wbond.net/&apos; +pf.replace( &apos; &apos;,&apos;%20&apos; )).read()); print( &apos;Please restart Sublime Text to finish installation&apos;)</div></pre></td></tr></table></figure></p>
+<p>当看到代码最后一行提示的时候说明安装成功，此时重启st，可在<code>Preferences -&gt; Package Setting</code>s看到<code>Package Control</code>。</p>
+<h2 id="安装markdown-preview"><a href="#安装markdown-preview" class="headerlink" title="安装markdown preview"></a>安装markdown preview</h2><p>按下键<code>Ctrl+Shift+p</code>调出命令面板，找到<code>Package Control: install Pakage</code>这一项。搜索<code>markdown preview</code>，点击安装。</p>
+<h2 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h2><p>Markdown Preview较常用的功能是preview in browser和Export HTML in Sublime Text，前者可以在浏览器看到预览效果，后者可将markdown保存为html文件。</p>
+<p>preview in browser据称是实时的，但是实践上还是需要在st保存，然后浏览器刷新才能看到新的效果，好在markdown写得多的话也不需要每敲一行看一次效果。</p>
+<h2 id="快捷键"><a href="#快捷键" class="headerlink" title="快捷键"></a>快捷键</h2><p>st支持自定义快捷键，markdown preview默认没有快捷键，我们可以自己为preview in browser设置快捷键。方法是在<code>Preferences -&gt; Key Bindings User</code>打开的文件的中括号中添加以下代码(可在Key Bindings Default找到格式)：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">&#123; &quot;keys&quot;: [&quot;alt+m&quot;], &quot;command&quot;: &quot;markdown_preview&quot;, &quot;args&quot;: &#123; &quot;target&quot;: &quot;browser&quot;&#125; &#125;</div></pre></td></tr></table></figure></p>
+<p><code>alt+m</code>可设置为自己喜欢的按键。</p>
+<h2 id="设置语法高亮和mathjax支持"><a href="#设置语法高亮和mathjax支持" class="headerlink" title="设置语法高亮和mathjax支持"></a>设置语法高亮和mathjax支持</h2><p>在<code>Preferences -&gt;Package Settings-&gt;Markdown Preview-&gt;Setting Default</code>中的第31行和36行找到<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">/*</div><div class="line">       Enable or not mathjax support.</div><div class="line">    */</div><div class="line">    &quot;enable_mathjax&quot;: false,</div><div class="line"></div><div class="line">    /*</div><div class="line">        Enable or not highlight.js support for syntax highlighting.</div><div class="line">    */</div><div class="line">    &quot;enable_highlight&quot;: false,</div></pre></td></tr></table></figure></p>
+<p>将两个false改为true即可。<br>语法高亮跟编辑器的主题有关，可以在<code>Preferences -&gt;Color Scheme</code>找自己喜欢的主题。<br>关于目录生成，只要文章是按照markdown语法写作的。在需要生成目录的地方写<code>[TOC]</code>即可。</p>
+<p>如果你这里没有看到目录而只是看到代码，说明不支持目录自动生成哈哈</p>
+<h2 id="打印成pdf"><a href="#打印成pdf" class="headerlink" title="打印成pdf"></a>打印成pdf</h2><p>将markdown转换为pdf应该有很多种方法的。我没有再折腾，直接用谷歌浏览器虚拟打印功能生成。<br>利用Markdown Preview的Preview in Browser功能可以在浏览器上看到htm效果。在页面右键-&gt;打印-&gt;另存为pdf-&gt;调节页边距即可将pdf文件下载下来。</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;作为Windows/Mac/Linux下强大的文本编辑器，st提供了对Markdown语言的支持。通过设置可实现markdown预览和转换功能。而本文介绍的Markdown Preview支持Mathjax语法和目录自动生成。(Windows下）&lt;/p&gt;
+&lt;h2 id=&quot;安
+    
+    </summary>
+    
+      <category term="Hexo" scheme="http://jerrychia.com/categories/Hexo/"/>
+    
+    
+      <category term="Hexo" scheme="http://jerrychia.com/tags/Hexo/"/>
     
   </entry>
   
