@@ -1,0 +1,842 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic|Covered By Your Grace:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="MLclass-ex," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="JerryChia's Blog" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="Logistic回归">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Machine Learning Programming Exercise 2">
+<meta property="og:url" content="http://jerrychia.com/2015/04/25/ml-ex2/index.html">
+<meta property="og:site_name" content="JerryChia's Blog">
+<meta property="og:description" content="Logistic回归">
+<meta property="og:updated_time" content="2016-05-08T10:43:32.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Machine Learning Programming Exercise 2">
+<meta name="twitter:description" content="Logistic回归">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"always"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 0,
+      author: '博主'
+    }
+  };
+</script>
+
+  <title> Machine Learning Programming Exercise 2 | JerryChia's Blog </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?26e9023520d4c3b9e6e659344aad42d4";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">JerryChia's Blog</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">梦想还是要有的，万一实现了呢！</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="#" class="st-search-show-outputs">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <form class="site-search-form">
+  <input type="text" id="st-search-input" class="st-search-input st-default-search-input" />
+</form>
+
+<script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+    (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+    e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+  _st('install', '7C8Yyg9EbTs4sJBsohJ4','2.0.0');
+</script>
+
+
+
+    </div>
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                Machine Learning Programming Exercise 2
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2015-04-25T16:30:22+08:00" content="2015-04-25">
+              2015-04-25
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Machine-Learning/" itemprop="url" rel="index">
+                    <span itemprop="name">Machine Learning</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2015/04/25/ml-ex2/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/04/25/ml-ex2/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2015/04/25/ml-ex2/" class="leancloud_visitors" data-flag-title="Machine Learning Programming Exercise 2">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <span class="post-meta-item-text">阅读次数 </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>Logistic回归<br><a id="more"></a></p>
+<h2 id="描述"><a href="#描述" class="headerlink" title="描述"></a>描述</h2><h2 id="分析"><a href="#分析" class="headerlink" title="分析"></a>分析</h2><h2 id="代码1"><a href="#代码1" class="headerlink" title="代码1"></a>代码1</h2><h3 id="1-2-1-Warmup-exercise-sigmoid-function"><a href="#1-2-1-Warmup-exercise-sigmoid-function" class="headerlink" title="1.2.1 Warmup exercise: sigmoid function"></a>1.2.1 Warmup exercise: sigmoid function</h3><p>Sigmoid函数，实现单位阶跃<br>sigmoid.m<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">length =  max(size(z));</div><div class="line">for i=1:length</div><div class="line">	g(i) = 1 / (1 + exp(-z(i)));</div><div class="line">end</div></pre></td></tr></table></figure></p>
+<h3 id="1-2-2-Cost-function-and-gradient"><a href="#1-2-2-Cost-function-and-gradient" class="headerlink" title="1.2.2 Cost function and gradient"></a>1.2.2 Cost function and gradient</h3><p>costFunction.m<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">J = (-1)*(    y&apos;*log(  sigmoid(X*theta)  ) + (1-y)&apos;*log( 1 - sigmoid(X*theta) )   ) / m;</div><div class="line"></div><div class="line">grad = X&apos; *(sigmoid(X*theta) - y) / m;</div></pre></td></tr></table></figure></p>
+<h3 id="1-2-3-Learning-parameters-using-fminunc"><a href="#1-2-3-Learning-parameters-using-fminunc" class="headerlink" title="1.2.3 Learning parameters using fminunc"></a>1.2.3 Learning parameters using fminunc</h3><p>这里我们使用<code>fminunc</code>函数来自动寻找最优值，其中需要设置的参数，以及调用方法如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">% Set options for fminunc</div><div class="line">options = optimset(&apos;GradObj&apos;, &apos;on&apos;, &apos;MaxIter&apos;, 400);</div><div class="line">% Run fminunc to obtain the optimal theta</div><div class="line">% This function will return theta and the cost</div><div class="line">[theta, cost] = ...</div><div class="line">fminunc(@(t)(costFunction(t, X, y)), initial theta, options);</div></pre></td></tr></table></figure></p>
+<p>In this code snippet, we first defined the options to be used with fminunc.<br>Specifically, we set the GradObj option to on, which tells fminunc that our function returns both the cost and the gradient. This allows fminunc to use the gradient when minimizing the function. Furthermore, we set the MaxIter option to 400, so that fminunc will run for at most 400 steps before it terminates.<br>To specify the actual function we are minimizing, we use a \short-hand” for specifying functions with the @(t) ( costFunction(t, X, y) ) . This creates a function, with argument t, which calls your costFunction. This allows us to wrap the costFunction for use with fminunc.<br>Notice that by using fminunc, you did not have to write any loops yourself, or set a learning rate like you did for gradient descent. This is all done by fminunc: you only needed to provide a function calculating the cost and the gradient.</p>
+<p>把94行的代码去掉plotDecisionBoundary的注释，就能看到画出的边界，这里要求我们看一下这个.m函数是如何实现的。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">% Plot Boundary</div><div class="line">plotDecisionBoundary(theta, X, y);</div></pre></td></tr></table></figure></p>
+<p>关于plotDecisionBoundary,具体参考.m文件</p>
+<ol>
+<li>plotData(X(:,2:3), y); 先画出点图</li>
+<li>如果特征值的数量小于3转步骤3，否则转步骤4</li>
+<li>寻找分界点上的任意两点，求出边界函数，然后画出边界线</li>
+<li>找出linespace，然后循环找z值，使用contour命令画图</li>
+</ol>
+<h3 id="1-2-4-Evaluating-logistic-regression"><a href="#1-2-4-Evaluating-logistic-regression" class="headerlink" title="1.2.4 Evaluating logistic regression"></a>1.2.4 Evaluating logistic regression</h3><p>完成<code>predict.m.</code>，让我们可以使用这个函数预测1或0<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">p =floor( sigmoid(X*theta) / 0.5 );</div></pre></td></tr></table></figure></p>
+<h3 id="执行2"><a href="#执行2" class="headerlink" title="执行2"></a>执行2</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div></pre></td><td class="code"><pre><div class="line">Plotting data with + indicating (y = 1) examples and o indicating (y = 0) examples.</div><div class="line"></div><div class="line">Program paused. Press enter to continue.</div><div class="line">Cost at initial theta (zeros): 0.693147</div><div class="line">Gradient at initial theta (zeros): </div><div class="line"> -0.100000 </div><div class="line"> -12.009217 </div><div class="line"> -11.262842 </div><div class="line"></div><div class="line">Program paused. Press enter to continue.</div><div class="line"></div><div class="line">Local minimum possible.</div><div class="line"></div><div class="line">fminunc stopped because the final change in function value relative to </div><div class="line">its initial value is less than the default value of the function tolerance.</div><div class="line"></div><div class="line">&lt;stopping criteria details&gt;</div><div class="line"></div><div class="line">Cost at theta found by fminunc: 0.203506</div><div class="line">theta: </div><div class="line"> -24.933013 </div><div class="line"> 0.204408 </div><div class="line"> 0.199618 </div><div class="line"></div><div class="line">Program paused. Press enter to continue.</div><div class="line">For a student with scores 45 and 85, we predict an admission probability of 0.774323</div><div class="line"></div><div class="line">Train Accuracy: 89.000000</div></pre></td></tr></table></figure>
+<h2 id="代码2-Regularized-logistic-regression"><a href="#代码2-Regularized-logistic-regression" class="headerlink" title="代码2-Regularized logistic regression"></a>代码2-Regularized logistic regression</h2><h3 id="2-3-Cost-function-and-gradient"><a href="#2-3-Cost-function-and-gradient" class="headerlink" title="2.3 Cost function and gradient"></a>2.3 Cost function and gradient</h3><p>costFunctionReg.m<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">J = (-1) * ( y&apos;*log( sigmoid(X*theta) ) + (1-y)&apos;*log( 1-sigmoid(X*theta) ))/m ...</div><div class="line">    + (theta&apos;*theta - theta(1)^2)*lambda/m ;</div><div class="line"></div><div class="line">grad = X&apos;*(sigmoid(X*theta)-y) ./m + theta*lambda/m ;</div><div class="line">grad(1) = grad(1) - theta(1)*lambda/m;</div></pre></td></tr></table></figure></p>
+<p>Learning parameters using fminunc<br>Plotting the decision boundary<code>plotDecisionBoundary.m</code></p>
+<h3 id="2-5-Optional-ungraded-exercises"><a href="#2-5-Optional-ungraded-exercises" class="headerlink" title="2.5 Optional (ungraded) exercises"></a>2.5 Optional (ungraded) exercises</h3><p>改变 lambda的值  观察边界曲线的变化情况<br>lambda太小，会造成欠拟合现象<br>lambda太大，会造成过拟合现象</p>
+<h3 id="执行2-1"><a href="#执行2-1" class="headerlink" title="执行2"></a>执行2</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div></pre></td><td class="code"><pre><div class="line">Plotting data with + indicating (y = 1) examples and o indicating (y = 0) examples.</div><div class="line"></div><div class="line">Program paused. Press enter to continue.</div><div class="line">Cost at initial theta (zeros): 0.693147</div><div class="line">Gradient at initial theta (zeros): </div><div class="line"> -0.100000 </div><div class="line"> -12.009217 </div><div class="line"> -11.262842 </div><div class="line"></div><div class="line">Program paused. Press enter to continue.</div><div class="line"></div><div class="line">Local minimum possible.</div><div class="line"></div><div class="line">fminunc stopped because the final change in function value relative to </div><div class="line">its initial value is less than the default value of the function tolerance.</div><div class="line"></div><div class="line">&lt;stopping criteria details&gt;</div><div class="line"></div><div class="line">Cost at theta found by fminunc: 0.203506</div><div class="line">theta: </div><div class="line"> -24.933013 </div><div class="line"> 0.204408 </div><div class="line"> 0.199618 </div><div class="line"></div><div class="line">Program paused. Press enter to continue.</div><div class="line">For a student with scores 45 and 85, we predict an admission probability of 0.774323</div><div class="line"></div><div class="line">Train Accuracy: 89.000000</div><div class="line"></div><div class="line">Program paused. Press enter to continue.</div></pre></td></tr></table></figure>
+<h2 id="Note"><a href="#Note" class="headerlink" title="Note:"></a>Note:</h2>
+      
+    </div>
+
+    <div>
+      
+        
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/MLclass-ex/" rel="tag">#MLclass-ex</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2015/04/25/matlab-mathfun-readwrite-file/" rel="next" title="Matlab读写数据">
+                <i class="fa fa-chevron-left"></i> Matlab读写数据
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2015/04/26/ml-ex3/" rel="prev" title="Machine Learning Programming Exercise 3">
+                Machine Learning Programming Exercise 3 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+  <p>热评文章</p>
+  <div class="ds-top-threads" data-range="weekly" data-num-items="4"></div>
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2015/04/25/ml-ex2/"
+           data-title="Machine Learning Programming Exercise 2" data-url="http://jerrychia.com/2015/04/25/ml-ex2/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/author.jpg"
+               alt="Jerry Chia" />
+          <p class="site-author-name" itemprop="name">Jerry Chia</p>
+          <p class="site-description motion-element" itemprop="description">Record</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">25</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">6</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">7</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/JerryChia" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/u/2099761791" target="_blank" title="Weibo">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                  Weibo
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              Blogrolls
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://seifzhang.jerrychia.com/" title="SeifZhang" target="_blank">SeifZhang</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#描述"><span class="nav-number">1.</span> <span class="nav-text">描述</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#分析"><span class="nav-number">2.</span> <span class="nav-text">分析</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#代码1"><span class="nav-number">3.</span> <span class="nav-text">代码1</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-2-1-Warmup-exercise-sigmoid-function"><span class="nav-number">3.1.</span> <span class="nav-text">1.2.1 Warmup exercise: sigmoid function</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-2-2-Cost-function-and-gradient"><span class="nav-number">3.2.</span> <span class="nav-text">1.2.2 Cost function and gradient</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-2-3-Learning-parameters-using-fminunc"><span class="nav-number">3.3.</span> <span class="nav-text">1.2.3 Learning parameters using fminunc</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-2-4-Evaluating-logistic-regression"><span class="nav-number">3.4.</span> <span class="nav-text">1.2.4 Evaluating logistic regression</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#执行2"><span class="nav-number">3.5.</span> <span class="nav-text">执行2</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#代码2-Regularized-logistic-regression"><span class="nav-number">4.</span> <span class="nav-text">代码2-Regularized logistic regression</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-3-Cost-function-and-gradient"><span class="nav-number">4.1.</span> <span class="nav-text">2.3 Cost function and gradient</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-5-Optional-ungraded-exercises"><span class="nav-number">4.2.</span> <span class="nav-text">2.5 Optional (ungraded) exercises</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#执行2-1"><span class="nav-number">4.3.</span> <span class="nav-text">执行2</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Note"><span class="nav-number">5.</span> <span class="nav-text">Note:</span></a></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2014 - 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Jerry Chia</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.0.1"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"jerrychia"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+  
+
+
+
+
+
+  
+  
+  
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("KiMhuaAWQvjWzpcgRj6L3q2k-gzGzoHsz", "sggpKRCkqHEouPBIR0iSTv0H");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+</body>
+</html>

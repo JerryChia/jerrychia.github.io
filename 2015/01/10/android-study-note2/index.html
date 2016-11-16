@@ -1,0 +1,1051 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic|Covered By Your Grace:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Android," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="JerryChia's Blog" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="常用控件-第二季介绍：
+
+控件使用Spinner，AutoCompleteTextView，RatingBar，SeekBar等
+Widget的使用方法
+Animation使用方法
+常见数据解析技术">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Android开发笔记-第二季">
+<meta property="og:url" content="http://jerrychia.com/2015/01/10/android-study-note2/index.html">
+<meta property="og:site_name" content="JerryChia's Blog">
+<meta property="og:description" content="常用控件-第二季介绍：
+
+控件使用Spinner，AutoCompleteTextView，RatingBar，SeekBar等
+Widget的使用方法
+Animation使用方法
+常见数据解析技术">
+<meta property="og:updated_time" content="2015-04-02T13:34:10.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Android开发笔记-第二季">
+<meta name="twitter:description" content="常用控件-第二季介绍：
+
+控件使用Spinner，AutoCompleteTextView，RatingBar，SeekBar等
+Widget的使用方法
+Animation使用方法
+常见数据解析技术">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"always"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 0,
+      author: '博主'
+    }
+  };
+</script>
+
+  <title> Android开发笔记-第二季 | JerryChia's Blog </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?26e9023520d4c3b9e6e659344aad42d4";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">JerryChia's Blog</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">梦想还是要有的，万一实现了呢！</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="#" class="st-search-show-outputs">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <form class="site-search-form">
+  <input type="text" id="st-search-input" class="st-search-input st-default-search-input" />
+</form>
+
+<script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+    (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+    e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+  _st('install', '7C8Yyg9EbTs4sJBsohJ4','2.0.0');
+</script>
+
+
+
+    </div>
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                Android开发笔记-第二季
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2015-01-10T16:30:22+08:00" content="2015-01-10">
+              2015-01-10
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Android/" itemprop="url" rel="index">
+                    <span itemprop="name">Android</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2015/01/10/android-study-note2/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/01/10/android-study-note2/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2015/01/10/android-study-note2/" class="leancloud_visitors" data-flag-title="Android开发笔记-第二季">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <span class="post-meta-item-text">阅读次数 </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="常用控件-第二季"><a href="#常用控件-第二季" class="headerlink" title="常用控件-第二季"></a>常用控件-第二季</h1><p>介绍：</p>
+<ol>
+<li>控件使用Spinner，AutoCompleteTextView，RatingBar，SeekBar等</li>
+<li>Widget的使用方法</li>
+<li>Animation使用方法</li>
+<li>常见数据解析技术</li>
+</ol>
+<a id="more"></a> 
+<h2 id="2-1-Spinner下拉菜单的使用"><a href="#2-1-Spinner下拉菜单的使用" class="headerlink" title="(2-1)Spinner下拉菜单的使用"></a>(2-1)Spinner下拉菜单的使用</h2><ol>
+<li>在布局文件中声明</li>
+<li><p>在strings.xml中创建string数组，数据是死的，也可以自己定义</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">string-array</span> <span class="attr">name</span>=<span class="string">"palnets_array"</span>&gt;</span></div><div class="line">	<span class="tag">&lt;<span class="name">item</span>&gt;</span>Earth<span class="tag">&lt;/<span class="name">item</span>&gt;</span></div><div class="line">	<span class="tag">&lt;<span class="name">item</span>&gt;</span>Venus<span class="tag">&lt;/<span class="name">item</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">string-array</span>&gt;</span></div></pre></td></tr></table></figure>
+</li>
+<li><p>创建一个ArrayAdapter<br>静态数据</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">ArrayAdapter&lt;CharSequence&gt; adapter </div><div class="line">ArrayAdapter.createFromResource(</div><div class="line">								<span class="keyword">this</span>,</div><div class="line">								R.array.palnets_array,</div><div class="line">								android.R.layout.simple_spinner_item<span class="comment">//默认布局文件，下拉菜单的样式，不建议修改</span></div><div class="line">								);</div><div class="line">adapter.setDropDownViewResource(android.R.layout.simple_dropdown_item);<span class="comment">//也是默认的，下拉item的样式，可以修改</span></div><div class="line"></div><div class="line">String[] palnets= getResources().getStringArray(R.array.palnets_array);<span class="comment">//获取数据</span></div></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>动态数据<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">List&lt;String&gt; list = ...;</div><div class="line">ArrayAdapter adapter = <span class="keyword">new</span> ArrayAdapter(<span class="keyword">this</span>,R.layout.item,R.id.textViewId,list);</div><div class="line">adapter.setDropDownViewResource(android.R.layout.simple_dropdown_item)</div></pre></td></tr></table></figure></p>
+<ol>
+<li>得到Spinner对象，设置数据<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">spinner.setAdapter(adapter);</div><div class="line">spinner.serPrompt(<span class="string">"标题"</span>);<span class="comment">//设置标题，震动，声音都有相应的方法</span></div><div class="line">spinner.setOnItemSelectedListener(l);</div></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>监听器有两个方法onItemSelected，onNothingSelected,方法提供的参数，一目了然。</p>
+<h2 id="2-2-DataPicker-AutoCompleteTextView的使用"><a href="#2-2-DataPicker-AutoCompleteTextView的使用" class="headerlink" title="(2-2)DataPicker,AutoCompleteTextView的使用"></a>(2-2)DataPicker,AutoCompleteTextView的使用</h2><p>DataPicker,Timepicker的使用，两者类似</p>
+<ol>
+<li><p>声明一个监听器，使用匿名内部类<br>用于监听用户设置好日期的事件</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">DatePickerDialog.OnDateSetListener onDateSetListener = <span class="keyword">new</span> </div><div class="line">DatePickerDialog.OnDateSetListener()&#123;</div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onDateSet</span> <span class="params">(DatePicker view, <span class="keyword">int</span> year, <span class="keyword">int</span> monthOfYear, <span class="keyword">int</span> dayOfMonth)</span></span>&#123;</div><div class="line">	<span class="comment">//do something...</span></div><div class="line">&#125;</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+</li>
+<li><p>复写onCreateDialog方法</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">switch</span> (id) &#123;</div><div class="line">		<span class="keyword">case</span> DATE_PICKER_ID:</div><div class="line">			<span class="keyword">return</span> <span class="keyword">new</span> DatePickerDialog(<span class="keyword">this</span>, onDateSetListener, <span class="number">2005</span>, <span class="number">4</span>, <span class="number">4</span>);</div><div class="line">		&#125;</div></pre></td></tr></table></figure>
+</li>
+<li><p>在你需要的时候调用<code>showDialog(DATE_PICKER_ID);</code></p>
+</li>
+</ol>
+<p>AutoCompleteTextView的使用</p>
+<ol>
+<li>在布局文件中声明AutoCompleteTextView</li>
+<li><p>定义提示条目的样式<code>list_item.xml</code></p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">&lt;?xml version="1.0" encoding="utf-8"?&gt; </div><div class="line"><span class="tag">&lt;<span class="name">TextView</span> <span class="attr">xmlns:android</span>=<span class="string">"http://schemas.android.com/apk/res/android"</span></span></div><div class="line">    <span class="attr">android:layout_width</span>=<span class="string">"fill_parent"</span></div><div class="line">    <span class="attr">android:layout_height</span>=<span class="string">"fill_parent"</span></div><div class="line">    <span class="attr">android:padding</span>=<span class="string">"10dp"</span></div><div class="line">    <span class="attr">android:textSize</span>=<span class="string">"16sp"</span></div><div class="line">    <span class="attr">android:textColor</span>=<span class="string">"#000"</span>&gt;</div><div class="line"><span class="tag">&lt;/<span class="name">TextView</span>&gt;</span></div></pre></td></tr></table></figure>
+</li>
+<li><p>需要使用ArrayAdapter来提供数据</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">ArrayAdapter&lt;String&gt; arrayAdapter = </div><div class="line"><span class="keyword">new</span> ArrayAdapter&lt;String&gt;(<span class="keyword">this</span>,R.layout.list_item,list);<span class="comment">//list or String[]</span></div></pre></td></tr></table></figure>
+</li>
+<li><p>为AutoCompleteTextView提供数据<br><code>autoAutoCompleteTextView.setAdapter(arrayAdapter);</code></p>
+</li>
+</ol>
+<p>最起码输入两个字符才会提示。</p>
+<h2 id="2-3-ExpandableListActivity的使用"><a href="#2-3-ExpandableListActivity的使用" class="headerlink" title="(2-3)ExpandableListActivity的使用"></a>(2-3)ExpandableListActivity的使用</h2><p>list数据中，每个item又有分组，以group的形式显示，这里使用ExpandableListActivity，SimpleExpandableListAdapter提供数据</p>
+<ol>
+<li><p>创建一个Activity，继承ExpandableListActivity</p>
+</li>
+<li><p>创建布局文件<code>main.xml,group.xml,child.xml</code><br>主列表：main.xml中使用ExpandableListView</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">ExpandableListView</span> </span></div><div class="line">    <span class="attr">android:id</span>=<span class="string">"@id/android:list"</span></div><div class="line">    <span class="attr">android:layout_height</span>=<span class="string">"fill_parent"</span></div><div class="line">    <span class="attr">android:layout_width</span>=<span class="string">"fill_parent"</span></div><div class="line">    <span class="attr">android:drawSelectorOnTop</span>=<span class="string">"false"</span></div><div class="line">    &gt;<span class="tag">&lt;/<span class="name">ExpandableListView</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">TextView</span> </span></div><div class="line">    <span class="attr">android:id</span>=<span class="string">"@id/android:empty"</span></div><div class="line">      <span class="attr">android:layout_height</span>=<span class="string">"fill_parent"</span></div><div class="line">    <span class="attr">android:layout_width</span>=<span class="string">"fill_parent"</span></div><div class="line">    <span class="attr">android:text</span>=<span class="string">"No data"</span></div><div class="line">    /&gt;</div></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>一级条目设置：group.xml<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">TextView</span></span></div><div class="line">	<span class="attr">android:id</span>=<span class="string">"@+id/groupTo"</span> </div><div class="line">	<span class="attr">android:layout_height</span>=<span class="string">"fill_parent"</span></div><div class="line">	<span class="attr">android:layout_width</span>=<span class="string">"fill_parent"</span>	</div><div class="line">	<span class="attr">android:paddingLeft</span>=<span class="string">"60px"</span></div><div class="line">	<span class="attr">android:paddingTop</span>=<span class="string">"10px"</span></div><div class="line">	<span class="attr">android:textSize</span>=<span class="string">"26sp"</span></div><div class="line">	<span class="attr">android:paddingBottom</span>=<span class="string">"10px"</span></div><div class="line">	<span class="attr">android:text</span>=<span class="string">"No data"</span>/&gt;</div></pre></td></tr></table></figure></p>
+<p>二级条目设置child.xml<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">TextView</span></span></div><div class="line">	<span class="attr">android:id</span>=<span class="string">"@+id/childTo"</span> </div><div class="line">	<span class="attr">android:layout_height</span>=<span class="string">"wrap_content"</span></div><div class="line">	<span class="attr">android:layout_width</span>=<span class="string">"fill_parent"</span>	</div><div class="line">	<span class="attr">android:paddingLeft</span>=<span class="string">"50px"</span></div><div class="line">	<span class="attr">android:paddingTop</span>=<span class="string">"5px"</span></div><div class="line">	<span class="attr">android:textSize</span>=<span class="string">"20sp"</span></div><div class="line">	<span class="attr">android:paddingBottom</span>=<span class="string">"5px"</span></div><div class="line">	<span class="attr">android:text</span>=<span class="string">"No data"</span>/&gt;</div></pre></td></tr></table></figure></p>
+<ol>
+<li>创建数据SimpleExpandableListAdapter<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line">SimpleExpandableListAdapter(Context context, </div><div class="line">							List&lt;? extends Map&lt;String, ?&gt;&gt; groupData, </div><div class="line">							<span class="keyword">int</span> groupLayout, </div><div class="line">							String[] groupFrom, </div><div class="line">							<span class="keyword">int</span>[] groupTo, </div><div class="line">							List&lt;? extends List&lt;? extends Map&lt;String, ?&gt;&gt;&gt; childData, </div><div class="line">							<span class="keyword">int</span> childLayout, </div><div class="line">							String[] childFrom, </div><div class="line">							<span class="keyword">int</span>[] childTo);</div><div class="line"></div><div class="line">SimpleExpandableListAdapter sela = <span class="keyword">new</span> </div><div class="line">	SimpleExpandableListAdapter(<span class="keyword">this</span>,</div><div class="line">								groups,</div><div class="line">								R.layout.group,</div><div class="line">								<span class="keyword">new</span> String[]&#123;<span class="string">"group_key"</span>&#125;,<span class="keyword">new</span> <span class="keyword">int</span>[]&#123;R.id.groupTo&#125;,</div><div class="line">								childs,</div><div class="line">								R.layout.child,</div><div class="line">								<span class="keyword">new</span> String[]&#123;<span class="string">"child_key"</span>&#125;,<span class="keyword">new</span> <span class="keyword">int</span>[]&#123;R.id.childTo&#125;</div><div class="line">								);</div><div class="line">setListAdapter(sela);</div></pre></td></tr></table></figure>
+</li>
+</ol>
+<h2 id="2-4-SeekBar，RatingBar的基本使用"><a href="#2-4-SeekBar，RatingBar的基本使用" class="headerlink" title="(2-4)SeekBar，RatingBar的基本使用"></a>(2-4)SeekBar，RatingBar的基本使用</h2><p>SeekBar的用法，常用在Mp3播放器，Flash播放器</p>
+<ol>
+<li>在布局文件中声明SeekBar</li>
+<li>定义一个监听器SeekBar.OnSeekBarChangeListener<br>这里有三个方法需要复写<br>onProgressChanged     |  进度发生变化<br>onStartTrackingTouch  |     开始拖动滑块<br>onStopTrackingTouch   |  结束拖动滑块</li>
+</ol>
+<p>RatingBar的用法，用于评分，小星星打分</p>
+<ol>
+<li><p>在布局文件中声明RatingBar</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">RatingBar</span></span></div><div class="line">	<span class="attr">android:numStart</span>=<span class="string">"5"</span> //<span class="attr">5</span>个星</div><div class="line">	<span class="attr">android:stepSize</span>=<span class="string">"1.0"</span>//每次移动步长</div><div class="line">/&gt;</div></pre></td></tr></table></figure>
+</li>
+<li><p>定义一个监听器RatingBar.OnRatingBarChangeListener<br>3，绑定监听器</p>
+</li>
+</ol>
+<h2 id="2-5-6-7-App-Widget"><a href="#2-5-6-7-App-Widget" class="headerlink" title="(2-5,6,7)App Widget"></a>(2-5,6,7)App Widget</h2><p>在Android手机屏幕上放置的控件，时钟，天气，Mp3等，相关概念：</p>
+<ol>
+<li>AppWidgetProviderInfo对象<br>为AppWidget提供元数据，包括布局，更新频率等。定义在XML文件中；根据你定义的XML文件自动生成</li>
+<li>AppWidgetProvider<br>定义了AppWidget的基本生命周期</li>
+</ol>
+<p>创建一个AppWidget的步骤</p>
+<ol>
+<li><p>定义AppWidgetProviderInfo<br>在res/xml文件夹中定义一个名为example_appwidget_info.xml的文件</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">appwidget-provider</span></span></div><div class="line">	<span class="attr">xmlns:android</span>=<span class="string">"..."</span></div><div class="line">	<span class="attr">android:minWidth</span>=<span class="string">"294dp"</span></div><div class="line">	<span class="attr">android:minHeight</span>=<span class="string">"72dp"</span></div><div class="line">	<span class="attr">android:updatePeriodMillis</span>=<span class="string">"86400000"</span></div><div class="line">	<span class="attr">android:initialLayout</span>=<span class="string">"@layout/example_appwidght"</span>&gt;</div><div class="line"><span class="tag">&lt;/<span class="name">appwidget-provider</span>&gt;</span></div></pre></td></tr></table></figure>
+</li>
+<li><p>为AppWidget指定样式和布局<br>定义一个新的布局文件example_appwidght.xml，在本例中只是简单的定义一个<code>&lt;TextView/&gt;</code></p>
+</li>
+<li>实现AppWidgetProvider，新建一个类来继承它<br>放在home屏幕上，与主程序是脱离的<br>onUpdate：在到达指定更新时间后，或用户添加时调用该方法<br>onDelete：当AppWidget被删除时调用该方法<br>onEnabled：当一个AppWidget的实例第一次被创建时，调用该方法<br>onDisabled：当最后一个APPWidget实例被删除时调用该方法<br>onReveice:接收广播事件，请求分发</li>
+<li>在Manifest中注册<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">receiver</span> <span class="attr">android:name</span>=<span class="string">"ExampleAppWidgetProvider"</span>&gt;</span></div><div class="line">	<span class="tag">&lt;<span class="name">intent-filter</span>&gt;</span></div><div class="line">		<span class="tag">&lt;<span class="name">action</span> <span class="attr">android:name</span>=<span class="string">"android.appwidget.action.APPWIDGET_UPDATE"</span>/&gt;</span></div><div class="line">	<span class="tag">&lt;/<span class="name">intent-filter</span>&gt;</span></div><div class="line">	<span class="tag">&lt;<span class="name">meta-data</span> <span class="attr">android:name</span>=<span class="string">"android.appwidget.provider"</span></span></div><div class="line">		   	   <span class="attr">android:resource</span>=<span class="string">"@xml/example_appwidget_info"</span>/&gt;</div><div class="line"><span class="tag">&lt;/<span class="name">receiver</span>&gt;</span></div></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>xml文件夹下example_appwidget_info.xml为AppWidgetProviderInfo提供数据，关联了一个布局文件，这个布局控制显示方式</p>
+<p>概念：<br>PendingIntent，悬而未决的Intent，PendingIntent不自己使用Intent，把PendingIntent发送给进程B，由进程B触发事件而使用</p>
+<p>RemoteViews的作用：表示一系列对象的View，所表示的对象运行在别的线程里面</p>
+<p>如何创建PendingIntent</p>
+<ol>
+<li>启动一个Activity：getActivity(Context context,int requestCode,Intent intent,int flags);</li>
+<li>发送一个广播：    getBroadcast()</li>
+<li>发送一个Service： getService()</li>
+</ol>
+<p>例子1：getActivity()打开一个新的Activity<br>在APP Widget中添加Button，以及按钮事件<br>APP Widget中的View运行在Home Screen进程中，所以无法按照之前的习惯绑定监听器，绑定方式为：<br><code>remoteViews.setOnClickPendingIntent(R.id.widgetButtonId,pendingIntent);</code><br>在ExampleAppWidgetProvider的onUpdate中绑定事件<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onUpdate</span><span class="params">(Context context,AppWidgetManager appWidgetManager,<span class="keyword">int</span> appWidgetids)</span></span></div><div class="line">&#123;</div><div class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; appWidgetIds.length; i++) &#123; </div><div class="line">		Intent intent = <span class="keyword">new</span> Intent(context, spinner01.class);</div><div class="line">		PendingIntent pendingIntent = PendingIntent.getActivity(context, <span class="number">0</span>,intent, <span class="number">0</span>);</div><div class="line">		RemoteViews remoteViews = <span class="keyword">new</span> RemoteViews(context.getPackageName(),</div><div class="line">				R.layout.example_appwidget);</div><div class="line">		remoteViews.setOnClickPendingIntent(R.id.appwidget_btn,pendingIntent);</div><div class="line">		appWidgetManager.updateAppWidget(appWidgetIds[i], remoteViews);</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>例子2：接受来自APPWidget的广播，更新AppWidget中空间的状态</p>
+<p>如何接收来自AppWidget的广播</p>
+<ol>
+<li>在AndroidManifest.xml中为AppWidgetProvider注册新的intent-filter，其本身就是一个receive，用于过滤收到的广播ACTION</li>
+<li>使用getBroadcast()方法创建一个PendingIntent</li>
+<li>为AppWidget当中的控件注册处理事件</li>
+<li>在onReceive方法中接收广播消息，onReceive方法接收广播，分发请求到其他四个生命周期函数，在onReceive中接收广播</li>
+</ol>
+<p>在ExampleAppWidgetProvider的onUpdate中绑定事件接收广播<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">Intent intent = <span class="keyword">new</span> Intent();</div><div class="line">intent.setAction(UPDATE_ACTION);</div><div class="line">PendingIntent pendingIntent = PendingIntent.getBroadcast(context,<span class="number">0</span>, intent, <span class="number">0</span>);</div><div class="line">RemoteViews remoteViews = <span class="keyword">new</span> RemoteViews(context.getPackageName(),R.layout.example_appwidget);</div><div class="line">remoteViews.setOnClickPendingIntent(R.id.appwidget_btn,pendingIntent);</div><div class="line">appWidgetManager.updateAppWidget(appWidgetIds[i], remoteViews);</div></pre></td></tr></table></figure></p>
+<p>RemoteViews中更改Widget的样式，有好多的方法</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">setImageViewUri(<span class="keyword">int</span> viewId,Uri uriId);</div><div class="line">setTextViewText(<span class="keyword">int</span> viewId,CharSequence text);<span class="comment">//修改一个文本控件的值</span></div><div class="line">setInt(<span class="keyword">int</span> viewId,String methedName,<span class="keyword">int</span> value);</div></pre></td></tr></table></figure>
+<p>在onReceive中的代码<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"> <span class="keyword">if</span> (UPDATE_ACTION.equals(action)) &#123;</div><div class="line">	System.out.println(<span class="string">"onReceive:"</span> + action);</div><div class="line"></div><div class="line">	RemoteViews remoteViews = <span class="keyword">new</span> RemoteViews(context.getPackageName(),</div><div class="line">			R.layout.example_appwidget);</div><div class="line">	remoteViews.setImageViewResource(R.id.appwidget_image,</div><div class="line">			R.drawable.test2);</div><div class="line">	remoteViews.setTextViewText(R.id.appwidget_textid, <span class="string">"Receive text"</span>);</div><div class="line"></div><div class="line">	AppWidgetManager appWidgetManager = AppWidgetManager</div><div class="line">			.getInstance(context);</div><div class="line">	ComponentName componentName = <span class="keyword">new</span> ComponentName(context,</div><div class="line">			ExampleAppWidgetProvider.class);</div><div class="line">	appWidgetManager.updateAppWidget(componentName, remoteViews);</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<h2 id="2-9-10-11-Animations的使用"><a href="#2-9-10-11-Animations的使用" class="headerlink" title="(2-9,10,11)Animations的使用"></a>(2-9,10,11)Animations的使用</h2><p>Animations框架，实现动态效果，在代码中实现动画，在xml文件中实现动画。提供了一系列动画效果</p>
+<p>分类：</p>
+<ol>
+<li>TweenedAnimations：旋转，移动，拉伸，淡入淡出等渐变效果</li>
+<li>Frame-by-Frame Animations，可以创建一个Drawable序列，这些Drawable可以按照指定的时间间隙一个个的显示，类似于放电影</li>
+</ol>
+<p>TweenedAnimations包括：</p>
+<ol>
+<li>Alpha：淡入淡出效果</li>
+<li>Scale：缩放</li>
+<li>Rotate：旋转</li>
+<li>Translate：移动</li>
+</ol>
+<p>使用TweenedAnimations的步骤</p>
+<ol>
+<li>创建一个AnimationSet对象 </li>
+<li>根据需要创建相应的Animation对象</li>
+<li>根据动画要求，设置数据</li>
+<li>将Animation对象添加到AnimationSet中</li>
+<li>使用空间对象开始执行AnimationSet</li>
+</ol>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">AnimationSet animationSet = <span class="keyword">new</span> AnimationSet(<span class="keyword">true</span>);</div><div class="line">RotateAnimation rotateAnimation = <span class="keyword">new</span> RotateAnimation(<span class="number">0</span>, <span class="number">360</span>,</div><div class="line">		Animation.RELATIVE_TO_PARENT, <span class="number">1f</span>,</div><div class="line">		Animation.RELATIVE_TO_PARENT, <span class="number">0f</span>);</div><div class="line">rotateAnimation.setDuration(<span class="number">5000</span>);</div><div class="line">animationSet.addAnimation(rotateAnimation);</div><div class="line">imageView.startAnimation(animationSet);</div></pre></td></tr></table></figure>
+<p>各种Animation的主要属性</p>
+<p>AnimationSet的属性设置</p>
+<ol>
+<li>setDuration        动画持续时间</li>
+<li>setFillAfter        true：执行后停留在执行结束的状态</li>
+<li>setFillBefore    true：执行后停留在执行之前的状态</li>
+<li>setStartOffSet    动画执行前等待时间</li>
+<li>setRepeatCount    动画执行次数</li>
+</ol>
+<p>Animations的第二种使用方法，基于XML</p>
+<ol>
+<li>在res文件夹下建立名为anim的文件夹</li>
+<li>创建xml文件，并首先加入set标签，修改为：</li>
+</ol>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">set</span> <span class="attr">xmlns:android</span>=<span class="string">""</span></span></div><div class="line">	<span class="attr">android:interpolator</span>=<span class="string">"@android:anim/accelerate_interpolator"</span>&gt;</div><div class="line"><span class="tag">&lt;/<span class="name">set</span>&gt;</span></div></pre></td></tr></table></figure>
+<ol>
+<li>在该标签中加入rotate，alpha，scale，translate标签，可以同时加多个不同的标签</li>
+</ol>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">alpha</span> <span class="attr">android:fromAlpha</span>=<span class="string">"1.0"</span></span></div><div class="line">		<span class="attr">android:toAlpha</span>=<span class="string">"0.0"</span></div><div class="line">		<span class="attr">android:startOffset</span>=<span class="string">"500"</span></div><div class="line">		<span class="attr">android:duration</span>=<span class="string">"500"</span>/&gt;</div></pre></td></tr></table></figure>
+<ol>
+<li>在代码中使用AnimationUtils装载xml文件，生成Animation对象<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">Animation animation = AnimationUtils.loadAnimation(<span class="keyword">this</span>,R.anim.alpha);</div></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>AnimationSet</p>
+<ol>
+<li>是Animation的子类</li>
+<li>包含一系列Animation</li>
+<li>针对AnimationSet设置一系列属性，可以被其中的子成员继承</li>
+</ol>
+<p>Interpolator<br>定义了动画变化的速率，在Animation框架中有以下几种Interpolator，AccelerateDecelerateInterpolator,等等，在set标签里面设置,也可以在代码中设置：<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">android:interpolator="@android:anim/AccelerateDecelerateInterpolator"</div><div class="line">android:shareInterpolator="true"</div></pre></td></tr></table></figure></p>
+<p>Frame-by-Frame Animations的使用方法<br>图片轮转的效果，一直轮转下去<br>代码：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">imageView.setBackgroundResource(R.drawable.anim_nv);</div><div class="line">AnimationDrawable animationDrawable = (AnimationDrawable)imageView.getBackground();</div><div class="line">animationDrawable.start();</div></pre></td></tr></table></figure></p>
+<p>R.drawable.anim_nv.xml文件<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">&lt;?xml version="1.0" encoding="utf-8"?&gt;</div><div class="line"><span class="tag">&lt;<span class="name">animation-list</span> <span class="attr">xmlns:android</span>=<span class="string">"http://schemas.android.com/apk/res/android"</span></span></div><div class="line">	<span class="attr">android:oneshot</span>=<span class="string">"false"</span>&gt;</div><div class="line">	<span class="tag">&lt;<span class="name">item</span> <span class="attr">android:drawable</span>=<span class="string">"@drawable/nv1"</span> <span class="attr">android:duration</span>=<span class="string">"500"</span> /&gt;</span></div><div class="line">	<span class="tag">&lt;<span class="name">item</span> <span class="attr">android:drawable</span>=<span class="string">"@drawable/nv2"</span> <span class="attr">android:duration</span>=<span class="string">"500"</span> /&gt;</span></div><div class="line">	<span class="tag">&lt;<span class="name">item</span> <span class="attr">android:drawable</span>=<span class="string">"@drawable/nv3"</span> <span class="attr">android:duration</span>=<span class="string">"500"</span> /&gt;</span></div><div class="line">	<span class="tag">&lt;<span class="name">item</span> <span class="attr">android:drawable</span>=<span class="string">"@drawable/nv4"</span> <span class="attr">android:duration</span>=<span class="string">"500"</span> /&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">animation-list</span>&gt;</span></div></pre></td></tr></table></figure></p>
+<h2 id="2-12-JSON数据交换"><a href="#2-12-JSON数据交换" class="headerlink" title="(2-12)JSON数据交换"></a>(2-12)JSON数据交换</h2><p>JSON：JavaScript object natation，是一系列键值对的集合。json已经被大部分的开发人员接受，在网络传输中应用非常广泛，它相对于使用XML来讲稍微方便一些，你可以在<strong><a href="http://www.json.org/" target="_blank" rel="external">json</a></strong>网上上查看它的介绍。</p>
+<table>
+<thead>
+<tr>
+<th>P</th>
+<th>JSON</th>
+<th>XML</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>数据可读性</td>
+<td>基本相同</td>
+<td>基本相同</td>
+</tr>
+<tr>
+<td>解析手段</td>
+<td>基本相同</td>
+<td>基本相同</td>
+</tr>
+<tr>
+<td>数据体积</td>
+<td>更小</td>
+<td></td>
+</tr>
+<tr>
+<td>与js交互</td>
+<td>方便</td>
+<td>不方便</td>
+</tr>
+<tr>
+<td>数据描述性</td>
+<td>中等</td>
+<td>好</td>
+</tr>
+</tbody>
+</table>
+<p>数据格式示例：<br><figure class="highlight json"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line">	<span class="attr">"name"</span>:<span class="string">"Michael"</span>,</div><div class="line">	<span class="attr">"address"</span>:</div><div class="line">	&#123;</div><div class="line">		<span class="attr">"city"</span>:<span class="string">"beijing"</span>,</div><div class="line">		<span class="attr">"postcode"</span>:<span class="number">100025</span></div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>jsonReader在Android 3.0版本之后才能使用，所以在3.0以下的版本无法使用。<br>这里使用google-gson，谷歌开源API，地址为<a href="http://code.google.com/p/google-gson/" target="_blank" rel="external">google-gson</a></p>
+<p>读取的样式</p>
+<ol>
+<li><p>你可以自己设定读取处理的代码</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line">datastr = <span class="string">"[&#123;\"name\":\"Michael\",\"age\":20&#125;,&#123;\"name\":\"Mike\",\"age\":21&#125;]"</span>;</div><div class="line"><span class="keyword">try</span> &#123;</div><div class="line">	JsonReader reader = <span class="keyword">new</span> JsonReader(<span class="keyword">new</span> StringReader(str));</div><div class="line">	reader.beginArray();</div><div class="line">	<span class="keyword">while</span> (reader.hasNext()) &#123;</div><div class="line">		reader.beginObject();</div><div class="line">		<span class="keyword">while</span> (reader.hasNext()) &#123;</div><div class="line">			String tagName = reader.nextName();</div><div class="line">			<span class="keyword">if</span> (tagName.equals(<span class="string">"name"</span>)) &#123;</div><div class="line">				System.out.println(<span class="string">"name ---&gt;"</span> + reader.nextString());</div><div class="line">			&#125; <span class="keyword">else</span> <span class="keyword">if</span> (tagName.equals(<span class="string">"age"</span>)) &#123;</div><div class="line">				System.out.println(<span class="string">"age ---&gt;"</span> + reader.nextInt());</div><div class="line">			&#125;</div><div class="line">		&#125;</div><div class="line">		reader.endObject();</div><div class="line">	&#125;</div><div class="line">	reader.endArray();</div><div class="line"></div><div class="line">&#125; <span class="keyword">catch</span> (Exception e) &#123;</div><div class="line">	e.printStackTrace();</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+<li><p>读取一个对象数据</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">datastr = <span class="string">"&#123;\"name\":\"Michael\",\"age\":20&#125;"</span>;</div><div class="line">Gson gson = <span class="keyword">new</span> Gson();</div><div class="line">User user = gson.fromJson(str, User.class);</div></pre></td></tr></table></figure>
+</li>
+<li><p>读取一系列对象数据</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">datastr = <span class="string">"[&#123;\"name\":\"Michael\",\"age\":20&#125;,&#123;\"name\":\"Mike\",\"age\":21&#125;]"</span>;</div><div class="line">Type listType = <span class="keyword">new</span> TypeToken&lt;LinkedList&lt;User&gt;&gt;()&#123;&#125;.getType();</div><div class="line">Gson gson = <span class="keyword">new</span> Gson();</div><div class="line">LinkedList&lt;User&gt; users = gson.fromJson(jsonData, listType);</div><div class="line"><span class="keyword">for</span> (Iterator iterator = users.iterator(); iterator.hasNext();) &#123;</div><div class="line">	User user = (User) iterator.next();</div><div class="line">	System.out.println(<span class="string">"name---&gt;"</span> + user.getName());</div><div class="line">	System.out.println(<span class="string">"age----&gt;"</span> + user.getAge());</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+</ol>
+
+      
+    </div>
+
+    <div>
+      
+        
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Android/" rel="tag">#Android</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2015/01/10/android-study-note3/" rel="prev" title="Android开发笔记-第三季">
+                Android开发笔记-第三季 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+  <p>热评文章</p>
+  <div class="ds-top-threads" data-range="weekly" data-num-items="4"></div>
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2015/01/10/android-study-note2/"
+           data-title="Android开发笔记-第二季" data-url="http://jerrychia.com/2015/01/10/android-study-note2/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/author.jpg"
+               alt="Jerry Chia" />
+          <p class="site-author-name" itemprop="name">Jerry Chia</p>
+          <p class="site-description motion-element" itemprop="description">Record</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">25</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">6</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">7</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/JerryChia" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/u/2099761791" target="_blank" title="Weibo">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                  Weibo
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              Blogrolls
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://seifzhang.jerrychia.com/" title="SeifZhang" target="_blank">SeifZhang</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#常用控件-第二季"><span class="nav-number">1.</span> <span class="nav-text">常用控件-第二季</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#2-1-Spinner下拉菜单的使用"><span class="nav-number">1.1.</span> <span class="nav-text">(2-1)Spinner下拉菜单的使用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-2-DataPicker-AutoCompleteTextView的使用"><span class="nav-number">1.2.</span> <span class="nav-text">(2-2)DataPicker,AutoCompleteTextView的使用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-3-ExpandableListActivity的使用"><span class="nav-number">1.3.</span> <span class="nav-text">(2-3)ExpandableListActivity的使用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-4-SeekBar，RatingBar的基本使用"><span class="nav-number">1.4.</span> <span class="nav-text">(2-4)SeekBar，RatingBar的基本使用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-5-6-7-App-Widget"><span class="nav-number">1.5.</span> <span class="nav-text">(2-5,6,7)App Widget</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-9-10-11-Animations的使用"><span class="nav-number">1.6.</span> <span class="nav-text">(2-9,10,11)Animations的使用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-12-JSON数据交换"><span class="nav-number">1.7.</span> <span class="nav-text">(2-12)JSON数据交换</span></a></li></ol></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2014 - 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Jerry Chia</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.0.1"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"jerrychia"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+  
+
+
+
+
+
+  
+  
+  
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("KiMhuaAWQvjWzpcgRj6L3q2k-gzGzoHsz", "sggpKRCkqHEouPBIR0iSTv0H");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+</body>
+</html>

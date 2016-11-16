@@ -1,0 +1,928 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>JerryChia&#39;s Blog</title>
+  <subtitle>梦想还是要有的，万一实现了呢！</subtitle>
+  <link href="/atom.xml" rel="self"/>
+  
+  <link href="http://jerrychia.com/"/>
+  <updated>2016-11-16T11:18:28.789Z</updated>
+  <id>http://jerrychia.com/</id>
+  
+  <author>
+    <name>Jerry Chia</name>
+    
+  </author>
+  
+  <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Hello World</title>
+    <link href="http://jerrychia.com/2016/10/22/hello-world/"/>
+    <id>http://jerrychia.com/2016/10/22/hello-world/</id>
+    <published>2016-10-22T04:39:04.000Z</published>
+    <updated>2016-11-16T11:18:28.789Z</updated>
+    
+    <content type="html"><![CDATA[<p>Welcome to <a href="https://hexo.io/" target="_blank" rel="external">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="external">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="external">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="external">GitHub</a>.</p>
+<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo new <span class="string">"My New Post"</span></div></pre></td></tr></table></figure>
+<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="external">Writing</a></p>
+<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo server</div></pre></td></tr></table></figure>
+<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="external">Server</a></p>
+<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo generate</div></pre></td></tr></table></figure>
+<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="external">Generating</a></p>
+<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo deploy</div></pre></td></tr></table></figure>
+<p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="external">Deployment</a></p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;Welcome to &lt;a href=&quot;https://hexo.io/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;Hexo&lt;/a&gt;! This is your very first post. Check &lt;a href=&quot;https://hexo.
+    
+    </summary>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>Matlab操作mysql</title>
+    <link href="http://jerrychia.com/2015/11/11/matlab-the-usage-of-mysql/"/>
+    <id>http://jerrychia.com/2015/11/11/matlab-the-usage-of-mysql/</id>
+    <published>2015-11-11T04:27:22.000Z</published>
+    <updated>2016-05-08T11:12:50.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>因为一些数据存放在mysql中，而算法是基于MATLAB的，所以需要连接mysql做一系列操作，下面记录我总结的方法，有些内容来自互联网。</p>
+<a id="more"></a>
+<h2 id="MATLAB连接MySql"><a href="#MATLAB连接MySql" class="headerlink" title="MATLAB连接MySql"></a>MATLAB连接MySql</h2><h3 id="简单连接测试"><a href="#简单连接测试" class="headerlink" title="简单连接测试"></a>简单连接测试</h3><p>找到MYSQL的JDBC的JAR包：mysql-connector-java-5.1.25-bin.jar，放到执行目录下，然后可以进行简单的连接测试，测试方法如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">&gt;&gt; javaaddpath(&apos;mysql-connector-java-5.1.25-bin.jar&apos;);</div><div class="line">&gt;&gt; conn = database(&apos;test&apos;,&apos;root&apos;,&apos;root&apos;,&apos;com.mysql.jdbc.Driver&apos;,&apos;jdbc:mysql://localhost:3306/test&apos;);</div><div class="line">&gt;&gt; ping(conn)</div><div class="line">&gt;&gt; e = exec(conn,&apos;SELECT * FROM testtabe&apos;);</div><div class="line">&gt;&gt; dat=fetch(e);</div><div class="line">&gt;&gt; data=dat.data;</div></pre></td></tr></table></figure>
+<h3 id="驱动配置"><a href="#驱动配置" class="headerlink" title="驱动配置"></a>驱动配置</h3><ol>
+<li>找到MYSQL的JDBC的JAR包：mysql-connector-java-5.1.25-bin.jar </li>
+<li>解压缩，并将mysql-connector-java-5.1.25-bin.jar文件拷贝到D:/program files/MATLAB/R2009a/java/jar/toolbox</li>
+<li>到D:/program files/MATLAB/R2009a/toolbox/local，找到classpath.txt文件，打开，并添加用来加载mysql的jdbc驱动<br>$matlabroot/java/jar/toolbox/mysql-connector-java-5.1.25-bin.jar</li>
+<li>到这里驱动就算好了，打开MATLAB</li>
+</ol>
+<p>有时候驱动配置会出现问题，从网上找到一个脚本</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line">try</div><div class="line">    allJavaPath=javaclasspath; %获得所有java的路径</div><div class="line">    %把当前文件夹里的所有文件夹（以及子文件夹）都添加到路径里；</div><div class="line">    addpath(genpath(fileparts(mfilename(&apos;fullpath&apos;))));</div><div class="line">    mysqlDriverPath=which(&apos;issas-mysql-connector-java-5.1.25-bin.jar&apos;);</div><div class="line">    </div><div class="line">    %判断当前路径下是否有该驱动文件</div><div class="line">    if isempty(mysqlDriverPath)</div><div class="line">        errordlg(&#123;&apos;找不到MySQL数据库驱动文件：issas-mysql-connector-java-5.1.25-bin.jar，请联系管理员！&apos;,&apos;找不到MySQL数据库驱动&apos;&#125;,&apos;数据库驱动错误&apos;);</div><div class="line">        return;</div><div class="line">    end</div><div class="line">    </div><div class="line">    if ~ismember(mysqlDriverPath,allJavaPath) %判断该驱动是否已经在路径里</div><div class="line">        javaaddpath(mysqlDriverPath);</div><div class="line">    end</div><div class="line">    </div><div class="line">catch exception</div><div class="line">    errordlg(&#123;&apos;驱动安装不成功,尝试手动添加驱动MySQL驱动,查看命令行下错误提示！&apos;,exception.identifier&#125;,&apos;数据库驱动错误&apos;);</div><div class="line">    return;</div><div class="line">end</div></pre></td></tr></table></figure>
+<h2 id="MATLAB下对mysql操作"><a href="#MATLAB下对mysql操作" class="headerlink" title="MATLAB下对mysql操作"></a>MATLAB下对mysql操作</h2><ol>
+<li><p>执行查询语句</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">cursorA = exec(conn,&apos;select * from dqrecord limit 100&apos;); </div><div class="line">cursorA=fetch(cursorA) ;</div><div class="line">cur=cursorA.data;//就是数据，是一个CELL结构</div><div class="line">num=rows(cursorA)//如果想得到某一列的值，可以先求出cur中共有多少列</div><div class="line">cur = cell2mat(cur);//再把CELL结构转换成MATRIX结构</div><div class="line">a=cur(1:num,1);//想取第一列，则可以这样写</div></pre></td></tr></table></figure>
+</li>
+<li><p>sql语句变量查询使用strcat<br>在exec函数执行查询过程中，有的sql语句要输入变量，这时可使用strcat函数完成该功能</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">t = strcat(s1, s2, s3, ...)</div><div class="line">for(t=1:10)</div><div class="line">    sql1 = strcat(&apos;select count(did) from rss_genepairs_u where gocc&gt;=&apos;,num2str(t),&apos; || gomf &gt;= &apos;,num2str(t),&apos; || gobp &gt;= &apos;,num2str(t));</div><div class="line">end</div></pre></td></tr></table></figure>
+</li>
+<li><p>返回值<br>从数据库中读取数据到matlab有三种数据类型（默认为元胞类型cellarray），分别为元胞类型（cellarray），数字型（numeric），结构型（structure）。可以在链接数据库之前通过setdbprefs函数来进行设置。如果数据库文件中全部是数值型数据时最好采用numeric型的数据，这样可以使得读取速度大幅提高，特别是在大型数据读取时非常明显。我曾经从数据库中读取过100万个数据，用cellarray时用了16s，但是用numeric时却只用了8s，速度提高很大，对电脑配置不好的来说，很有帮助的。<br>调用格式：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">setdbprefs(‘datareturnformat’,’numric’)</div></pre></td></tr></table></figure></li>
+</ol>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;因为一些数据存放在mysql中，而算法是基于MATLAB的，所以需要连接mysql做一系列操作，下面记录我总结的方法，有些内容来自互联网。&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="Matlab" scheme="http://jerrychia.com/categories/Matlab/"/>
+    
+    
+      <category term="Matlab" scheme="http://jerrychia.com/tags/Matlab/"/>
+    
+      <category term="MySql" scheme="http://jerrychia.com/tags/MySql/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Mysql数据库导入，备份，还原</title>
+    <link href="http://jerrychia.com/2015/11/11/mysql-the-backup-and-restore/"/>
+    <id>http://jerrychia.com/2015/11/11/mysql-the-backup-and-restore/</id>
+    <published>2015-11-11T04:27:22.000Z</published>
+    <updated>2016-05-08T11:13:01.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>记录mysql数据库导入txt文件，备份和还原操作</p>
+<a id="more"></a>
+<h2 id="MySql导入txt文件"><a href="#MySql导入txt文件" class="headerlink" title="MySql导入txt文件"></a>MySql导入txt文件</h2><p>导入txt文件到mysql里面，编码格式为：utf8<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">mysql&gt; LOAD DATA INFILE &apos;D:/test.txt&apos; INTO TABLE tablename CHARACTER SET utf8 FIELDS TERMINATED BY &apos;,&apos; LINES TERMINATED BY &apos; &apos; (id,field1,field3,field5,field2);</div><div class="line">LOAD DATA INFILE &apos;D:/tianchi/gd_weather_report.txt&apos; INTO TABLE gd_weather_report CHARACTER SET utf8 FIELDS TERMINATED BY &apos;,&apos;;</div></pre></td></tr></table></figure></p>
+<h2 id="Mysql导入导出"><a href="#Mysql导入导出" class="headerlink" title="Mysql导入导出"></a>Mysql导入导出</h2><p>MySQL备份和还原,都是利用mysqldump、mysql和source命令来完成的。 </p>
+<h3 id="Win32下MySQL的备份与还原"><a href="#Win32下MySQL的备份与还原" class="headerlink" title="Win32下MySQL的备份与还原"></a>Win32下MySQL的备份与还原</h3><ol>
+<li><p>备份<br>开始菜单 | 运行 | cmd |利用<code>cd /Program Files/MySQL/MySQL Server 5.0/bin</code>命令进入bin文件夹 | 利用<code>mysqldump  -u 用户名 -p databasename &gt;exportfilename</code>导出数据库到文件，如<code>mysqldump -u root -p voice&gt;voice.sql</code>，然后输入密码即可开始导出。 </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">C:\Program Files\MySQL\MySQL Server 5.1\bin&gt;mysqldump -uroot -proot test gd_lin_</div><div class="line">desc &gt; desc.sql</div></pre></td></tr></table></figure>
+</li>
+<li><p>还原<br>将要导入的.sql文件移至bin文件下，这样的路径比较方便，进入<code>MySQL Command Line Client</code>，输入密码，进入到<code>mysql&gt;</code>，输入命令<code>show databases；</code>，回车，看看有些什么数据库；建立你要还原的数据库，输入<code>create database voice；</code>，回车；切换到刚建立的数据库，输入<code>use voice；</code>，回车；导入数据，输入<code>source voice.sql；</code>，回车，开始导入，再次出现<code>mysql&gt;</code>并且没有提示错误即还原成功。 </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">C:\Program Files\MySQL\MySQL Server 5.1\bin&gt;mysqldump -uroot -proot test gd_lin_</div><div class="line">desc &gt; desc.sql</div></pre></td></tr></table></figure>
+</li>
+</ol>
+<h3 id="Linux下MySQL的备份与还原"><a href="#Linux下MySQL的备份与还原" class="headerlink" title="Linux下MySQL的备份与还原"></a>Linux下MySQL的备份与还原</h3><ol>
+<li><p>备份</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">[root@localhost ~]# cd /var/lib/mysql (进入到MySQL库目录，根据自己的MySQL的安装情况调整目录) </div><div class="line">[root@localhost mysql]# mysqldump -u root -p voice&gt;voice.sql，输入密码即可。</div></pre></td></tr></table></figure>
+</li>
+<li><p>还原</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">法一：</div><div class="line">[root@localhost ~]# mysql -u root -p 回车，输入密码，进入MySQL的控制台&quot;mysql&gt;&quot;,同Win32下MySQL的还原 </div><div class="line">法二：</div><div class="line">[root@localhost ~]# cd /var/lib/mysql (进入到MySQL库目录，根据自己的MySQL的安装情况调整目录) </div><div class="line">[root@localhost mysql]# mysql -u root -p voice&lt;voice.sql，输入密码即可。</div></pre></td></tr></table></figure>
+</li>
+</ol>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;记录mysql数据库导入txt文件，备份和还原操作&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="DataBase" scheme="http://jerrychia.com/categories/DataBase/"/>
+    
+    
+      <category term="MySql" scheme="http://jerrychia.com/tags/MySql/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>PowerDesigner执行脚本把表生成Excel</title>
+    <link href="http://jerrychia.com/2015/09/17/powerdes-execshell-dt-to-excel/"/>
+    <id>http://jerrychia.com/2015/09/17/powerdes-execshell-dt-to-excel/</id>
+    <published>2015-09-17T08:30:22.000Z</published>
+    <updated>2016-05-08T11:02:15.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>在网上查找了一个脚本文件可以把PowderDesigner中的物理表结构生成Excel文件，方便设计人员查看，根据这个脚本做了一些修改，更方便的输出自己需要的信息。</p>
+<a id="more"></a>
+<h2 id="Code"><a href="#Code" class="headerlink" title="Code"></a>Code</h2><p>修改后的脚本如下所示，你可以在PowerDesigner里面用组合键Ctrl+Shift+X来调出执行窗口。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div><div class="line">106</div><div class="line">107</div><div class="line">108</div><div class="line">109</div><div class="line">110</div><div class="line">111</div><div class="line">112</div><div class="line">113</div><div class="line">114</div><div class="line">115</div><div class="line">116</div><div class="line">117</div><div class="line">118</div><div class="line">119</div><div class="line">120</div><div class="line">121</div><div class="line">122</div><div class="line">123</div><div class="line">124</div><div class="line">125</div><div class="line">126</div><div class="line">127</div><div class="line">128</div><div class="line">129</div><div class="line">130</div><div class="line">131</div><div class="line">132</div><div class="line">133</div><div class="line">134</div><div class="line">135</div><div class="line">136</div><div class="line">137</div><div class="line">138</div><div class="line">139</div><div class="line">140</div><div class="line">141</div><div class="line">142</div><div class="line">143</div><div class="line">144</div><div class="line">145</div><div class="line">146</div><div class="line">147</div><div class="line">148</div><div class="line">149</div><div class="line">150</div><div class="line">151</div><div class="line">152</div><div class="line">153</div><div class="line">154</div><div class="line">155</div><div class="line">156</div><div class="line">157</div><div class="line">158</div><div class="line">159</div><div class="line">160</div><div class="line">161</div><div class="line">162</div><div class="line">163</div><div class="line">164</div><div class="line">165</div><div class="line">166</div><div class="line">167</div><div class="line">168</div><div class="line">169</div><div class="line">170</div><div class="line">171</div><div class="line">172</div><div class="line">173</div><div class="line">174</div></pre></td><td class="code"><pre><div class="line">&apos;****************************************************************************</div><div class="line"></div><div class="line">&apos;* File:     pdm2excel.txt</div><div class="line">&apos;* Title:    pdm export to excel</div><div class="line">&apos;* Purpose:  To export the tables and columns to Excel</div><div class="line">&apos;* Model:    Physical Data Model</div><div class="line">&apos;* Objects:  Table, Column, View</div><div class="line">&apos;* Author:   ziyan</div><div class="line">&apos;* Created:  2012-05-03</div><div class="line">&apos;* Version:  1.0</div><div class="line">&apos;* Modify Info: Author:JerryChia</div><div class="line">&apos;* BlogPage:http://jerrychia.com</div><div class="line">&apos;* Des:add author info,and modify columns</div><div class="line"></div><div class="line">&apos;*****************************************************************************</div><div class="line"></div><div class="line">Option Explicit</div><div class="line"></div><div class="line">   Dim rowsNum</div><div class="line">   rowsNum = 0</div><div class="line"></div><div class="line">&apos;-----------------------------------------------------------------------------</div><div class="line">&apos; Main function</div><div class="line">&apos;-----------------------------------------------------------------------------</div><div class="line"></div><div class="line">&apos; Get the current active model</div><div class="line">Dim Model</div><div class="line">Set Model = ActiveModel</div><div class="line"></div><div class="line">If (Model Is Nothing) Or (Not Model.IsKindOf(PdPDM.cls_Model)) Then</div><div class="line">  MsgBox &quot;The current model is not an PDM model.&quot;</div><div class="line">Else</div><div class="line"></div><div class="line"> &apos; Get the tables collection</div><div class="line"> &apos;创建EXCEL APP</div><div class="line"></div><div class="line"> dim beginrow</div><div class="line"> DIM EXCEL, SHEET</div><div class="line"></div><div class="line"> set EXCEL = CREATEOBJECT(&quot;Excel.Application&quot;)</div><div class="line"></div><div class="line"> EXCEL.workbooks.add(-4167)&apos;添加工作表</div><div class="line"> EXCEL.workbooks(1).sheets(1).name =&quot;test&quot;</div><div class="line"> set sheet = EXCEL.workbooks(1).sheets(&quot;test&quot;)</div><div class="line"></div><div class="line"> ShowProperties Model, SHEET</div><div class="line"></div><div class="line"> EXCEL.visible = true</div><div class="line"></div><div class="line"> &apos;设置列宽和自动换行</div><div class="line"></div><div class="line"> sheet.Columns(1).ColumnWidth = 15 </div><div class="line"> sheet.Columns(2).ColumnWidth = 15 </div><div class="line"> sheet.Columns(4).ColumnWidth = 15 </div><div class="line"> sheet.Columns(5).ColumnWidth = 15 </div><div class="line"> sheet.Columns(6).ColumnWidth = 10</div><div class="line"> sheet.Columns(7).ColumnWidth = 10</div><div class="line"> sheet.Columns(8).ColumnWidth = 10</div><div class="line"> </div><div class="line"> sheet.Columns(1).WrapText =true</div><div class="line"> sheet.Columns(2).WrapText =true</div><div class="line"> sheet.Columns(4).WrapText =true</div><div class="line"></div><div class="line"> End If</div><div class="line"></div><div class="line">&apos;-----------------------------------------------------------------------------</div><div class="line">&apos; Show properties of tables</div><div class="line">&apos;-----------------------------------------------------------------------------</div><div class="line"></div><div class="line">Sub ShowProperties(mdl, sheet)</div><div class="line">   &apos; Show tables of the current model/package</div><div class="line">   rowsNum=0</div><div class="line">   beginrow = rowsNum+1</div><div class="line"></div><div class="line">   &apos; For each table</div><div class="line"></div><div class="line">   output &quot;begin&quot;</div><div class="line"></div><div class="line">   Dim tab</div><div class="line">   For Each tab In mdl.tables</div><div class="line">      ShowTable tab,sheet</div><div class="line">   Next</div><div class="line"></div><div class="line">   if mdl.tables.count &gt; 0 then</div><div class="line">        sheet.Range(&quot;A&quot; &amp; beginrow + 1 &amp; &quot;:A&quot; &amp; rowsNum).Rows.Group</div><div class="line">   end if</div><div class="line"></div><div class="line">   output &quot;end&quot;</div><div class="line">End Sub</div><div class="line"></div><div class="line">&apos;----------------------------------------------------------------------------- </div><div class="line">&apos;输出作者信息</div><div class="line">&apos;----------------------------------------------------------------------------- </div><div class="line"></div><div class="line">sheet.cells(3, 10 ) = &quot;Author:&quot;</div><div class="line">sheet.cells(3, 11 ) = &quot;JerryChia&quot;</div><div class="line">sheet.cells(4, 10 ) = &quot;版本&quot;</div><div class="line">sheet.cells(4, 11 ) = &quot;Ver 1.0&quot;</div><div class="line">sheet.cells(5, 10 ) = &quot;日期&quot;</div><div class="line">sheet.cells(5, 11 ) = Now</div><div class="line">sheet.Range(sheet.cells(3, 10),sheet.cells(4, 11)).Borders.LineStyle = &quot;1&quot;</div><div class="line">sheet.Range(sheet.cells(4, 10),sheet.cells(5, 11)).Borders.LineStyle = &quot;1&quot;</div><div class="line"></div><div class="line">&apos;-----------------------------------------------------------------------------</div><div class="line">&apos; Show table properties</div><div class="line">&apos;-----------------------------------------------------------------------------</div><div class="line"></div><div class="line">Sub ShowTable(tab, sheet)</div><div class="line"></div><div class="line">   If IsObject(tab) Then</div><div class="line"></div><div class="line">     Dim rangFlag</div><div class="line"></div><div class="line">     rowsNum = rowsNum + 1</div><div class="line"></div><div class="line">      &apos; Show properties</div><div class="line"></div><div class="line">      Output &quot;================================&quot;</div><div class="line">    </div><div class="line">      sheet.cells(rowsNum, 1 ) = &quot;表名&quot;</div><div class="line">      sheet.cells(rowsNum, 2) = tab.code</div><div class="line">      sheet.cells(rowsNum, 3) = &quot;注释&quot;</div><div class="line">      sheet.cells(rowsNum, 4) = tab.comment</div><div class="line">      sheet.Range(sheet.cells(rowsNum, 4),sheet.cells(rowsNum, 5)).Merge</div><div class="line"></div><div class="line">      rowsNum = rowsNum + 1</div><div class="line">      sheet.cells(rowsNum, 1) = &quot;属性名&quot;</div><div class="line">      sheet.cells(rowsNum, 2) = &quot;中文名&quot;</div><div class="line">      sheet.cells(rowsNum, 3) = &quot;注释&quot;</div><div class="line">      sheet.cells(rowsNum, 4) = &quot;字段类型&quot;</div><div class="line">      sheet.cells(rowsNum, 5) = &quot;字段长度&quot;</div><div class="line">      sheet.cells(rowsNum, 6) = &quot;不为空&quot;</div><div class="line">      sheet.cells(rowsNum, 7) = &quot;Key&quot;</div><div class="line">      sheet.cells(rowsNum, 8) = &quot;FK&quot;</div><div class="line"></div><div class="line">      &apos;设置边框</div><div class="line">      sheet.Range(sheet.cells(rowsNum-1, 1),sheet.cells(rowsNum, 8)).Borders.LineStyle = &quot;1&quot;</div><div class="line">Dim col &apos; running column</div><div class="line"></div><div class="line">Dim colsNum</div><div class="line"></div><div class="line">colsNum = 0</div><div class="line"></div><div class="line">      for each col in tab.columns</div><div class="line"></div><div class="line">        rowsNum = rowsNum + 1</div><div class="line"></div><div class="line">        colsNum = colsNum + 1</div><div class="line"></div><div class="line">      sheet.cells(rowsNum, 1) = col.code</div><div class="line">      sheet.cells(rowsNum, 2) = col.name </div><div class="line">      sheet.cells(rowsNum, 3) = col.comment  </div><div class="line">      sheet.cells(rowsNum, 4) = col.datatype</div><div class="line">      sheet.cells(rowsNum, 5) = col.length</div><div class="line">      if col.mandatory = true  then</div><div class="line">         sheet.cells(rowsNum, 6) = col.mandatory</div><div class="line">      end if</div><div class="line">      if col.primary = true  then</div><div class="line">         sheet.cells(rowsNum, 7) = &quot;Key&quot;</div><div class="line">      end if</div><div class="line">      if col.foreignkey = true  then</div><div class="line">         sheet.cells(rowsNum, 8) = &quot;FK&quot;</div><div class="line">      end if</div><div class="line">      </div><div class="line">      next</div><div class="line"></div><div class="line">      sheet.Range(sheet.cells(rowsNum-colsNum+1,1),sheet.cells(rowsNum,8)).Borders.LineStyle = &quot;2&quot;</div><div class="line"></div><div class="line">      rowsNum = rowsNum + 1</div><div class="line">      Output &quot;FullDescription: &quot;       + tab.Name</div><div class="line"></div><div class="line">   End If</div><div class="line">   </div><div class="line">End Sub</div></pre></td></tr></table></figure>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;在网上查找了一个脚本文件可以把PowderDesigner中的物理表结构生成Excel文件，方便设计人员查看，根据这个脚本做了一些修改，更方便的输出自己需要的信息。&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="DataBase" scheme="http://jerrychia.com/categories/DataBase/"/>
+    
+    
+      <category term="PowerDesigner" scheme="http://jerrychia.com/tags/PowerDesigner/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Machine Learning Programming Exercise OverView</title>
+    <link href="http://jerrychia.com/2015/05/01/ml_analsys/"/>
+    <id>http://jerrychia.com/2015/05/01/ml_analsys/</id>
+    <published>2015-05-01T08:30:22.000Z</published>
+    <updated>2016-05-08T11:06:31.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>这里总结机器学习的一系列程序训练的列表<br><a id="more"></a></p>
+<h2 id="List"><a href="#List" class="headerlink" title="List"></a>List</h2><table>
+<thead>
+<tr>
+<th style="text-align:left">Main Contents</th>
+<th style="text-align:center">Post Name</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">梯度下降</td>
+<td style="text-align:center"><a href="/2015/04/24/ml-ex1/">Programming Exercise 1</a></td>
+</tr>
+<tr>
+<td style="text-align:left">Logistic回归</td>
+<td style="text-align:center"><a href="/2015/04/25/ml-ex2/">Programming Exercise 2</a></td>
+</tr>
+<tr>
+<td style="text-align:left">Multi-class Classification and Neural Networks</td>
+<td style="text-align:center"><a href="/2015/04/26/ml-ex3/">Programming Exercise 3</a></td>
+</tr>
+<tr>
+<td style="text-align:left">Neural Networks Learning</td>
+<td style="text-align:center"><a href="/2015/04/27/ml-ex4/">Programming Exercise 4</a></td>
+</tr>
+<tr>
+<td style="text-align:left">Regularized Linear Regression and Bias v.s. Variance</td>
+<td style="text-align:center"><a href="/2015/04/28/ml-ex5/">Programming Exercise 5</a></td>
+</tr>
+<tr>
+<td style="text-align:left">Support Vector Machine</td>
+<td style="text-align:center"><a href="/2015/04/29/ml-ex6/">Programming Exercise 6</a></td>
+</tr>
+<tr>
+<td style="text-align:left">K-means Clustering and Principal Component Analysis</td>
+<td style="text-align:center"><a href="/2015/04/30/ml-ex7/">Programming Exercise 7</a></td>
+</tr>
+<tr>
+<td style="text-align:left">Anomaly Detection and Recommender Systems</td>
+<td style="text-align:center"><a href="/2015/04/30/ml-ex8/">Programming Exercise 8</a></td>
+</tr>
+</tbody>
+</table>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;这里总结机器学习的一系列程序训练的列表&lt;br&gt;
+    
+    </summary>
+    
+      <category term="Machine Learning" scheme="http://jerrychia.com/categories/Machine-Learning/"/>
+    
+    
+      <category term="MLclass-ex" scheme="http://jerrychia.com/tags/MLclass-ex/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Machine Learning Programming Exercise 8</title>
+    <link href="http://jerrychia.com/2015/04/30/ml-ex8/"/>
+    <id>http://jerrychia.com/2015/04/30/ml-ex8/</id>
+    <published>2015-04-30T09:30:22.000Z</published>
+    <updated>2016-05-08T10:41:34.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>Anomaly Detection and Recommender Systems<br><a id="more"></a></p>
+<h2 id="描述"><a href="#描述" class="headerlink" title="描述"></a>描述</h2><h2 id="分析"><a href="#分析" class="headerlink" title="分析"></a>分析</h2><h2 id="代码1"><a href="#代码1" class="headerlink" title="代码1"></a>代码1</h2><h3 id="1-1-Gaussian-distribution"><a href="#1-1-Gaussian-distribution" class="headerlink" title="1.1 Gaussian distribution"></a>1.1 Gaussian distribution</h3><p>estimateGaussian.m<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">mu = mean(a)&apos;;</div><div class="line">sig_var = var(X)&apos;;</div><div class="line">sigma2 = sig_var.*( (m-1)/m );</div></pre></td></tr></table></figure></p>
+<h3 id="1-3-Selecting-the-threshold-epsilon"><a href="#1-3-Selecting-the-threshold-epsilon" class="headerlink" title="1.3 Selecting the threshold,epsilon"></a>1.3 Selecting the threshold,epsilon</h3><p>selectThreshold.m<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">predictions = (pval &lt; epsilon);</div><div class="line">tp = sum( (predictions == 1) &amp; (yval == 1) );</div><div class="line">fp = sum( (predictions == 1) &amp; (yval == 0) );</div><div class="line">fn = sum( (predictions == 0) &amp; (yval == 1) );</div><div class="line"></div><div class="line">prec= tp / (tp+fp);</div><div class="line">rec= tp / (tp+fn);</div><div class="line">F1 = 2*prec*rec/(prec+rec);</div></pre></td></tr></table></figure></p>
+<h3 id="执行1"><a href="#执行1" class="headerlink" title="执行1"></a>执行1</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">Visualizing example dataset for outlier detection.</div><div class="line"></div><div class="line">Program paused. Press enter to continue.</div><div class="line">Visualizing Gaussian fit.</div><div class="line"></div><div class="line">Program paused. Press enter to continue.</div><div class="line">Best epsilon found using cross-validation: 8.990853e-005</div><div class="line">Best F1 on Cross Validation Set:  0.875000</div><div class="line">   (you should see a value epsilon of about 8.99e-05)</div><div class="line"></div><div class="line">Program paused. Press enter to continue.</div><div class="line">Best epsilon found using cross-validation: 1.377229e-018</div><div class="line">Best F1 on Cross Validation Set:  0.615385</div><div class="line">&gt; Outliers found: 117</div><div class="line">   (you should see a value epsilon of about 1.38e-18)</div></pre></td></tr></table></figure>
+<h2 id="代码2"><a href="#代码2" class="headerlink" title="代码2"></a>代码2</h2><h3 id="2-2-1-Collaborative-filtering-cost-function"><a href="#2-2-1-Collaborative-filtering-cost-function" class="headerlink" title="2.2.1 Collaborative filtering cost function"></a>2.2.1 Collaborative filtering cost function</h3><p>cofiCostFunc.m<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">J = sum(sum( ( (X*Theta&apos; - Y).^2 ).*(R==1) ))/2;</div></pre></td></tr></table></figure></p>
+<h3 id="2-2-2-Collaborative-filtering-gradient"><a href="#2-2-2-Collaborative-filtering-gradient" class="headerlink" title="2.2.2 Collaborative filtering gradient"></a>2.2.2 Collaborative filtering gradient</h3><p>cofiCostFunc.m<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">% X grad and Theta grad.</div><div class="line">X_grad = ( (X*Theta&apos; - Y).*(R==1) )*Theta;</div><div class="line">Theta_grad = ( (X*Theta&apos; - Y).*(R==1) )&apos;*X;</div></pre></td></tr></table></figure></p>
+<h3 id="2-2-3-Regularized-cost-function"><a href="#2-2-3-Regularized-cost-function" class="headerlink" title="2.2.3 Regularized cost function"></a>2.2.3 Regularized cost function</h3><p>cofiCostFunc.m<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">% add regularization to J</div><div class="line">J = J + (lambda/2)*(  sum(sum(Theta.^2)) +  sum(sum(X.^2))    );</div></pre></td></tr></table></figure></p>
+<h3 id="2-2-4-Regularized-gradient"><a href="#2-2-4-Regularized-gradient" class="headerlink" title="2.2.4 Regularized gradient"></a>2.2.4 Regularized gradient</h3><p>cofiCostFunc.m<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">% add regularization to gradient</div><div class="line">X_grad = X_grad + X.*lambda;</div><div class="line">Theta_grad = Theta_grad + Theta.*lambda;</div></pre></td></tr></table></figure></p>
+<h3 id="执行2"><a href="#执行2" class="headerlink" title="执行2"></a>执行2</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div><div class="line">106</div><div class="line">107</div><div class="line">108</div><div class="line">109</div><div class="line">110</div><div class="line">111</div><div class="line">112</div><div class="line">113</div><div class="line">114</div><div class="line">115</div><div class="line">116</div><div class="line">117</div><div class="line">118</div><div class="line">119</div><div class="line">120</div><div class="line">121</div><div class="line">122</div><div class="line">123</div><div class="line">124</div><div class="line">125</div><div class="line">126</div><div class="line">127</div><div class="line">128</div><div class="line">129</div><div class="line">130</div><div class="line">131</div><div class="line">132</div><div class="line">133</div><div class="line">134</div><div class="line">135</div><div class="line">136</div><div class="line">137</div><div class="line">138</div><div class="line">139</div><div class="line">140</div><div class="line">141</div><div class="line">142</div><div class="line">143</div><div class="line">144</div><div class="line">145</div><div class="line">146</div><div class="line">147</div></pre></td><td class="code"><pre><div class="line">&gt;&gt; ex8_cofi</div><div class="line">Loading movie ratings dataset.</div><div class="line"></div><div class="line">Average rating for movie 1 (Toy Story): 3.878319 / 5</div><div class="line"></div><div class="line"></div><div class="line">Program paused. Press enter to continue.</div><div class="line">Cost at loaded parameters: 22.224604 </div><div class="line">(this value should be about 22.22)</div><div class="line"></div><div class="line">Program paused. Press enter to continue.</div><div class="line"></div><div class="line">Checking Gradients (without regularization) ... </div><div class="line">   -1.8404   -1.8404</div><div class="line">    5.8113    5.8113</div><div class="line">   -2.4634   -2.4634</div><div class="line">    3.7310    3.7310</div><div class="line">   -2.3557   -2.3557</div><div class="line">   -0.0255   -0.0255</div><div class="line">   -4.0380   -4.0380</div><div class="line">   -0.8986   -0.8986</div><div class="line">    3.0550    3.0550</div><div class="line">   -4.3507   -4.3507</div><div class="line">   -1.9525   -1.9525</div><div class="line">   -1.1563   -1.1563</div><div class="line">   -3.5283   -3.5283</div><div class="line">    3.1682    3.1682</div><div class="line">   -6.7028   -6.7028</div><div class="line">   -0.0338   -0.0338</div><div class="line">    2.3826    2.3826</div><div class="line">   -2.2530   -2.2530</div><div class="line">    4.5383    4.5383</div><div class="line">    4.8124    4.8124</div><div class="line">    1.4331    1.4331</div><div class="line">    3.7219    3.7219</div><div class="line">    0.3296    0.3296</div><div class="line">   -0.7154   -0.7154</div><div class="line">    4.3715    4.3715</div><div class="line">   -0.2285   -0.2285</div><div class="line">    1.1408    1.1408</div><div class="line"></div><div class="line">The above two columns you get should be very similar.</div><div class="line">(Left-Your Numerical Gradient, Right-Analytical Gradient)</div><div class="line"></div><div class="line">If your backpropagation implementation is correct, then </div><div class="line">the relative difference will be small (less than 1e-9). </div><div class="line"></div><div class="line">Relative Difference: 2.22649e-012</div><div class="line"></div><div class="line">Program paused. Press enter to continue.</div><div class="line">Cost at loaded parameters (lambda = 1.5): 31.344056 </div><div class="line">(this value should be about 31.34)</div><div class="line"></div><div class="line">Program paused. Press enter to continue.</div><div class="line"></div><div class="line">Checking Gradients (with regularization) ... </div><div class="line">   -1.3327   -1.3327</div><div class="line">   -0.0593   -0.0593</div><div class="line">    2.1602    2.1602</div><div class="line">   -0.9993   -0.9993</div><div class="line">   -7.3349   -7.3349</div><div class="line">   -1.7193   -1.7193</div><div class="line">    1.8763    1.8763</div><div class="line">   -2.5908   -2.5908</div><div class="line">    3.8992    3.8992</div><div class="line">    0.4749    0.4749</div><div class="line">    0.1394    0.1394</div><div class="line">    0.4605    0.4605</div><div class="line">   -0.6444   -0.6444</div><div class="line">   -0.6806   -0.6806</div><div class="line">    1.1376    1.1376</div><div class="line">    0.6506    0.6506</div><div class="line">    2.7093    2.7093</div><div class="line">   -1.4672   -1.4672</div><div class="line">    1.5013    1.5013</div><div class="line">    4.0697    4.0697</div><div class="line">    2.8430    2.8430</div><div class="line">    4.2770    4.2770</div><div class="line">   -0.3713   -0.3713</div><div class="line">   -1.2112   -1.2112</div><div class="line">   -2.5566   -2.5566</div><div class="line">   -1.8282   -1.8282</div><div class="line">   -2.2807   -2.2807</div><div class="line"></div><div class="line">The above two columns you get should be very similar.</div><div class="line">(Left-Your Numerical Gradient, Right-Analytical Gradient)</div><div class="line"></div><div class="line">If your backpropagation implementation is correct, then </div><div class="line">the relative difference will be small (less than 1e-9). </div><div class="line"></div><div class="line">Relative Difference: 2.2006e-012</div><div class="line"></div><div class="line">Program paused. Press enter to continue.</div><div class="line"></div><div class="line"></div><div class="line">New user ratings:</div><div class="line">Rated 4 for Toy Story (1995)</div><div class="line">Rated 3 for Twelve Monkeys (1995)</div><div class="line">Rated 5 for Usual Suspects, The (1995)</div><div class="line">Rated 4 for Outbreak (1995)</div><div class="line">Rated 5 for Shawshank Redemption, The (1994)</div><div class="line">Rated 3 for While You Were Sleeping (1995)</div><div class="line">Rated 5 for Forrest Gump (1994)</div><div class="line">Rated 2 for Silence of the Lambs, The (1991)</div><div class="line">Rated 4 for Alien (1979)</div><div class="line">Rated 5 for Die Hard 2 (1990)</div><div class="line">Rated 5 for Sphere (1998)</div><div class="line"></div><div class="line">Program paused. Press enter to continue.</div><div class="line"></div><div class="line">Training collaborative filtering...</div><div class="line"></div><div class="line"></div><div class="line"></div><div class="line"></div><div class="line">Iteration     1 | Cost: 9.850607e+005</div><div class="line">...</div><div class="line"></div><div class="line">Recommender system learning completed.</div><div class="line"></div><div class="line">Program paused. Press enter to continue.</div><div class="line"></div><div class="line">Top recommendations for you:</div><div class="line">Predicting rating 8.5 for movie Star Wars (1977)</div><div class="line">Predicting rating 8.4 for movie Titanic (1997)</div><div class="line">Predicting rating 8.4 for movie Shawshank Redemption, The (1994)</div><div class="line">Predicting rating 8.3 for movie Raiders of the Lost Ark (1981)</div><div class="line">Predicting rating 8.2 for movie Schindler&apos;s List (1993)</div><div class="line">Predicting rating 8.1 for movie Good Will Hunting (1997)</div><div class="line">Predicting rating 8.1 for movie Usual Suspects, The (1995)</div><div class="line">Predicting rating 8.1 for movie Empire Strikes Back, The (1980)</div><div class="line">Predicting rating 8.0 for movie Godfather, The (1972)</div><div class="line">Predicting rating 8.0 for movie Braveheart (1995)</div><div class="line"></div><div class="line"></div><div class="line">Original ratings provided:</div><div class="line">Rated 4 for Toy Story (1995)</div><div class="line">Rated 3 for Twelve Monkeys (1995)</div><div class="line">Rated 5 for Usual Suspects, The (1995)</div><div class="line">Rated 4 for Outbreak (1995)</div><div class="line">Rated 5 for Shawshank Redemption, The (1994)</div><div class="line">Rated 3 for While You Were Sleeping (1995)</div><div class="line">Rated 5 for Forrest Gump (1994)</div><div class="line">Rated 2 for Silence of the Lambs, The (1991)</div><div class="line">Rated 4 for Alien (1979)</div><div class="line">Rated 5 for Die Hard 2 (1990)</div><div class="line">Rated 5 for Sphere (1998)</div></pre></td></tr></table></figure>
+<h2 id="Note"><a href="#Note" class="headerlink" title="Note:"></a>Note:</h2>]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;Anomaly Detection and Recommender Systems&lt;br&gt;
+    
+    </summary>
+    
+      <category term="Machine Learning" scheme="http://jerrychia.com/categories/Machine-Learning/"/>
+    
+    
+      <category term="MLclass-ex" scheme="http://jerrychia.com/tags/MLclass-ex/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Machine Learning Programming Exercise 7</title>
+    <link href="http://jerrychia.com/2015/04/30/ml-ex7/"/>
+    <id>http://jerrychia.com/2015/04/30/ml-ex7/</id>
+    <published>2015-04-30T08:30:22.000Z</published>
+    <updated>2016-05-08T10:43:32.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>K-means Clustering and Principal Component Analysis<br>k聚簇和PCA主成分分析<br><a id="more"></a></p>
+<h2 id="描述"><a href="#描述" class="headerlink" title="描述"></a>描述</h2><h2 id="分析"><a href="#分析" class="headerlink" title="分析"></a>分析</h2><h2 id="代码1"><a href="#代码1" class="headerlink" title="代码1"></a>代码1</h2><h3 id="1-1-1-Finding-closest-centroids"><a href="#1-1-1-Finding-closest-centroids" class="headerlink" title="1.1.1 Finding closest centroids"></a>1.1.1 Finding closest centroids</h3><p>findClosestCentroids<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">for i=1:size(X,1)</div><div class="line">    t_x = [];</div><div class="line">    for j=1:K</div><div class="line">        t_x =[t_x ; X(i,:)];</div><div class="line">    end</div><div class="line">    dis = sum( (centroids - t_x).^2, 2);</div><div class="line">    [val,min_index]=min(dis,[],1);</div><div class="line">    idx(i) = min_index;</div><div class="line">end</div></pre></td></tr></table></figure></p>
+<h3 id="1-1-2-Computing-centroid-means"><a href="#1-1-2-Computing-centroid-means" class="headerlink" title="1.1.2 Computing centroid means"></a>1.1.2 Computing centroid means</h3><p>computeCentroids.m<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">for i=1:K</div><div class="line">    t_idx = (idx==i);</div><div class="line">    centroids(i,:) = ( t_idx&apos;*X )./ sum(t_idx);</div><div class="line">end</div></pre></td></tr></table></figure></p>
+<h3 id="1-3-Random-initialization"><a href="#1-3-Random-initialization" class="headerlink" title="1.3 Random initialization"></a>1.3 Random initialization</h3><p>使用randperm函数随机初始化Centroids，代码PDF给出了，只需要拷贝就行。<br>kMeansInitCentroids.m<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">% Initialize the centroids to be random examples</div><div class="line">% Randomly reorder the indices of examples</div><div class="line">randidx = randperm(size(X, 1));</div><div class="line">% Take the first K examples as centroids</div><div class="line">centroids = X(randidx(1:K), :);</div></pre></td></tr></table></figure></p>
+<h3 id="2-2-Implementing-PCA"><a href="#2-2-Implementing-PCA" class="headerlink" title="2.2 Implementing PCA"></a>2.2 Implementing PCA</h3><p>pca.m<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">X_nom = X&apos;*X./m;</div><div class="line">[U,S,V] = svd(X_nom);</div></pre></td></tr></table></figure></p>
+<h3 id="2-3-1-Projecting-the-data-onto-the-principal-components"><a href="#2-3-1-Projecting-the-data-onto-the-principal-components" class="headerlink" title="2.3.1 Projecting the data onto the principal components"></a>2.3.1 Projecting the data onto the principal components</h3><p>projectData.m<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">Z = X * U(:, 1:K);</div></pre></td></tr></table></figure></p>
+<h3 id="2-3-2-Reconstructing-an-approximation-of-the-data"><a href="#2-3-2-Reconstructing-an-approximation-of-the-data" class="headerlink" title="2.3.2 Reconstructing an approximation of the data"></a>2.3.2 Reconstructing an approximation of the data</h3><p>recoverData.m<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">X_rec = Z * U(:, 1:K)&apos;;</div></pre></td></tr></table></figure></p>
+<h2 id="Note"><a href="#Note" class="headerlink" title="Note:"></a>Note:</h2>]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;K-means Clustering and Principal Component Analysis&lt;br&gt;k聚簇和PCA主成分分析&lt;br&gt;
+    
+    </summary>
+    
+      <category term="Machine Learning" scheme="http://jerrychia.com/categories/Machine-Learning/"/>
+    
+    
+      <category term="MLclass-ex" scheme="http://jerrychia.com/tags/MLclass-ex/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Machine Learning Programming Exercise 6</title>
+    <link href="http://jerrychia.com/2015/04/29/ml-ex6/"/>
+    <id>http://jerrychia.com/2015/04/29/ml-ex6/</id>
+    <published>2015-04-29T08:30:22.000Z</published>
+    <updated>2016-05-08T10:43:32.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>Support Vector Machine<br>支持向量机s<br><a id="more"></a></p>
+<h2 id="描述"><a href="#描述" class="headerlink" title="描述"></a>描述</h2><h2 id="分析"><a href="#分析" class="headerlink" title="分析"></a>分析</h2><h2 id="代码1"><a href="#代码1" class="headerlink" title="代码1"></a>代码1</h2><h3 id="1-2-1-Gaussian-Kernel"><a href="#1-2-1-Gaussian-Kernel" class="headerlink" title="1.2.1 Gaussian Kernel"></a>1.2.1 Gaussian Kernel</h3><p>gaussianKernel.m<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">ep = (-1) * sum( (x1 - x2).^2 )/(2*sigma*sigma);</div><div class="line">sim = exp(ep);</div></pre></td></tr></table></figure></p>
+<h3 id="1-2-3-Example-Dataset-3"><a href="#1-2-3-Example-Dataset-3" class="headerlink" title="1.2.3 Example Dataset 3"></a>1.2.3 Example Dataset 3</h3><p>dataset3Params<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line">para_val = [0.01    0.03    0.10    0.30    1    3   10   30];</div><div class="line">grad = 100;</div><div class="line">for i=1:8</div><div class="line">    for j=1:8</div><div class="line">        tp_C =  para_val(i);</div><div class="line">        tp_sigma =  para_val(j);</div><div class="line">        model= svmTrain(X, y, tp_C, @(x1, x2) gaussianKernel(x1, x2, tp_sigma));</div><div class="line">        predictions = svmPredict(model, Xval);</div><div class="line">        t_grad = mean(double(predictions ~= yval));</div><div class="line">        </div><div class="line">        if t_grad &lt; grad</div><div class="line">            grad = t_grad;</div><div class="line">            C = tp_C;</div><div class="line">            sigma = tp_sigma;</div><div class="line">        end</div><div class="line">        fprintf(&apos;\nJerryChia&gt;&gt;grad: %f , t_grad: %f |C: %f ,sigma: %f ...\n&apos;,grad,t_grad,C,sigma);</div><div class="line">    end</div><div class="line">end</div></pre></td></tr></table></figure></p>
+<h3 id="执行1"><a href="#执行1" class="headerlink" title="执行1"></a>执行1</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div></pre></td><td class="code"><pre><div class="line">Loading and Visualizing Data ...</div><div class="line">Program paused. Press enter to continue.</div><div class="line"></div><div class="line">Training Linear SVM ...</div><div class="line"></div><div class="line">Training ................................... Done! </div><div class="line"></div><div class="line">Program paused. Press enter to continue.</div><div class="line"></div><div class="line">Evaluating the Gaussian Kernel ...</div><div class="line">Gaussian Kernel between x1 = [1; 2; 1], x2 = [0; 4; -1], sigma = 0.5 :</div><div class="line">  0.324652</div><div class="line">(this value should be about 0.324652)</div><div class="line">Program paused. Press enter to continue.</div><div class="line">Loading and Visualizing Data ...</div><div class="line">Program paused. Press enter to continue.</div><div class="line"></div><div class="line">Training SVM with RBF Kernel (this may take 1 to 2 minutes) ...</div><div class="line"></div><div class="line">Training .................................... Done! </div><div class="line"></div><div class="line">Program paused. Press enter to continue.</div><div class="line"></div><div class="line">Loading and Visualizing Data ...</div><div class="line">Program paused. Press enter to continue.</div><div class="line"></div><div class="line">Training .................................... Done! </div><div class="line">...</div><div class="line"></div><div class="line">Program paused. Press enter to continue.</div></pre></td></tr></table></figure>
+<h2 id="2-Spam-Classification"><a href="#2-Spam-Classification" class="headerlink" title="2 Spam Classification"></a>2 Spam Classification</h2><p>垃圾邮件分类</p>
+<h3 id="2-1-1-Vocabulary-List"><a href="#2-1-1-Vocabulary-List" class="headerlink" title="2.1.1 Vocabulary List"></a>2.1.1 Vocabulary List</h3><p>processEmail<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">for i=1:size(vocabList,1)</div><div class="line">    if strcmp( vocabList&#123;i&#125; , str)</div><div class="line">        word_indices = [word_indices ; i];</div><div class="line">        fprintf(&apos;\n\nJerryChia: %s,index: %d =========================\n&apos;,str,i);</div><div class="line">    end</div><div class="line">end</div></pre></td></tr></table></figure></p>
+<h3 id="2-2-Extracting-Features-from-Emails"><a href="#2-2-Extracting-Features-from-Emails" class="headerlink" title="2.2 Extracting Features from Emails"></a>2.2 Extracting Features from Emails</h3><p>emailFeatures<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">for i=1:size(word_indices,1)</div><div class="line">    x( word_indices(i) ) = 1;</div><div class="line">end</div></pre></td></tr></table></figure></p>
+<h2 id="Note"><a href="#Note" class="headerlink" title="Note:"></a>Note:</h2>]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;Support Vector Machine&lt;br&gt;支持向量机s&lt;br&gt;
+    
+    </summary>
+    
+      <category term="Machine Learning" scheme="http://jerrychia.com/categories/Machine-Learning/"/>
+    
+    
+      <category term="MLclass-ex" scheme="http://jerrychia.com/tags/MLclass-ex/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Machine Learning Programming Exercise 5</title>
+    <link href="http://jerrychia.com/2015/04/28/ml-ex5/"/>
+    <id>http://jerrychia.com/2015/04/28/ml-ex5/</id>
+    <published>2015-04-28T08:30:22.000Z</published>
+    <updated>2016-05-08T10:40:54.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>Regularized Linear Regression and Bias v.s. Variance</p>
+<a id="more"></a>
+<h2 id="描述"><a href="#描述" class="headerlink" title="描述"></a>描述</h2><h2 id="分析"><a href="#分析" class="headerlink" title="分析"></a>分析</h2><h2 id="代码1"><a href="#代码1" class="headerlink" title="代码1"></a>代码1</h2><h3 id=""><a href="#" class="headerlink" title=" "></a> </h3><h3 id="1-2-Regularized-linear-regression-cost-function"><a href="#1-2-Regularized-linear-regression-cost-function" class="headerlink" title="1.2 Regularized linear regression cost function"></a>1.2 Regularized linear regression cost function</h3><p>linearRegCostFunction.m<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">h_theta = theta;</div><div class="line">h_theta(1) = 0;</div><div class="line"></div><div class="line">J = (X*theta - y)&apos; * (X*theta - y)/(2*m) +  h_theta&apos;*h_theta*lambda/(2*m);</div></pre></td></tr></table></figure></p>
+<h3 id="1-3-Regularized-linear-regression-gradient"><a href="#1-3-Regularized-linear-regression-gradient" class="headerlink" title="1.3 Regularized linear regression gradient"></a>1.3 Regularized linear regression gradient</h3><p>linearRegCostFunction.m.<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">grad = X&apos;*(X*theta - y)./m + h_theta*lambda./m;</div></pre></td></tr></table></figure></p>
+<h3 id="2-1-Learning-curves"><a href="#2-1-Learning-curves" class="headerlink" title="2.1 Learning curves"></a>2.1 Learning curves</h3><p>learningCurve.m训练集和交叉验证集<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">for i=1:m</div><div class="line">   %error_train error_val</div><div class="line">   t_X = X(1:i, :);</div><div class="line">   t_y = y(1:i);</div><div class="line">   % find theta</div><div class="line">   [theta] = trainLinearReg(t_X, t_y, lambda);</div><div class="line">   lambda_J = 0;</div><div class="line">   [t_J, t_grad] = linearRegCostFunction(t_X, t_y, theta, lambda_J);</div><div class="line">   [v_J, v_grad] = linearRegCostFunction(Xval, yval, theta, lambda_J);</div><div class="line">   error_train(i) = t_J;</div><div class="line">   error_val(i)   = v_J;</div><div class="line">end</div></pre></td></tr></table></figure></p>
+<h3 id="3-Polynomial-regression"><a href="#3-Polynomial-regression" class="headerlink" title="3 Polynomial regression"></a>3 Polynomial regression</h3><p>多项式<br>polyFeatures.m<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">for i=1:p</div><div class="line">    X_poly(:,1) = X.^i;</div><div class="line">end</div></pre></td></tr></table></figure></p>
+<h3 id="代码执行结果"><a href="#代码执行结果" class="headerlink" title="代码执行结果"></a>代码执行结果</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div></pre></td><td class="code"><pre><div class="line">Loading and Visualizing Data ...</div><div class="line">Program paused. Press enter to continue.</div><div class="line">Cost at theta = [1 ; 1]: 303.993192 </div><div class="line">(this value should be about 303.993192)</div><div class="line">Program paused. Press enter to continue.</div><div class="line">Gradient at theta = [1 ; 1]:  [-15.303016; 598.250744] </div><div class="line">(this value should be about [-15.303016; 598.250744])</div><div class="line">Program paused. Press enter to continue.</div><div class="line">Iteration     1 | Cost: 1.052435e+002</div><div class="line">Iteration     2 | Cost: 2.237391e+001</div><div class="line">Iteration     3 | Cost: 2.237391e+001</div><div class="line">Iteration     4 | Cost: 2.237391e+001</div><div class="line">Iteration     5 | Cost: 2.237391e+001</div><div class="line"></div><div class="line">Program paused. Press enter to continue.</div><div class="line">Iteration     1 | Cost: 2.663868e-001</div><div class="line">Iteration     2 | Cost: 3.944305e-031</div><div class="line">...</div><div class="line"></div><div class="line">&gt; Training Examples Train Error Cross Validation Error</div><div class="line">    1   0.000000  205.121096</div><div class="line">    2   0.000000  110.300366</div><div class="line">    3   3.286595  45.010231</div><div class="line">    4   2.842678  48.368911</div><div class="line">    5   13.154049 35.865165</div><div class="line">    6   19.443963 33.829962</div><div class="line">    7   20.098522 31.970986</div><div class="line">    8   18.172859 30.862446</div><div class="line">    9   22.609405 31.135998</div><div class="line">    10    23.261462 28.936207</div><div class="line">    11    24.317250 29.551432</div><div class="line">    12    22.373906 29.433818</div><div class="line">Program paused. Press enter to continue.</div><div class="line"></div><div class="line">Normalized Training Example 1:</div><div class="line">  1.000000  </div><div class="line">  -0.362141  </div><div class="line">  -0.755087  </div><div class="line">  0.182226  </div><div class="line">  -0.706190  </div><div class="line">  0.306618  </div><div class="line">  -0.590878  </div><div class="line">  0.344516  </div><div class="line">  -0.508481  </div><div class="line"></div><div class="line">Program paused. Press enter to continue.</div><div class="line">Iteration     1 | Cost: 8.273556e+001</div><div class="line">Iteration     2 | Cost: 2.689698e+001</div><div class="line">...</div><div class="line"></div><div class="line">Polynomial Regression (lambda = 0.010000)</div><div class="line"></div><div class="line">&gt; Training Examples Train Error Cross Validation Error</div><div class="line">    1   0.000000  138.846777</div><div class="line">    2   0.000032  143.534618</div><div class="line">    3   0.000441  11.021209</div><div class="line">    4   0.002759  7.815718</div><div class="line">    5   0.002204  7.930543</div><div class="line">    6   0.021719  10.173533</div><div class="line">    7   0.083253  5.358162</div><div class="line">    8   0.087846  4.828850</div><div class="line">    9   0.238724  7.347323</div><div class="line">    10    0.237323  7.495601</div><div class="line">    11    0.217514  7.785831</div><div class="line">    12    0.221680  17.034686</div><div class="line">Program paused. Press enter to continue.</div><div class="line">Iteration     1 | Cost: 8.273077e+001</div><div class="line">Iteration     2 | Cost: 2.687496e+001</div><div class="line">...</div><div class="line"></div><div class="line">lambda    Train Error Validation Error</div><div class="line"> 0.000000 0.114774  12.889352</div><div class="line"> 0.001000 0.167935  18.630091</div><div class="line"> 0.003000 0.181277  19.060816</div><div class="line"> 0.010000 0.221680  17.034686</div><div class="line"> 0.030000 0.281851  12.829102</div><div class="line"> 0.100000 0.459318  7.587013</div><div class="line"> 0.300000 0.921760  4.636833</div><div class="line"> 1.000000 2.076188  4.260625</div><div class="line"> 3.000000 4.901351  3.822907</div><div class="line"> 10.000000  16.092213 9.945509</div><div class="line">&gt;&gt;</div></pre></td></tr></table></figure>
+<h2 id="代码2-3-2-Optional-exercise-Adjusting-the-reg-ularization-parameter"><a href="#代码2-3-2-Optional-exercise-Adjusting-the-reg-ularization-parameter" class="headerlink" title="代码2-3.2 Optional exercise: Adjusting the reg-ularization parameter"></a>代码2-3.2 Optional exercise: Adjusting the reg-ularization parameter</h2><p>这里修改lambda的值来进行多项式拟合，取值1,100</p>
+<p>通过你完成的validationCurve.m的代码，你在<br>trainLinearReg 函数里使用不同的lambda值来观察训练集和交叉验证集误差的曲线，其中lambda的值应该的范围为{0; 0:001; 0:003; 0:01; 0:03; 0:1; 0:3; 1; 3; 10}。</p>
+<h2 id="Note"><a href="#Note" class="headerlink" title="Note:"></a>Note:</h2>]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;Regularized Linear Regression and Bias v.s. Variance&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="Machine Learning" scheme="http://jerrychia.com/categories/Machine-Learning/"/>
+    
+    
+      <category term="MLclass-ex" scheme="http://jerrychia.com/tags/MLclass-ex/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Machine Learning Programming Exercise 4</title>
+    <link href="http://jerrychia.com/2015/04/27/ml-ex4/"/>
+    <id>http://jerrychia.com/2015/04/27/ml-ex4/</id>
+    <published>2015-04-27T08:30:22.000Z</published>
+    <updated>2016-05-08T10:43:32.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>Neural Networks Learning</p>
+<a id="more"></a>
+<h2 id="描述"><a href="#描述" class="headerlink" title="描述"></a>描述</h2><h2 id="分析"><a href="#分析" class="headerlink" title="分析"></a>分析</h2><h2 id="代码1"><a href="#代码1" class="headerlink" title="代码1"></a>代码1</h2><h3 id="1-2-1-Warmup-exercise-sigmoid-function"><a href="#1-2-1-Warmup-exercise-sigmoid-function" class="headerlink" title="1.2.1 Warmup exercise: sigmoid function"></a>1.2.1 Warmup exercise: sigmoid function</h3><h3 id="1-3-Feedforward-and-cost-function"><a href="#1-3-Feedforward-and-cost-function" class="headerlink" title="1.3 Feedforward and cost function"></a>1.3 Feedforward and cost function</h3><p>nnCostFunction.m to return the cost<br>You should see that the cost is about 0.287629.<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">a1 = [ones(m,1) X];</div><div class="line">a2_1 = sigmoid( (a1*Theta1&apos;) );</div><div class="line">a2_2 = [ones(m,1) a2_1];</div><div class="line">a3_1 = sigmoid( (a2_2*Theta2&apos;) );</div><div class="line">h_theta = a3_1;</div><div class="line">for c=1:num_labels</div><div class="line">    J = J + (-1)/m *( (y==c)&apos;*log(h_theta(:,c)) + (1-(y==c))&apos;*log(1 - h_theta(:,c)) );</div><div class="line">end</div></pre></td></tr></table></figure></p>
+<h3 id="1-4-Regularized-cost-function"><a href="#1-4-Regularized-cost-function" class="headerlink" title="1.4 Regularized cost function"></a>1.4 Regularized cost function</h3><p>Once you are done, ex4.m will call your nnCostFunction using the loaded<br>set of parameters for Theta1 and Theta2, and lambda = 1. You should see that the cost is about 0.383770</p>
+<p>nnCostFunction.m<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">t1 = Theta1.^2;</div><div class="line">t1(:,1) = 0;</div><div class="line">t2 = Theta2.^2;</div><div class="line">t2(:,1) = 0;</div><div class="line">J = J + ( sum( t1(:) ) + sum( t2(:) ) )*lambda/(2*m);</div></pre></td></tr></table></figure></p>
+<h3 id="2-1-Sigmoid-gradient"><a href="#2-1-Sigmoid-gradient" class="headerlink" title="2.1 Sigmoid gradient"></a>2.1 Sigmoid gradient</h3><p>To help you get started with this part of the exercise, you will First implement<br>the sigmoid gradient function.<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">sg = sigmoid(z);</div><div class="line">g = sg .* (1 - sg);</div></pre></td></tr></table></figure></p>
+<h3 id="2-2-Random-initialization"><a href="#2-2-Random-initialization" class="headerlink" title="2.2 Random initialization"></a>2.2 Random initialization</h3><p>随机初始化theta值，使用[-w,w]，这里w=0.12，一个好的选择是w=根号6 / （ 根号Lin+根号Lout)<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">% Randomly initialize the weights to small values</div><div class="line">epsilon_init = 0.12;</div><div class="line">W = rand(L_out, 1 + L_in)*2*epsilon_init-epsilon_init;</div></pre></td></tr></table></figure></p>
+<h3 id="2-3-Backpropagation"><a href="#2-3-Backpropagation" class="headerlink" title="2.3 Backpropagation"></a>2.3 Backpropagation</h3><p>After you have implemented the backpropagation algorithm, the script<br>ex4.m will proceed to run gradient checking on your implementation. </p>
+<p>nnCostFunction.m<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line">%grad</div><div class="line">for t=1:m</div><div class="line">    a1 = [1;X(t,:)&apos;];</div><div class="line">    z2 = Theta1 * a1;</div><div class="line">    a2_t = sigmoid(z2);</div><div class="line">    a2 = [1;a2_t];</div><div class="line">    z3 = Theta2 * a2;</div><div class="line">    a3 = sigmoid(z3);</div><div class="line">    </div><div class="line">    delta_3 = a3;</div><div class="line">    delta_3( y(t),1 ) = delta_3( y(t),1 ) - 1;</div><div class="line">    delta_2 = (Theta2)&apos; * delta_3 .* sigmoidGradient([1;z2]);</div><div class="line">    </div><div class="line">    %fprintf(&apos;\njjjj+ %g size(y_init).\n&apos;,size(y_init));</div><div class="line">    </div><div class="line">    delta_2 = delta_2(2:end);</div><div class="line">    Theta2_grad = Theta2_grad + delta_3*(a2)&apos;;  </div><div class="line">    Theta1_grad = Theta1_grad + delta_2*(a1)&apos;;</div><div class="line">    </div><div class="line">end</div><div class="line"></div><div class="line">Theta2_grad = Theta2_grad./m;</div><div class="line">Theta1_grad = Theta1_grad./m;</div></pre></td></tr></table></figure></p>
+<h3 id="2-4-Gradient-checking"><a href="#2-4-Gradient-checking" class="headerlink" title="2.4 Gradient checking"></a>2.4 Gradient checking</h3><p>不需要写代码，方程式已经帮助我们实现了，我们应该看一下代码了解一下作者的思路，代码在<code>computeNumericalGradient.m</code>中。</p>
+<p>思想：数学中的近似求导问题</p>
+<p>根据J近似求出梯度值，这样在ex4中与costFunction计算出来的结果比较，达到检查梯度的目的。</p>
+<h3 id="2-5-Regularized-Neural-Networks"><a href="#2-5-Regularized-Neural-Networks" class="headerlink" title="2.5 Regularized Neural Networks"></a>2.5 Regularized Neural Networks</h3><p>nnCostFunction.m<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">% 2.5 Regularized Neural Networks</div><div class="line">after2 = Theta2.*(lambda/m);</div><div class="line">after1 = Theta1.*(lambda/m);</div><div class="line">after2(:,1) = 0;</div><div class="line">after1(:,1) = 0;</div><div class="line"></div><div class="line">Theta2_grad = Theta2_grad./m + after2;</div><div class="line">Theta1_grad = Theta1_grad./m + after1;</div></pre></td></tr></table></figure></p>
+<h3 id="2-6-Learning-parameters-using-fmincg"><a href="#2-6-Learning-parameters-using-fmincg" class="headerlink" title="2.6 Learning parameters using fmincg"></a>2.6 Learning parameters using fmincg</h3><p>训练结果大概为95.3%，由于对theta进行随机初始化，所以会有1%的误差。</p>
+<h3 id="代码执行结果"><a href="#代码执行结果" class="headerlink" title="代码执行结果"></a>代码执行结果</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div></pre></td><td class="code"><pre><div class="line">Loading and Visualizing Data ...</div><div class="line">Program paused. Press enter to continue.</div><div class="line"></div><div class="line">Loading Saved Neural Network Parameters ...</div><div class="line"></div><div class="line">Feedforward Using Neural Network ...</div><div class="line"></div><div class="line">Cost at parameters (loaded from ex4weights): 0.287629 </div><div class="line">(this value should be about 0.287629)</div><div class="line"></div><div class="line">Program paused. Press enter to continue.</div><div class="line"></div><div class="line">Checking Cost Function (w/ Regularization) ... </div><div class="line">Cost at parameters (loaded from ex4weights): 0.383770 </div><div class="line">(this value should be about 0.383770)</div><div class="line">Program paused. Press enter to continue.</div><div class="line"></div><div class="line">Evaluating sigmoid gradient...</div><div class="line">Sigmoid gradient evaluated at [1 -0.5 0 0.5 1]:</div><div class="line">  0.196612 0.235004 0.250000 0.235004 0.196612 </div><div class="line"></div><div class="line">Program paused. Press enter to continue.</div><div class="line"></div><div class="line">Initializing Neural Network Parameters ...</div><div class="line"></div><div class="line">Checking Backpropagation... </div><div class="line">   -0.0093   -0.0093</div><div class="line">    0.0089    0.0089</div><div class="line">   ...</div><div class="line"></div><div class="line">The above two columns you get should be very similar.</div><div class="line">(Left-Your Numerical Gradient, Right-Analytical Gradient)</div><div class="line"></div><div class="line">If your backpropagation implementation is correct, then </div><div class="line">the relative difference will be small (less than 1e-9). </div><div class="line"></div><div class="line">Relative Difference: 2.06516e-011</div><div class="line"></div><div class="line">Program paused. Press enter to continue.</div><div class="line"></div><div class="line">Checking Backpropagation (w/ Regularization) ... </div><div class="line">   -0.0093   -0.0093</div><div class="line">    0.0089    0.0089</div><div class="line">   ...</div><div class="line"></div><div class="line">The above two columns you get should be very similar.</div><div class="line">(Left-Your Numerical Gradient, Right-Analytical Gradient)</div><div class="line"></div><div class="line">If your backpropagation implementation is correct, then </div><div class="line">the relative difference will be small (less than 1e-9). </div><div class="line"></div><div class="line">Relative Difference: 1.99997e-011</div><div class="line"></div><div class="line"></div><div class="line">Cost at (fixed) debugging parameters (w/ lambda = 10): 0.576051 </div><div class="line">(this value should be about 0.576051)</div><div class="line"></div><div class="line">Program paused. Press enter to continue.</div><div class="line"></div><div class="line">Training Neural Network... </div><div class="line"></div><div class="line">Iteration     1 | Cost: 3.308059e+000</div><div class="line">Iteration     2 | Cost: 3.265667e+000</div><div class="line">...</div><div class="line"></div><div class="line">Program paused. Press enter to continue.</div><div class="line"></div><div class="line">Visualizing Neural Network... </div><div class="line"></div><div class="line">Program paused. Press enter to continue.</div><div class="line"></div><div class="line">Training Set Accuracy: 94.860000</div></pre></td></tr></table></figure>
+<h2 id="代码2"><a href="#代码2" class="headerlink" title="代码2"></a>代码2</h2><p>在这里，让我们通过修改lambda和MaxIter的值，来看一看欠拟合和过拟合的现象。</p>
+<h2 id="Note"><a href="#Note" class="headerlink" title="Note:"></a>Note:</h2>]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;Neural Networks Learning&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="Machine Learning" scheme="http://jerrychia.com/categories/Machine-Learning/"/>
+    
+    
+      <category term="MLclass-ex" scheme="http://jerrychia.com/tags/MLclass-ex/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Machine Learning Programming Exercise 3</title>
+    <link href="http://jerrychia.com/2015/04/26/ml-ex3/"/>
+    <id>http://jerrychia.com/2015/04/26/ml-ex3/</id>
+    <published>2015-04-26T08:30:22.000Z</published>
+    <updated>2016-05-08T10:43:32.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>Multi-class Classification and Neural Networks<br><a id="more"></a></p>
+<h2 id="描述"><a href="#描述" class="headerlink" title="描述"></a>描述</h2><p>复杂神经网络</p>
+<h2 id="分析"><a href="#分析" class="headerlink" title="分析"></a>分析</h2><h2 id="代码1"><a href="#代码1" class="headerlink" title="代码1"></a>代码1</h2><h3 id="1-2-1-Warmup-exercise-sigmoid-function"><a href="#1-2-1-Warmup-exercise-sigmoid-function" class="headerlink" title="1.2.1 Warmup exercise: sigmoid function"></a>1.2.1 Warmup exercise: sigmoid function</h3><h3 id="1-3-Vectorizing-Logistic-Regression"><a href="#1-3-Vectorizing-Logistic-Regression" class="headerlink" title="1.3 Vectorizing Logistic Regression"></a>1.3 Vectorizing Logistic Regression</h3><p>lrCostFunction(theta, X, y, lambda)<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">temp = theta;</div><div class="line">temp(1) = 0;   % because we don&apos;t add anything for j = 0  </div><div class="line">J = (-1) * sum( y .* log( sigmoid(X*theta) ) + (1 - y) .* log( 1 - sigmoid(X*theta)) ) / m ...</div><div class="line">    + (temp&apos;*temp)*lambda/m;</div><div class="line"></div><div class="line">grad = X&apos;*(sigmoid(X*theta) - y)/m + temp*lambda/m ;</div></pre></td></tr></table></figure></p>
+<h3 id="1-4-One-vs-all-Classication"><a href="#1-4-One-vs-all-Classication" class="headerlink" title="1.4 One-vs-all Classication"></a>1.4 One-vs-all Classication</h3><p>Furthermore, you will be using fmincg for this exercise (instead of fminunc).fmincg works similarly to fminunc, but is more more efficient for dealing with a large number of parameters.</p>
+<p>oneVsAll.m<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">options = optimset(&apos;GradObj&apos;, &apos;on&apos;, &apos;MaxIter&apos;, 50);</div><div class="line">for c = 1:num_labels</div><div class="line">    initial_theta = zeros(n + 1, 1);</div><div class="line">    [theta] = ...  </div><div class="line">        fmincg (@(t)(lrCostFunction(t, X, (y == c), lambda)), ...</div><div class="line">              initial_theta, options);</div><div class="line">    all_theta(c,:)= theta&apos;; </div><div class="line">end</div></pre></td></tr></table></figure></p>
+<h3 id="1-2-4-Evaluating-logistic-regression"><a href="#1-2-4-Evaluating-logistic-regression" class="headerlink" title="1.2.4 Evaluating logistic regression"></a>1.2.4 Evaluating logistic regression</h3><p>predictOneVsAll.m<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"> % [Y_col,Ind_row]=max(a,[],2) 每行的最大值及列号 </div><div class="line">[maxVal,p] = max( sigmoid(X*all_theta&apos;) ,[],2);</div></pre></td></tr></table></figure></p>
+<h3 id="执行结果1"><a href="#执行结果1" class="headerlink" title="执行结果1"></a>执行结果1</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">Loading and Visualizing Data ...</div><div class="line">Program paused. Press enter to continue.</div><div class="line"></div><div class="line">Training One-vs-All Logistic Regression...</div><div class="line">Iteration     1 | Cost: 2.802145e-001</div><div class="line">.</div><div class="line">.</div><div class="line">Iteration    50 | Cost: 1.177491e-002</div><div class="line">Program paused. Press enter to continue.</div><div class="line"></div><div class="line">Training Set Accuracy: 94.740000</div></pre></td></tr></table></figure>
+<h2 id="代码2-Neural-Networks"><a href="#代码2-Neural-Networks" class="headerlink" title="代码2-Neural Networks"></a>代码2-Neural Networks</h2><h3 id="2-2-Feedforward-Propagation-and-Prediction"><a href="#2-2-Feedforward-Propagation-and-Prediction" class="headerlink" title="2.2 Feedforward Propagation and Prediction"></a>2.2 Feedforward Propagation and Prediction</h3><p>predict.m<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">a1 = [ones(m,1) X];</div><div class="line">a2_1 = sigmoid( (a1*Theta1&apos;) );</div><div class="line">a2_2 = [ones(m,1) a2_1];</div><div class="line">a3_1 = sigmoid( (a2_2*Theta2&apos;) );</div><div class="line"></div><div class="line">[t,p] = max(a3_1, [], 2);</div><div class="line"></div><div class="line">``` </div><div class="line"></div><div class="line">### 执行结果</div></pre></td></tr></table></figure></p>
+<p>Loading and Visualizing Data …<br>Program paused. Press enter to continue.</p>
+<p>Loading Saved Neural Network Parameters …</p>
+<p>Training Set Accuracy: 97.520000<br>Program paused. Press enter to continue.</p>
+<p>```</p>
+<h2 id="Note"><a href="#Note" class="headerlink" title="Note:"></a>Note:</h2>]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;Multi-class Classification and Neural Networks&lt;br&gt;
+    
+    </summary>
+    
+      <category term="Machine Learning" scheme="http://jerrychia.com/categories/Machine-Learning/"/>
+    
+    
+      <category term="MLclass-ex" scheme="http://jerrychia.com/tags/MLclass-ex/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Machine Learning Programming Exercise 2</title>
+    <link href="http://jerrychia.com/2015/04/25/ml-ex2/"/>
+    <id>http://jerrychia.com/2015/04/25/ml-ex2/</id>
+    <published>2015-04-25T08:30:22.000Z</published>
+    <updated>2016-05-08T10:43:32.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>Logistic回归<br><a id="more"></a></p>
+<h2 id="描述"><a href="#描述" class="headerlink" title="描述"></a>描述</h2><h2 id="分析"><a href="#分析" class="headerlink" title="分析"></a>分析</h2><h2 id="代码1"><a href="#代码1" class="headerlink" title="代码1"></a>代码1</h2><h3 id="1-2-1-Warmup-exercise-sigmoid-function"><a href="#1-2-1-Warmup-exercise-sigmoid-function" class="headerlink" title="1.2.1 Warmup exercise: sigmoid function"></a>1.2.1 Warmup exercise: sigmoid function</h3><p>Sigmoid函数，实现单位阶跃<br>sigmoid.m<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">length =  max(size(z));</div><div class="line">for i=1:length</div><div class="line">	g(i) = 1 / (1 + exp(-z(i)));</div><div class="line">end</div></pre></td></tr></table></figure></p>
+<h3 id="1-2-2-Cost-function-and-gradient"><a href="#1-2-2-Cost-function-and-gradient" class="headerlink" title="1.2.2 Cost function and gradient"></a>1.2.2 Cost function and gradient</h3><p>costFunction.m<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">J = (-1)*(    y&apos;*log(  sigmoid(X*theta)  ) + (1-y)&apos;*log( 1 - sigmoid(X*theta) )   ) / m;</div><div class="line"></div><div class="line">grad = X&apos; *(sigmoid(X*theta) - y) / m;</div></pre></td></tr></table></figure></p>
+<h3 id="1-2-3-Learning-parameters-using-fminunc"><a href="#1-2-3-Learning-parameters-using-fminunc" class="headerlink" title="1.2.3 Learning parameters using fminunc"></a>1.2.3 Learning parameters using fminunc</h3><p>这里我们使用<code>fminunc</code>函数来自动寻找最优值，其中需要设置的参数，以及调用方法如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">% Set options for fminunc</div><div class="line">options = optimset(&apos;GradObj&apos;, &apos;on&apos;, &apos;MaxIter&apos;, 400);</div><div class="line">% Run fminunc to obtain the optimal theta</div><div class="line">% This function will return theta and the cost</div><div class="line">[theta, cost] = ...</div><div class="line">fminunc(@(t)(costFunction(t, X, y)), initial theta, options);</div></pre></td></tr></table></figure></p>
+<p>In this code snippet, we first defined the options to be used with fminunc.<br>Specifically, we set the GradObj option to on, which tells fminunc that our function returns both the cost and the gradient. This allows fminunc to use the gradient when minimizing the function. Furthermore, we set the MaxIter option to 400, so that fminunc will run for at most 400 steps before it terminates.<br>To specify the actual function we are minimizing, we use a \short-hand” for specifying functions with the @(t) ( costFunction(t, X, y) ) . This creates a function, with argument t, which calls your costFunction. This allows us to wrap the costFunction for use with fminunc.<br>Notice that by using fminunc, you did not have to write any loops yourself, or set a learning rate like you did for gradient descent. This is all done by fminunc: you only needed to provide a function calculating the cost and the gradient.</p>
+<p>把94行的代码去掉plotDecisionBoundary的注释，就能看到画出的边界，这里要求我们看一下这个.m函数是如何实现的。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">% Plot Boundary</div><div class="line">plotDecisionBoundary(theta, X, y);</div></pre></td></tr></table></figure></p>
+<p>关于plotDecisionBoundary,具体参考.m文件</p>
+<ol>
+<li>plotData(X(:,2:3), y); 先画出点图</li>
+<li>如果特征值的数量小于3转步骤3，否则转步骤4</li>
+<li>寻找分界点上的任意两点，求出边界函数，然后画出边界线</li>
+<li>找出linespace，然后循环找z值，使用contour命令画图</li>
+</ol>
+<h3 id="1-2-4-Evaluating-logistic-regression"><a href="#1-2-4-Evaluating-logistic-regression" class="headerlink" title="1.2.4 Evaluating logistic regression"></a>1.2.4 Evaluating logistic regression</h3><p>完成<code>predict.m.</code>，让我们可以使用这个函数预测1或0<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">p =floor( sigmoid(X*theta) / 0.5 );</div></pre></td></tr></table></figure></p>
+<h3 id="执行2"><a href="#执行2" class="headerlink" title="执行2"></a>执行2</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div></pre></td><td class="code"><pre><div class="line">Plotting data with + indicating (y = 1) examples and o indicating (y = 0) examples.</div><div class="line"></div><div class="line">Program paused. Press enter to continue.</div><div class="line">Cost at initial theta (zeros): 0.693147</div><div class="line">Gradient at initial theta (zeros): </div><div class="line"> -0.100000 </div><div class="line"> -12.009217 </div><div class="line"> -11.262842 </div><div class="line"></div><div class="line">Program paused. Press enter to continue.</div><div class="line"></div><div class="line">Local minimum possible.</div><div class="line"></div><div class="line">fminunc stopped because the final change in function value relative to </div><div class="line">its initial value is less than the default value of the function tolerance.</div><div class="line"></div><div class="line">&lt;stopping criteria details&gt;</div><div class="line"></div><div class="line">Cost at theta found by fminunc: 0.203506</div><div class="line">theta: </div><div class="line"> -24.933013 </div><div class="line"> 0.204408 </div><div class="line"> 0.199618 </div><div class="line"></div><div class="line">Program paused. Press enter to continue.</div><div class="line">For a student with scores 45 and 85, we predict an admission probability of 0.774323</div><div class="line"></div><div class="line">Train Accuracy: 89.000000</div></pre></td></tr></table></figure>
+<h2 id="代码2-Regularized-logistic-regression"><a href="#代码2-Regularized-logistic-regression" class="headerlink" title="代码2-Regularized logistic regression"></a>代码2-Regularized logistic regression</h2><h3 id="2-3-Cost-function-and-gradient"><a href="#2-3-Cost-function-and-gradient" class="headerlink" title="2.3 Cost function and gradient"></a>2.3 Cost function and gradient</h3><p>costFunctionReg.m<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">J = (-1) * ( y&apos;*log( sigmoid(X*theta) ) + (1-y)&apos;*log( 1-sigmoid(X*theta) ))/m ...</div><div class="line">    + (theta&apos;*theta - theta(1)^2)*lambda/m ;</div><div class="line"></div><div class="line">grad = X&apos;*(sigmoid(X*theta)-y) ./m + theta*lambda/m ;</div><div class="line">grad(1) = grad(1) - theta(1)*lambda/m;</div></pre></td></tr></table></figure></p>
+<p>Learning parameters using fminunc<br>Plotting the decision boundary<code>plotDecisionBoundary.m</code></p>
+<h3 id="2-5-Optional-ungraded-exercises"><a href="#2-5-Optional-ungraded-exercises" class="headerlink" title="2.5 Optional (ungraded) exercises"></a>2.5 Optional (ungraded) exercises</h3><p>改变 lambda的值  观察边界曲线的变化情况<br>lambda太小，会造成欠拟合现象<br>lambda太大，会造成过拟合现象</p>
+<h3 id="执行2-1"><a href="#执行2-1" class="headerlink" title="执行2"></a>执行2</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div></pre></td><td class="code"><pre><div class="line">Plotting data with + indicating (y = 1) examples and o indicating (y = 0) examples.</div><div class="line"></div><div class="line">Program paused. Press enter to continue.</div><div class="line">Cost at initial theta (zeros): 0.693147</div><div class="line">Gradient at initial theta (zeros): </div><div class="line"> -0.100000 </div><div class="line"> -12.009217 </div><div class="line"> -11.262842 </div><div class="line"></div><div class="line">Program paused. Press enter to continue.</div><div class="line"></div><div class="line">Local minimum possible.</div><div class="line"></div><div class="line">fminunc stopped because the final change in function value relative to </div><div class="line">its initial value is less than the default value of the function tolerance.</div><div class="line"></div><div class="line">&lt;stopping criteria details&gt;</div><div class="line"></div><div class="line">Cost at theta found by fminunc: 0.203506</div><div class="line">theta: </div><div class="line"> -24.933013 </div><div class="line"> 0.204408 </div><div class="line"> 0.199618 </div><div class="line"></div><div class="line">Program paused. Press enter to continue.</div><div class="line">For a student with scores 45 and 85, we predict an admission probability of 0.774323</div><div class="line"></div><div class="line">Train Accuracy: 89.000000</div><div class="line"></div><div class="line">Program paused. Press enter to continue.</div></pre></td></tr></table></figure>
+<h2 id="Note"><a href="#Note" class="headerlink" title="Note:"></a>Note:</h2>]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;Logistic回归&lt;br&gt;
+    
+    </summary>
+    
+      <category term="Machine Learning" scheme="http://jerrychia.com/categories/Machine-Learning/"/>
+    
+    
+      <category term="MLclass-ex" scheme="http://jerrychia.com/tags/MLclass-ex/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Matlab读写数据</title>
+    <link href="http://jerrychia.com/2015/04/25/matlab-mathfun-readwrite-file/"/>
+    <id>http://jerrychia.com/2015/04/25/matlab-mathfun-readwrite-file/</id>
+    <published>2015-04-25T08:30:22.000Z</published>
+    <updated>2015-04-28T11:30:24.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>使用MATLAB对文件进行读写操作，对它做了一个总结，记录在Blog中。</p>
+<a id="more"></a>
+<h2 id="目录部分"><a href="#目录部分" class="headerlink" title="目录部分"></a>目录部分</h2><ol>
+<li>文件的打开与关闭</li>
+<li>MATLAB矩阵按格式写入txt</li>
+<li>保存复数到文件中</li>
+</ol>
+<h2 id="文件的打开与关闭"><a href="#文件的打开与关闭" class="headerlink" title="文件的打开与关闭"></a>文件的打开与关闭</h2><ol>
+<li>打开文件<br>在读写文件之前，必须先用<code>fopen</code>函数打开或创建文件，并指定对该文件进行的操作方式，它的调用格式为：<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">fid=fopen（文件名，‘打开方式’）</div></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>说明：其中<code>fid</code>用于存储文件句柄值，如果返回的句柄值大于0，则说明文件打开成功。文件名用字符串形式，表示待打开的数据文件。常见的打开方式如下：<br> ‘r’ ：只读方式打开文件（默认的方式），该文件必须已存在。<br> ‘r+’：读写方式打开文件，打开后先读后写。该文件必须已存在。<br> ‘w’ ：打开后写入数据。该文件已存在则更新；不存在则创建。<br> ‘w+’：读写方式打开文件。先读后写。该文件已存在则更新；不存在则创建。<br> ‘a’ ：在打开的文件末端添加数据。文件不存在则创建。<br> ‘a+’：打开文件后，先读入数据再添加数据。文件不存在则创建。<br>另外，在这些字符串后添加一个“t”，如‘rt’或‘wt+’，则将该文件以文本方式打开；如果添加的是“b”，则以二进制格式打开，这也是<code>fopen</code>函数默认的打开方式。</p>
+<ol>
+<li>关闭文件<br>文件在进行完读、写等操作后，应及时关闭，以免数据丢失。关闭文件用<code>fclose</code>函数，调用格式为：<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sta＝fclose(fid)</div></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>说明：该函数关闭<code>fid</code>所表示的文件。<code>sta</code>表示关闭文件操作的返回代码，若关闭成功，返回0，否则返回-1。如果要关闭所有已打开的文件用<code>fclose(‘all’)</code>。</p>
+<p>参考：<a href="http://blog.sina.com.cn/s/blog_6f58e33d010142qo.html" target="_blank" rel="external">http://blog.sina.com.cn/s/blog_6f58e33d010142qo.html</a></p>
+<h2 id="MATLAB矩阵按格式写入txt"><a href="#MATLAB矩阵按格式写入txt" class="headerlink" title="MATLAB矩阵按格式写入txt"></a>MATLAB矩阵按格式写入txt</h2><ol>
+<li>使用<code>dlmwrite</code>函数<br>写入有格式的矩阵数据，在当前目录下新生成a.txt文件，也可以是其它格式的数据文件.m,.asv等<br>dlmwrite(‘a.txt’,data,’delimiter’,’\t’,’newline’,’pc’)<br>参数说明(依次是)：<br> 写入的文件名；<br> 矩阵；<br> 属性；<br> 这儿用了两个，一个是分隔符，用分隔符‘/t’；一个是换行的，用于pc平台。<br>还可以定义小数精度，更多用法请参考帮助文档‘doc 函数名’查找</li>
+<li>手动定义矩阵格式<br>有格式的矩阵数据<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">a=[1 2 3 4 5];b=[4 5 6 7 8];</div><div class="line">A=[a&apos;,b&apos;];</div><div class="line">fid=fopen(&apos;C:\Users\gk\Desktop\b.txt&apos;,&apos;wt&apos;);%改为你自己文件的位置</div><div class="line">[m,n]=size(A);</div><div class="line">for i=1:m</div><div class="line">    for j=1:n</div><div class="line"> if j==n</div><div class="line">fprintf(fid,&apos;%g\n&apos;,A(i,j));</div><div class="line"> else</div><div class="line">fprintf(fid,&apos;%g\t&apos;,A(i,j)); </div><div class="line"> end</div><div class="line">    end</div><div class="line">end</div><div class="line">fclose(fid)</div></pre></td></tr></table></figure>
+</li>
+</ol>
+<h2 id="保存复数到文件中"><a href="#保存复数到文件中" class="headerlink" title="保存复数到文件中"></a>保存复数到文件中</h2><p>保存时会造成丢失虚部的现象，这里有两种解决方法：</p>
+<ol>
+<li>转换成字符串<br><code>mat2str(fushu)</code></li>
+<li>提取实部虚部<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">shibu=real(a);</div><div class="line">xubu=imag(a);</div></pre></td></tr></table></figure>
+</li>
+</ol>
+<h2 id="Note"><a href="#Note" class="headerlink" title="Note:"></a>Note:</h2><p>例子可以自己在matlab里代值尝试，或在命令行里输入“doc+函数名” 查找例子。</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;使用MATLAB对文件进行读写操作，对它做了一个总结，记录在Blog中。&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="Matlab" scheme="http://jerrychia.com/categories/Matlab/"/>
+    
+    
+      <category term="Matlab" scheme="http://jerrychia.com/tags/Matlab/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Matlab排列组合常用函数</title>
+    <link href="http://jerrychia.com/2015/04/24/matlab-mathfun-combinate/"/>
+    <id>http://jerrychia.com/2015/04/24/matlab-mathfun-combinate/</id>
+    <published>2015-04-24T08:40:22.000Z</published>
+    <updated>2015-04-28T11:30:07.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>使用MATLAB的排列组合函数，对它做了一个总结，记录在Blog中。</p>
+<a id="more"></a>
+<h2 id="求n的阶乘"><a href="#求n的阶乘" class="headerlink" title="求n的阶乘"></a>求n的阶乘</h2><p>方法如下：<br><figure class="highlight matlab"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">a. <span class="built_in">factorial</span>(n)</div><div class="line">b. <span class="built_in">gamma</span>(n+<span class="number">1</span>)</div><div class="line">c. v=<span class="string">'n!'</span>; vpa(v)</div></pre></td></tr></table></figure></p>
+<h2 id="求组合-数"><a href="#求组合-数" class="headerlink" title="求组合(数)"></a>求组合(数)</h2><p>方法如下：<br><figure class="highlight matlab"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">a. combntns(x,m)    列举出从n个元素中取出m个元素的组合。其中，x是含有n个元素的向量。</div><div class="line">b. <span class="built_in">nchoosek</span>(n,m)    从n各元素中取m个元素的所有组合数。</div><div class="line">c. <span class="built_in">nchoosek</span>(x,m)    从向量x中取m个元素的组合</div><div class="line">eg:</div><div class="line">&gt;&gt; combntns(<span class="number">1</span>:<span class="number">1</span>:<span class="number">3</span>,<span class="number">2</span>)</div><div class="line"><span class="built_in">ans</span> =</div><div class="line"></div><div class="line">     <span class="number">1</span>     <span class="number">2</span></div><div class="line">     <span class="number">1</span>     <span class="number">3</span></div><div class="line">     <span class="number">2</span>     <span class="number">3</span></div></pre></td></tr></table></figure></p>
+<h2 id="求排列-数"><a href="#求排列-数" class="headerlink" title="求排列(数)"></a>求排列(数)</h2><p>方法如下:<br><figure class="highlight matlab"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">perms</span>(x)         给出向量x的所有排列。</div><div class="line">prod(n:m)        求排列数：m*(m<span class="number">-1</span>)*(m<span class="number">-2</span>)*…*(n+<span class="number">1</span>)*n</div><div class="line">prod(<span class="number">1</span>:<span class="number">2</span>:<span class="number">2</span>n<span class="number">-1</span>)   求(<span class="number">2</span>n<span class="number">-1</span>)!!</div><div class="line">prod(<span class="number">2</span>:<span class="number">2</span>:<span class="number">2</span>n)     求(<span class="number">2</span>n)!!</div><div class="line">prod(A)          对矩阵A的各列求积</div><div class="line">prod(A,dim)      dim=<span class="number">1</span>（默认）；dim=<span class="number">2</span>，对矩阵A的各行求积（等价于(prod(A'))'）</div><div class="line"></div><div class="line">eg:</div><div class="line">&gt;&gt; <span class="built_in">perms</span>([<span class="number">1</span> <span class="number">2</span> <span class="number">3</span>])</div><div class="line"><span class="built_in">ans</span> =</div><div class="line"></div><div class="line">     <span class="number">3</span>     <span class="number">2</span>     <span class="number">1</span> </div><div class="line">     <span class="number">3</span>     <span class="number">1</span>     <span class="number">2</span> </div><div class="line">     <span class="number">2</span>     <span class="number">3</span>     <span class="number">1</span> </div><div class="line">     <span class="number">2</span>     <span class="number">1</span>     <span class="number">3</span> </div><div class="line">     <span class="number">1</span>     <span class="number">2</span>     <span class="number">3</span> </div><div class="line">     <span class="number">1</span>     <span class="number">3</span>     <span class="number">2</span></div></pre></td></tr></table></figure></p>
+<h2 id="cumprod-累积求积函数"><a href="#cumprod-累积求积函数" class="headerlink" title="cumprod() 累积求积函数"></a>cumprod() 累积求积函数</h2><figure class="highlight matlab"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">cumprod(n:m)      输出一个向量[n n*(n+<span class="number">1</span>) n(n+<span class="number">1</span>)(n+<span class="number">2</span>) … n(n+<span class="number">1</span>)(n+<span class="number">2</span>)…(m<span class="number">-1</span>)m]</div><div class="line">cumprod(A)        若A为矩阵：输出同维数的矩阵，按列累积求积</div><div class="line">cumprod(A,dim)    A为矩阵，dim=<span class="number">1</span>或<span class="number">2</span>，dim=<span class="number">1</span>，默认，与上面一样；dim=<span class="number">2</span>，按行累积求积。</div></pre></td></tr></table></figure>
+<h2 id="Note"><a href="#Note" class="headerlink" title="Note:"></a>Note:</h2><p>例子可以自己在matlab里代值尝试，或在命令行里输入“doc+函数名” 查找例子。</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;使用MATLAB的排列组合函数，对它做了一个总结，记录在Blog中。&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="Matlab" scheme="http://jerrychia.com/categories/Matlab/"/>
+    
+    
+      <category term="Matlab" scheme="http://jerrychia.com/tags/Matlab/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Machine Learning Programming Exercise 1</title>
+    <link href="http://jerrychia.com/2015/04/24/ml-ex1/"/>
+    <id>http://jerrychia.com/2015/04/24/ml-ex1/</id>
+    <published>2015-04-24T08:30:22.000Z</published>
+    <updated>2016-05-08T10:39:57.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>梯度下降<br><a id="more"></a></p>
+<h2 id="描述"><a href="#描述" class="headerlink" title="描述"></a>描述</h2><h2 id="分析"><a href="#分析" class="headerlink" title="分析"></a>分析</h2><h2 id="代码1"><a href="#代码1" class="headerlink" title="代码1"></a>代码1</h2><h3 id="1-Simple-octave-function"><a href="#1-Simple-octave-function" class="headerlink" title="1 Simple octave function"></a>1 Simple octave function</h3><p>warmUpExercise.m<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">A = eye(5);</div></pre></td></tr></table></figure></p>
+<h3 id="2-2-Gradient-Descent"><a href="#2-2-Gradient-Descent" class="headerlink" title="2.2 Gradient Descent"></a>2.2 Gradient Descent</h3><p>这里采用梯度下降，具体公式见pdf文档。</p>
+<h4 id="2-2-3-Computing-the-cost-J"><a href="#2-2-3-Computing-the-cost-J" class="headerlink" title="2.2.3 Computing the cost J"></a>2.2.3 Computing the cost J</h4><p>computeCost(X, y, theta)<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">for i=1:m</div><div class="line">	% hs = theta&apos;*X(i,:);</div><div class="line">	J = J + ( X(i,:)*theta - y(i) )^2/(2*m); </div><div class="line">end</div></pre></td></tr></table></figure></p>
+<h4 id="2-2-4-Gradient-descent"><a href="#2-2-4-Gradient-descent" class="headerlink" title="2.2.4 Gradient descent"></a>2.2.4 Gradient descent</h4><p>gradientDescent(X, y, theta, alpha, num_iters)<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">theta = theta - (alpha/m)*X&apos;*(X*theta - y);</div></pre></td></tr></table></figure></p>
+<h3 id="执行1"><a href="#执行1" class="headerlink" title="执行1"></a>执行1</h3><p>这是代码执行结果<code>ex1</code>：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div></pre></td><td class="code"><pre><div class="line">Running warmUpExercise ... </div><div class="line">5x5 Identity Matrix: </div><div class="line"></div><div class="line">ans =</div><div class="line"></div><div class="line">     1     0     0     0     0</div><div class="line">     0     1     0     0     0</div><div class="line">     0     0     1     0     0</div><div class="line">     0     0     0     1     0</div><div class="line">     0     0     0     0     1</div><div class="line"></div><div class="line">Program paused. Press enter to continue.</div><div class="line">Plotting Data ...</div><div class="line">Program paused. Press enter to continue.</div><div class="line">Running Gradient Descent ...</div><div class="line"></div><div class="line">ans =</div><div class="line"></div><div class="line">   32.0727</div><div class="line"></div><div class="line">Theta found by gradient descent: -3.630291 1.166362 </div><div class="line">For population = 35,000, we predict a profit of 4519.767868</div><div class="line">For population = 70,000, we predict a profit of 45342.450129</div><div class="line">Program paused. Press enter to continue.</div><div class="line">Visualizing J(theta_0, theta_1) ...</div></pre></td></tr></table></figure></p>
+<h2 id="代码2-Extra-Credit-Exercises-optional"><a href="#代码2-Extra-Credit-Exercises-optional" class="headerlink" title="代码2-Extra Credit Exercises (optional)"></a>代码2-Extra Credit Exercises (optional)</h2><h3 id="3-1-Feature-Normalization"><a href="#3-1-Feature-Normalization" class="headerlink" title="3.1 Feature Normalization"></a>3.1 Feature Normalization</h3><p>featureNormalize.m<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">参数正则化公式：</div><div class="line">X_new = ( X_old - 平均值 ) / 标准差</div></pre></td></tr></table></figure></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">mu = mean(X_norm,1);%求每一列均值</div><div class="line">sigma = std(X_norm);%求每一列标准差</div><div class="line"></div><div class="line">for i=1:size(X_norm,1)</div><div class="line">    X_norm(i,:) =  (X_norm(i,:) - mu)./sigma;</div><div class="line">end</div></pre></td></tr></table></figure>
+<h3 id="3-2-Gradient-Descent"><a href="#3-2-Gradient-Descent" class="headerlink" title="3.2 Gradient Descent"></a>3.2 Gradient Descent</h3><p>computeCostMulti.m<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">J = (X*theta - y)&apos;*(X*theta - y)./(2*m);</div></pre></td></tr></table></figure></p>
+<p>gradientDescentMulti<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">theta = theta - (alpha/m)*X&apos;*(X*theta - y);</div></pre></td></tr></table></figure></p>
+<blockquote>
+<p>the learning rate alpha on a log-scale, at multiplicative steps of about 3 times the previous value (i.e., 0.3, 0.1, 0.03, 0.01 and so on)</p>
+</blockquote>
+<p>这里你需要改变’alpha’的值，来与下面的图像进行对比，修改<code>ex1_multi.m</code>中第84行<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">% Choose some alpha value</div><div class="line">alpha = 0.1;</div><div class="line">num_iters = 50;</div></pre></td></tr></table></figure></p>
+<p>然后你会发现，与图像一致。</p>
+<p>接着你要改变第107行，用来预测1650平方3居室房子的价格。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">price = 0; % You should change this</div><div class="line">[currX mu sigma] = featureNormalize([1650 3]);</div><div class="line">price =[1 currX]*theta;</div></pre></td></tr></table></figure></p>
+<h3 id="3-3-Normal-Equations"><a href="#3-3-Normal-Equations" class="headerlink" title="3.3 Normal Equations"></a>3.3 Normal Equations</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">In the lecture videos, you learned that the closed-form solution to linear</div><div class="line">regression is</div><div class="line">theta = ( X&apos;* X )^-1 * X&apos; * y;%求逆运算</div></pre></td></tr></table></figure>
+<p>这里你可以使用线性公式求出最优的theta值，公式如上所示。</p>
+<p>normalEqn.m<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">%求逆运算 inv(A) 或 A^-1</div><div class="line">theta = ( X&apos;* X )^-1 * X&apos; * y;</div></pre></td></tr></table></figure></p>
+<p>接着你要改变第152行，用来预测1650平方3居室房子的价格。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">price = 0; % You should change this </div><div class="line">price =[1 1650 3]*theta;</div></pre></td></tr></table></figure></p>
+<h3 id="执行2"><a href="#执行2" class="headerlink" title="执行2"></a>执行2</h3><p>下面是程序输出的结果，图片就不发上来了。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div></pre></td><td class="code"><pre><div class="line">Loading data ...</div><div class="line">First 10 examples from the dataset: </div><div class="line"> x = [2104 3], y = 399900 </div><div class="line"> x = [1600 3], y = 329900 </div><div class="line"> x = [2400 3], y = 369000 </div><div class="line"> x = [1416 2], y = 232000 </div><div class="line"> x = [3000 4], y = 539900 </div><div class="line"> x = [1985 4], y = 299900 </div><div class="line"> x = [1534 3], y = 314900 </div><div class="line"> x = [1427 3], y = 198999 </div><div class="line"> x = [1380 3], y = 212000 </div><div class="line"> x = [1494 3], y = 242500 </div><div class="line">Program paused. Press enter to continue.</div><div class="line">Normalizing Features ...</div><div class="line">Running gradient descent ...</div><div class="line">Theta computed from gradient descent: </div><div class="line"> 338658.249249 </div><div class="line"> 104127.515597 </div><div class="line"> -172.205334 </div><div class="line"></div><div class="line">Predicted price of a 1650 sq-ft, 3 br house (using gradient descent):</div><div class="line"> $338658.249249</div><div class="line">Program paused. Press enter to continue.</div><div class="line">Solving with normal equations...</div><div class="line">Theta computed from the normal equations: </div><div class="line"> 89597.909543 </div><div class="line"> 139.210674 </div><div class="line"> -8738.019112 </div><div class="line"></div><div class="line">Predicted price of a 1650 sq-ft, 3 br house (using normal equations):</div><div class="line"> $293081.464335</div></pre></td></tr></table></figure></p>
+<h2 id="Note"><a href="#Note" class="headerlink" title="Note:"></a>Note:</h2><p>数据归一化和两种常用的归一化方法<br><a href="http://www.cnblogs.com/chaosimple/archive/2013/07/31/3227271.html" target="_blank" rel="external">http://www.cnblogs.com/chaosimple/archive/2013/07/31/3227271.html</a></p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;梯度下降&lt;br&gt;
+    
+    </summary>
+    
+      <category term="Machine Learning" scheme="http://jerrychia.com/categories/Machine-Learning/"/>
+    
+    
+      <category term="MLclass-ex" scheme="http://jerrychia.com/tags/MLclass-ex/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Matlab函数杂记</title>
+    <link href="http://jerrychia.com/2015/04/23/matlab-mathfun-manyfuncs/"/>
+    <id>http://jerrychia.com/2015/04/23/matlab-mathfun-manyfuncs/</id>
+    <published>2015-04-23T08:30:22.000Z</published>
+    <updated>2015-04-28T11:29:34.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>在MATLAB中使用的函数，解决了特定的问题，由于函数太多，不对其进行分类。</p>
+<a id="more"></a>
+<h1 id="目录"><a href="#目录" class="headerlink" title="目录"></a>目录</h1><ol>
+<li>matlab求矩阵某一列的最大值及所在位置</li>
+</ol>
+<h2 id="matlab求矩阵某一列的最大值及所在位置"><a href="#matlab求矩阵某一列的最大值及所在位置" class="headerlink" title="matlab求矩阵某一列的最大值及所在位置"></a>matlab求矩阵某一列的最大值及所在位置</h2><p>代码<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">[maxVal,maxIndex]=max(A,[],2);</div><div class="line">% maxVal	: 每列的最大值，是一个 行X1 的矩阵</div><div class="line">% maxIndex	: 每列最大值所在的位置，也是 行X1 的矩阵</div></pre></td></tr></table></figure></p>
+<p>参考：<br><a href="http://blog.sina.com.cn/s/blog_647aa0090100id8r.html" target="_blank" rel="external">http://blog.sina.com.cn/s/blog_647aa0090100id8r.html</a><br><a href="http://www.ilovematlab.cn/thread-27706-1-1.html" target="_blank" rel="external">http://www.ilovematlab.cn/thread-27706-1-1.html</a></p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;在MATLAB中使用的函数，解决了特定的问题，由于函数太多，不对其进行分类。&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="Matlab" scheme="http://jerrychia.com/categories/Matlab/"/>
+    
+    
+      <category term="Matlab" scheme="http://jerrychia.com/tags/Matlab/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>阿里笔试-编程题20150402</title>
+    <link href="http://jerrychia.com/2015/04/02/exam-ali-20150402/"/>
+    <id>http://jerrychia.com/2015/04/02/exam-ali-20150402/</id>
+    <published>2015-04-02T13:26:27.000Z</published>
+    <updated>2015-04-02T13:36:08.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>阿里巴巴2015年4月2日笔试编程题</p>
+<a id="more"></a> 
+<h1 id="阿里巴巴笔试编程题"><a href="#阿里巴巴笔试编程题" class="headerlink" title="阿里巴巴笔试编程题"></a>阿里巴巴笔试编程题</h1><p>1.双十一的时候很多人都提前在购物车中收藏了想买的商品，等到0点就一键批量下单，假设购物车清单如下：*请编写一键批量下单的主要逻辑代码（0点流量很大，适当考虑性能）<br>列表如下</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">店铺A</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">商品A1</td>
+<td style="text-align:center">1999元</td>
+<td style="text-align:right">1件</td>
+</tr>
+<tr>
+<td style="text-align:center">商品A1</td>
+<td style="text-align:center">20元</td>
+<td style="text-align:right">1件</td>
+</tr>
+<tr>
+<td style="text-align:center">店铺B</td>
+</tr>
+<tr>
+<td style="text-align:center">商品B1</td>
+<td style="text-align:center">120元</td>
+<td style="text-align:right">1件</td>
+</tr>
+<tr>
+<td style="text-align:center">店铺C</td>
+</tr>
+<tr>
+<td style="text-align:center">商品C1</td>
+<td style="text-align:center">59元</td>
+<td style="text-align:right">1件</td>
+</tr>
+</tbody>
+</table>
+<p>2.为了方便有车一族预约汽车保养服务，天猫和汽车主机厂商合作，将全国数千家4s店的汽车保养服务搬到网上，开放给用户进行预约，用户可以根据自己的闲暇时间提前预约汽车保养服务并可享有优惠价格。假设某个品牌的汽车主机厂商在天猫上发布了一个汽车保养服务商品，这个商品有7个套餐，每个套餐的价格不同，每个套餐每天可提供的服务量是一定的（比如每天每个店提供5辆次的套餐A类型的汽车保养服务），全国一共有1500家4s店，用户最多可提前一个月（30天）进行预约下单。如果由你来设计这个汽车保养服务商品的系统，你打算怎么做？<br>*请根据面向对象原理设计出商品模型，同时说明设计思路，最好能阐明发布商品、编辑商品和交易下单等场景的具体逻辑。<br>3.用Java代码模拟实现：一个人不断往箱子里放苹果，另一个人不断从箱子里取苹果，箱子只能放5个苹果，苹果数量无限。要求不使用java.util.concurrent包中的类。</p>
+<h1 id="自己做的答案"><a href="#自己做的答案" class="headerlink" title="自己做的答案"></a>自己做的答案</h1><h2 id="第三题"><a href="#第三题" class="headerlink" title="第三题"></a>第三题</h2><p>这是典型的生产者消费者问题，我的代码为<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div><div class="line">106</div><div class="line">107</div><div class="line">108</div><div class="line">109</div><div class="line">110</div><div class="line">111</div><div class="line">112</div><div class="line">113</div><div class="line">114</div><div class="line">115</div><div class="line">116</div><div class="line">117</div><div class="line">118</div><div class="line">119</div><div class="line">120</div><div class="line">121</div><div class="line">122</div><div class="line">123</div><div class="line">124</div><div class="line">125</div><div class="line">126</div><div class="line">127</div><div class="line">128</div><div class="line">129</div><div class="line">130</div><div class="line">131</div><div class="line">132</div><div class="line">133</div><div class="line">134</div><div class="line">135</div><div class="line">136</div><div class="line">137</div><div class="line">138</div><div class="line">139</div><div class="line">140</div><div class="line">141</div><div class="line">142</div><div class="line">143</div><div class="line">144</div><div class="line">145</div><div class="line">146</div><div class="line">147</div><div class="line">148</div><div class="line">149</div><div class="line">150</div><div class="line">151</div><div class="line">152</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> java.util.LinkedList; </div><div class="line"><span class="comment">/**</span></div><div class="line"> * <span class="doctag">@author</span> JerryChia.com</div><div class="line"> * <span class="doctag">@date</span> 2015-4-2</div><div class="line"> * </div><div class="line"> */ </div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Box</span>  </span></div><div class="line">&#123;  </div><div class="line">    <span class="comment">// 最大存储量  </span></div><div class="line">    <span class="keyword">private</span> <span class="keyword">final</span> <span class="keyword">int</span> MAX_SIZE = <span class="number">5</span>;  </div><div class="line">  </div><div class="line">    <span class="comment">// 存储</span></div><div class="line">    <span class="keyword">private</span> LinkedList&lt;String&gt; list = <span class="keyword">new</span> LinkedList&lt;String&gt;();  </div><div class="line">  </div><div class="line">    <span class="comment">// 生产  </span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">put</span><span class="params">()</span>  </span></div><div class="line">    &#123;  </div><div class="line">    	<span class="keyword">int</span> num = <span class="number">1</span>;</div><div class="line">        <span class="comment">// 同步代码段  </span></div><div class="line">        <span class="keyword">synchronized</span> (list)  </div><div class="line">        &#123;  </div><div class="line">            <span class="keyword">while</span> (list.size() + num &gt; MAX_SIZE)  </div><div class="line">            &#123;  </div><div class="line">                System.out.println(<span class="string">"放入一个苹果\t盒子中有现在有苹果:"</span>  </div><div class="line">                        + list.size() + <span class="string">"\t暂时不能放入"</span>);  </div><div class="line">                <span class="keyword">try</span>  </div><div class="line">                &#123; </div><div class="line">                    list.wait();  </div><div class="line">                &#125;  </div><div class="line">                <span class="keyword">catch</span> (InterruptedException e)  </div><div class="line">                &#123;  </div><div class="line">                    e.printStackTrace();  </div><div class="line">                &#125;  </div><div class="line">            &#125;  </div><div class="line">  </div><div class="line">            <span class="comment">// 放入苹果</span></div><div class="line">            list.add(<span class="string">"Apple"</span>);  </div><div class="line">  </div><div class="line">            System.out.println(<span class="string">"放入成功\t现在盒子中有苹果："</span> + list.size());  </div><div class="line">  </div><div class="line">            list.notifyAll();  </div><div class="line">        &#125;  </div><div class="line">    &#125;  </div><div class="line">  </div><div class="line">    <span class="comment">// 取出苹果</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">get</span><span class="params">()</span>  </span></div><div class="line">    &#123;  </div><div class="line">    	</div><div class="line">        <span class="comment">// 同步代码 </span></div><div class="line">        <span class="keyword">synchronized</span> (list)  </div><div class="line">        &#123;  </div><div class="line">            <span class="comment">// 如何盒子中没有苹果  </span></div><div class="line">            <span class="keyword">while</span> (list.size() &lt; <span class="number">1</span>)  </div><div class="line">            &#123;  </div><div class="line">                System.out.println(<span class="string">"要取出一个苹果\t盒子中没有苹果:"</span>  </div><div class="line">                        + list.size() + <span class="string">"\t暂时不能取!"</span>);  </div><div class="line">                <span class="keyword">try</span>  </div><div class="line">                &#123;  </div><div class="line">                    <span class="comment">// 阻塞  </span></div><div class="line">                    list.wait();  </div><div class="line">                &#125;  </div><div class="line">                <span class="keyword">catch</span> (InterruptedException e)  </div><div class="line">                &#123;  </div><div class="line">                    e.printStackTrace();  </div><div class="line">                &#125;  </div><div class="line">            &#125;  </div><div class="line">  </div><div class="line">            <span class="comment">// 取出苹果</span></div><div class="line">            list.remove();  </div><div class="line">          </div><div class="line">  </div><div class="line">            System.out.println(<span class="string">"取出一个苹果\t现在盒子中剩余量为:"</span> + list.size());  </div><div class="line">  </div><div class="line">            list.notifyAll();  </div><div class="line">        &#125;  </div><div class="line">    &#125;  </div><div class="line">   </div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getMAX_SIZE</span><span class="params">()</span>  </span></div><div class="line">    &#123;  </div><div class="line">        <span class="keyword">return</span> MAX_SIZE;  </div><div class="line">    &#125;  </div><div class="line">&#125;  </div><div class="line"><span class="comment">/** </span></div><div class="line"> * 放苹果 PutApple</div><div class="line"> */  </div><div class="line"> <span class="class"><span class="keyword">class</span> <span class="title">PutApple</span> <span class="keyword">extends</span> <span class="title">Thread</span>  </span></div><div class="line">&#123;  </div><div class="line">   </div><div class="line">    <span class="keyword">private</span> Box Box;  </div><div class="line">  </div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="title">PutApple</span><span class="params">(Box Box)</span>  </span></div><div class="line">    &#123;  </div><div class="line">        <span class="keyword">this</span>.Box = Box;  </div><div class="line">    &#125;  </div><div class="line">  </div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span>  </span></div><div class="line">    &#123;  </div><div class="line">        put();  </div><div class="line">    &#125;  </div><div class="line">  </div><div class="line">    <span class="comment">// 放苹果</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">put</span><span class="params">()</span>  </span></div><div class="line">    &#123;  </div><div class="line">        Box.put();  </div><div class="line">    &#125;   </div><div class="line">&#125;  </div><div class="line"><span class="comment">/**  </span></div><div class="line"> *  取苹果</div><div class="line"> */  </div><div class="line"> <span class="class"><span class="keyword">class</span> <span class="title">GetApple</span> <span class="keyword">extends</span> <span class="title">Thread</span>  </span></div><div class="line">&#123;  </div><div class="line">   </div><div class="line">    <span class="keyword">private</span> Box Box;  </div><div class="line">  </div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="title">GetApple</span><span class="params">(Box Box)</span>  </span></div><div class="line">    &#123;  </div><div class="line">        <span class="keyword">this</span>.Box = Box;  </div><div class="line">    &#125;  </div><div class="line">  </div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span>  </span></div><div class="line">    &#123;  </div><div class="line">        get();  </div><div class="line">    &#125;  </div><div class="line">  </div><div class="line">    <span class="comment">// 取苹果</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">get</span><span class="params">()</span>  </span></div><div class="line">    &#123;  </div><div class="line">        Box.get();  </div><div class="line">    &#125;   </div><div class="line">&#125;   </div><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">AppleTest</span>  </span></div><div class="line">&#123;  </div><div class="line">	   <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span>  </span></div><div class="line">	    &#123;   </div><div class="line">	        Box Box = <span class="keyword">new</span> Box();  </div><div class="line">	        <span class="comment">// 生产对象  </span></div><div class="line">	        PutApple p1 = <span class="keyword">new</span> PutApple(Box);   </div><div class="line">	        <span class="comment">// 消费对象  </span></div><div class="line">	        GetApple c1 = <span class="keyword">new</span> GetApple(Box);   </div><div class="line">	   </div><div class="line">	        p1.start();   </div><div class="line">		   </div><div class="line">	        <span class="keyword">while</span> (<span class="keyword">true</span>) &#123; </div><div class="line">		         PutApple p = <span class="keyword">new</span> PutApple(Box);    </div><div class="line">		         GetApple c = <span class="keyword">new</span> GetApple(Box);   </div><div class="line">		      	 p.start();   </div><div class="line">				 c.start(); </div><div class="line">			&#125;</div><div class="line">	    &#125;  </div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;阿里巴巴2015年4月2日笔试编程题&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="IT笔试" scheme="http://jerrychia.com/categories/IT%E7%AC%94%E8%AF%95/"/>
+    
+    
+      <category term="AliExam" scheme="http://jerrychia.com/tags/AliExam/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>设置cmd和Git窗口下代理服务器</title>
+    <link href="http://jerrychia.com/2015/03/30/hexo-how-to-set-http-proxy/"/>
+    <id>http://jerrychia.com/2015/03/30/hexo-how-to-set-http-proxy/</id>
+    <published>2015-03-30T15:41:35.000Z</published>
+    <updated>2015-04-02T13:33:58.000Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="设置代理服务器"><a href="#设置代理服务器" class="headerlink" title="设置代理服务器"></a>设置代理服务器</h1><p>解决国内网无法访问外网的问题</p>
+<h2 id="windows下命令行设置代理"><a href="#windows下命令行设置代理" class="headerlink" title="windows下命令行设置代理"></a>windows下命令行设置代理</h2><p>在Windows命令行 cmd 环境下设置代理可能不是很常用，但是某些情况下还是可能会用到，比如公司的电脑只能通过设置代理访问外网，而你需要在 cmd 环境下使用 gem 命令更新文件时。<br>当然，如果你使用某些代理软件为所有通讯设置了代理，那就不需要这些设置了。</p>
+<p>为 cmd 设置代理很简单，首先打开 cmd，然后输入如下命令：</p>
+<p><code>set http_proxy=http://proxy.yourname.com:8080</code></p>
+<p>其中<code>http://proxy.yourname.com</code>是你的代理服务器地址，而 8080 是端口号，如果有则设置。另外，如果你的代理服务器要求用户名和密码的话，那么还需要：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">set http_proxy_user=&lt;你的用户名&gt;</div><div class="line">set http_proxy_pass=&lt;你的密码&gt;</div></pre></td></tr></table></figure></p>
+<p>设置完成后，就可以在 cmd 下正常使用网络了。</p>
+<h2 id="git-设置代理"><a href="#git-设置代理" class="headerlink" title="git 设置代理"></a>git 设置代理</h2><p>git的代理很容易设置<br><code>git config --global http.proxy http://yourproxyname.com:8080</code></p>
+<p>如果需要用户名密码<br><code>git config --global http.proxy http://user:password@yourproxyname.com:8080</code></p>
+<p>设置完成后，可以通过下面的命令查看是否有效<br><code>git config –-get –-global http.proxy</code></p>
+<p>你可以通过下面的命令删除代理</p>
+<p><code>git config --system (或 --global 或 --local) --unset http.proxy</code></p>
+<p>Github for Windows 可以通过GitShell工具设置，步骤一样</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h1 id=&quot;设置代理服务器&quot;&gt;&lt;a href=&quot;#设置代理服务器&quot; class=&quot;headerlink&quot; title=&quot;设置代理服务器&quot;&gt;&lt;/a&gt;设置代理服务器&lt;/h1&gt;&lt;p&gt;解决国内网无法访问外网的问题&lt;/p&gt;
+&lt;h2 id=&quot;windows下命令行设置代理&quot;&gt;&lt;a hre
+    
+    </summary>
+    
+      <category term="Hexo" scheme="http://jerrychia.com/categories/Hexo/"/>
+    
+    
+      <category term="Hexo" scheme="http://jerrychia.com/tags/Hexo/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>hexo修改Pacman主题</title>
+    <link href="http://jerrychia.com/2015/03/28/hexo-use-pacman-theme/"/>
+    <id>http://jerrychia.com/2015/03/28/hexo-use-pacman-theme/</id>
+    <published>2015-03-28T08:16:46.000Z</published>
+    <updated>2016-05-08T10:35:48.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>本文的目的是为了把<a href="http://yangjian.me/pacman/hello/introducing-pacman-theme/" title="Pacman Theme" target="_blank" rel="external">Pacman</a>主题修改成自己想要的样子，记录了我的修改过程，大家可以参考这篇文章，更好的自定义自己的主题。</p>
+<p>修改历史：</p>
+<blockquote>
+<p>2016.05.04 修改hexo升级到3.0以上版本时RSS订阅，站点地图不兼容的问题，增加添加七牛图片外链</p>
+</blockquote>
+<a id="more"></a> 
+<h1 id="Pacman介绍"><a href="#Pacman介绍" class="headerlink" title="Pacman介绍"></a>Pacman介绍</h1><blockquote>
+<p><a href="http://yangjian.me/pacman/hello/introducing-pacman-theme/" title="Pacman Theme" target="_blank" rel="external">Pacman</a>是一款为<a href="http://zespia.tw/hexo/" title="hexo" target="_blank" rel="external">Hexo</a>打造的一款扁平化，有着响应式设计的主题。本站正是为该主题设计的演示站点，同时你也可以访问我的博客查看效果。主题源码托管在Github上，欢迎Fork。遇到任何问题或意见请发表issue。<br>–By <a href="http://yangjian.me/" title="YangJian&#39;s Blog" target="_blank" rel="external">YangJian</a></p>
+</blockquote>
+<h1 id="使用pacman"><a href="#使用pacman" class="headerlink" title="使用pacman"></a>使用pacman</h1><p>你可以参考作者关于主题的介绍。下面是我简单整理的思路。</p>
+<h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><p>Pacman需要安装<strong>Hexo 2.4.5</strong>或以上版本<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ git clone https://github.com/A-limon/pacman.git themes/pacman</div></pre></td></tr></table></figure></p>
+<h2 id="启用"><a href="#启用" class="headerlink" title="启用"></a>启用</h2><p>修改你的博客根目录下的<code>_config.yml</code>配置文件中的<code>theme</code>属性，将其设置为<code>pacman</code>。同时请设置<code>stylus</code>属性中的<code>compress</code>值为<code>true</code>。</p>
+<h2 id="更新"><a href="#更新" class="headerlink" title="更新"></a>更新</h2><p>请先备份你的<code>_config.yml</code>文件后再升级<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">cd themes/pacman</div><div class="line">git pull</div></pre></td></tr></table></figure></p>
+<h1 id="配置常用插件"><a href="#配置常用插件" class="headerlink" title="配置常用插件"></a>配置常用插件</h1><h2 id="从2-x升级到3-0相关插件的安装方法–更新"><a href="#从2-x升级到3-0相关插件的安装方法–更新" class="headerlink" title="从2.x升级到3.0相关插件的安装方法–更新"></a>从2.x升级到3.0相关插件的安装方法–更新</h2><ol>
+<li><p>常用插件安装命令：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">npm install hexo-generator-index --save</div><div class="line">npm install hexo-generator-archive --save</div><div class="line">npm install hexo-generator-category --save</div><div class="line">npm install hexo-generator-tag --save</div><div class="line">npm install hexo-server --save</div><div class="line">npm install hexo-deployer-git --save</div><div class="line">npm install hexo-deployer-heroku --save</div><div class="line">npm install hexo-deployer-rsync --save</div><div class="line">npm install hexo-deployer-openshift --save</div><div class="line">npm install hexo-renderer-marked@0.2 --save</div><div class="line">npm install hexo-renderer-stylus@0.2 --save</div><div class="line">npm install hexo-generator-feed@1 --save</div><div class="line">npm install hexo-generator-sitemap@1 --save</div></pre></td></tr></table></figure>
+</li>
+<li><p>插件安装之后需要配置全局配置文件<code>——config.yml</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">feed:</div><div class="line">  type: atom ##feed类型 atom或者rss2</div><div class="line">  path: atom.xml ##feed路径</div><div class="line">  limit: 20  ##feed文章最小数量</div><div class="line">deploy:</div><div class="line">  type: git ##部署类型 其他类型自行google之</div><div class="line">  repo: &lt;repository url&gt; ##git仓库地址</div><div class="line">  branch: [branch] ##git 页面分支</div><div class="line">  message: [message] ##git message建议默认字段update 可以自定义</div><div class="line">  -多部署</div><div class="line">      deploy:</div><div class="line">          type: git</div><div class="line">          message: update  ##git message建议默认字段update 可以自定义</div><div class="line">          repo: </div><div class="line">          github: &lt;repository url&gt;,[branch] ##github 仓库地址和分支</div><div class="line">          gitcafe: &lt;repository url&gt;,[branch] ##gitcafe 仓库地址和分支</div></pre></td></tr></table></figure>
+</li>
+</ol>
+<h2 id="多说评论"><a href="#多说评论" class="headerlink" title="多说评论"></a>多说评论</h2><ol>
+<li><p>在<code>themes\pacman\layout\_partial\post\comment.ejs</code>中添加多说通用代码。通用代码在多说获取。<br>多说的通用代码升级了，增加了几个参数，参数的值如下面所示：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">&lt;div class=&quot;ds-thread&quot; data-thread-key=&quot;&lt;%- page.path %&gt;&quot; data-title=&quot;&lt;%- page.title %&gt;&quot; data-url=&quot;&lt;%- page.permalink %&gt;&quot;&gt;&lt;/div&gt;</div></pre></td></tr></table></figure>
+</li>
+<li><p>在<code>theme\_config.yml</code>中配置多说</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">duoshuo: </div><div class="line">  enable: true  ## duoshuo.com</div><div class="line">  short_name: JerryChia&apos;s Bolg   ## duoshuo short name.</div></pre></td></tr></table></figure>
+</li>
+</ol>
+<h2 id="RSS订阅–更新"><a href="#RSS订阅–更新" class="headerlink" title="RSS订阅–更新"></a>RSS订阅–更新</h2><ol>
+<li><p>安装插件</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">npm install hexo-generator-feed</div></pre></td></tr></table></figure>
+</li>
+<li><p>启动服务器，用浏览器打开<code>http://localhost:4000/atom.xml</code>，就可以看到RSS已经生效了。</p>
+</li>
+</ol>
+<p>升级到hexo3.X后，这么操作</p>
+<ol>
+<li>安装插件并配置<code>_config.yml</code><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">$ npm install hexo-generator-feed@1 --save</div><div class="line">配置：</div><div class="line">feed:</div><div class="line">  type: atom ##feed类型 atom或者rss2</div><div class="line">  path: atom.xml ##feed路径</div><div class="line">  limit: 20  ##feed文章最小数量</div></pre></td></tr></table></figure>
+</li>
+</ol>
+<h2 id="Sitemap站长地图–更新"><a href="#Sitemap站长地图–更新" class="headerlink" title="Sitemap站长地图–更新"></a>Sitemap站长地图–更新</h2><ol>
+<li><p>安装插件</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">npm install hexo-generator-sitemap</div></pre></td></tr></table></figure>
+</li>
+<li><p>启动服务器，用浏览器打开<code>http://localhost:4000/sitemap.xml</code>， 就可以看到sitemap已经生效了。</p>
+</li>
+</ol>
+<p>升级到hexo3.X后，这么操作</p>
+<ol>
+<li>安装插件并配置<code>_config.yml</code><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">npm install hexo-generator-sitemap@1 --save</div></pre></td></tr></table></figure>
+</li>
+</ol>
+<h2 id="mathjax数学公式"><a href="#mathjax数学公式" class="headerlink" title="mathjax数学公式"></a>mathjax数学公式</h2><ol>
+<li><p>在网页上显示数学公式，创建文件<code>pacman\layout\_partial\mathjax.ejs</code>，把下面的代码复制进去。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div></pre></td><td class="code"><pre><div class="line">&lt;!-- mathjax config similar to math.stackexchange --&gt;</div><div class="line"></div><div class="line">&lt;script type=&quot;text/x-mathjax-config&quot;&gt;</div><div class="line">  MathJax.Hub.Config(&#123;</div><div class="line">    tex2jax: &#123;</div><div class="line">      inlineMath: [ [&apos;$&apos;,&apos;$&apos;], [&quot;\\(&quot;,&quot;\\)&quot;] ],</div><div class="line">      processEscapes: true</div><div class="line">    &#125;</div><div class="line">  &#125;);</div><div class="line">&lt;/script&gt;</div><div class="line"></div><div class="line">&lt;script type=&quot;text/x-mathjax-config&quot;&gt;</div><div class="line">    MathJax.Hub.Config(&#123;</div><div class="line">      tex2jax: &#123;</div><div class="line">        skipTags: [&apos;script&apos;, &apos;noscript&apos;, &apos;style&apos;, &apos;textarea&apos;, &apos;pre&apos;, &apos;code&apos;]</div><div class="line">      &#125;</div><div class="line">    &#125;);</div><div class="line">&lt;/script&gt;</div><div class="line"></div><div class="line">&lt;script type=&quot;text/x-mathjax-config&quot;&gt;</div><div class="line">    MathJax.Hub.Queue(function() &#123;</div><div class="line">        var all = MathJax.Hub.getAllJax(), i;</div><div class="line">        for(i=0; i &lt; all.length; i += 1) &#123;</div><div class="line">            all[i].SourceElement().parentNode.className += &apos; has-jax&apos;;</div><div class="line">        &#125;</div><div class="line">    &#125;);</div><div class="line">&lt;/script&gt;</div><div class="line"></div><div class="line">&lt;script type=&quot;text/javascript&quot; src=&quot;http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML&quot;&gt;</div><div class="line">&lt;/script&gt;</div></pre></td></tr></table></figure>
+</li>
+<li><p>在<code>themes/pacman/layout/_partial/after_footer.ejs</code> 的最后一行，增加对mathjax的引用，详细内容请查看源代码。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">&lt;!-- mathjax --&gt;  </div><div class="line">&lt;%- partial(&apos;mathjax&apos;) %&gt;</div><div class="line">&lt;script src=&quot;&lt;%- config.root %&gt;js/mathjax.js&quot;&gt;&lt;/script&gt;</div></pre></td></tr></table></figure>
+</li>
+<li><p>在文章中测试，添加一个新文章，增加公式，把下面的代码复制到你的<code>post</code>里面，然后生成，查看。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">## 公式</div><div class="line">$$J\_\alpha(x)=\sum _&#123;m=0&#125;^\infty \frac&#123;(-1)^ m&#125;&#123;m! \, \Gamma (m + \alpha + 1)&#125;&#123;\left(&#123;\frac&#123;x&#125;&#123;2&#125;&#125;\right)&#125;^&#123;2 m + \alpha &#125;$$</div></pre></td></tr></table></figure>
+</li>
+</ol>
+<h2 id="添加返回顶部ToTop图标"><a href="#添加返回顶部ToTop图标" class="headerlink" title="添加返回顶部ToTop图标"></a>添加返回顶部<code>ToTop</code>图标</h2><ol>
+<li><p>在themes\pacman\source\js中添加totop.js，把下面的代码复制进去</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div></pre></td><td class="code"><pre><div class="line">(function($) &#123; </div><div class="line">	// When to show the scroll link</div><div class="line">	// higher number = scroll link appears further down the page   </div><div class="line">	var upperLimit = 1000;</div><div class="line">	</div><div class="line">	// Our scroll link element</div><div class="line">	var scrollElem = $(&apos;#totop&apos;);</div><div class="line">   </div><div class="line">	// Scroll to top speed</div><div class="line">	var scrollSpeed = 500;</div><div class="line">   </div><div class="line">	// Show and hide the scroll to top link based on scroll position   </div><div class="line">	scrollElem.hide();</div><div class="line">	$(window).scroll(function () &#123;            </div><div class="line">		var scrollTop = $(document).scrollTop();       </div><div class="line">		if ( scrollTop &gt; upperLimit ) &#123;</div><div class="line">			$(scrollElem).stop().fadeTo(300, 1); // fade back in           </div><div class="line">		&#125;else&#123;       </div><div class="line">			$(scrollElem).stop().fadeTo(300, 0); // fade out</div><div class="line">		&#125;</div><div class="line">	&#125;);</div><div class="line">	// Scroll to top animation on click</div><div class="line">	$(scrollElem).click(function()&#123;</div><div class="line">		$(&apos;html, body&apos;).animate(&#123;scrollTop:0&#125;, scrollSpeed); return false;</div><div class="line">	&#125;);</div><div class="line">&#125;)(jQuery);</div></pre></td></tr></table></figure>
+</li>
+<li><p>创建<code>themes/pacman/layout/_partial/totop.ejs</code>，把下面的代码复制进去，在<code>pacman\source\img</code>中添加一个图标，名字为<code>scrollup.png</code>。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">&lt;div id=&quot;totop&quot; style=&quot;position:fixed;bottom:150px;right:50px;cursor: pointer;&quot;&gt;</div><div class="line">&lt;a title=&quot;返回顶部&quot;&gt;&lt;img src=&quot;/img/scrollup.png&quot;/&gt;&lt;/a&gt;</div><div class="line">&lt;/div&gt;</div></pre></td></tr></table></figure>
+</li>
+<li><p>在<code>themes/pacman/layout/_partial/after_footer.ejs</code>的最后一行，增加对<code>totop</code>的引用，详细内容请查看源代码。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">&lt;!-- totop --&gt;  </div><div class="line">&lt;%- partial(&apos;totop&apos;) %&gt;</div><div class="line">&lt;script src=&quot;&lt;%- config.root %&gt;js/totop.js&quot;&gt;&lt;/script&gt;</div></pre></td></tr></table></figure>
+</li>
+</ol>
+<h2 id="右边widget设置"><a href="#右边widget设置" class="headerlink" title="右边widget设置"></a>右边<code>widget</code>设置</h2><ol>
+<li>右边的<code>widget</code>样式都在<code>pacman\layout\_widget</code>文件夹中，如果你要修改或者是添加均在这里操作.</li>
+<li>然后在主题的配置文件中进行修改<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">widgets: </div><div class="line">- rss</div><div class="line">- clock</div><div class="line">- music</div><div class="line">- category</div><div class="line">- recent_posts</div><div class="line">- archive</div><div class="line">- recent_comments</div><div class="line">- tagcloud</div><div class="line">- blogroll</div><div class="line">- tag</div><div class="line">- recent_posts</div><div class="line">- map</div></pre></td></tr></table></figure>
+</li>
+</ol>
+<h2 id="修改导航菜单，添加关于-RSS"><a href="#修改导航菜单，添加关于-RSS" class="headerlink" title="修改导航菜单，添加关于,RSS"></a>修改导航菜单，添加<strong>关于</strong>,<strong>RSS</strong></h2><ol>
+<li><p>在<code>pacman\_config.yml</code>中修改<code>menu</code>，添加</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">About: /about</div></pre></td></tr></table></figure>
+</li>
+<li><p>在博客文件而不是主题文件的<code>source</code>中新建<code>about</code>文件夹，里面建立<code>index.md</code>文件，按格式写自己的介绍</p>
+</li>
+<li><p>添加RSS<br><code>menu</code>中添加<code>RSS: \atom.xml</code></p>
+</li>
+</ol>
+<h2 id="时间换成中文显示"><a href="#时间换成中文显示" class="headerlink" title="时间换成中文显示"></a>时间换成中文显示</h2><ol>
+<li>标题下面文章更新时间改成中文<br>在你网站的<code>_config.yml</code>中将语言设置为<code>zh-CN</code>即可</li>
+<li>右侧<code>widgets</code>里面的<code>archive</code>显示的时间变化成中文<br>先在``文件夹里面所有的语言文件都在最后一行添加下面的代码<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">archive_date: &quot;YYYY 年 MM 月&quot;</div></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>然后修改<code>pacman\layout\_widget\archive.ejs</code>,替换为以下样式<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">list_archives(&#123;format:__(&apos;archive_date&apos;)&#125;)</div></pre></td></tr></table></figure></p>
+<ol>
+<li>归档页面左侧时间导航窗口变成中文，把<code>pacman\layout\_partial\archive.ejs</code>文件中的部分代码修改为下面的样子<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">&lt;div class=&quot;archive-title&quot; &gt;</div><div class="line">  &lt;h2 class=&quot;&lt;%= icon %&gt;-icon&quot;&gt;&lt;%= title %&gt;&lt;/h2&gt;</div><div class="line">  &lt;% if(page.archive)&#123; %&gt;</div><div class="line">  &lt;div class=&quot;archiveslist archive-float clearfix&quot;&gt;</div><div class="line">   &lt;%- list_archives(&#123;format:__(&apos;archive_date&apos;)&#125;) %&gt;</div><div class="line"> &lt;/div&gt;</div></pre></td></tr></table></figure>
+</li>
+</ol>
+<h2 id="改变主题颜色"><a href="#改变主题颜色" class="headerlink" title="改变主题颜色"></a>改变主题颜色</h2><p>在文件<code>themes\pacman\source\css\_base\variable.styl</code>中配置了页面的颜色，有选择行的修改就行</p>
+<h2 id="搜索设置"><a href="#搜索设置" class="headerlink" title="搜索设置"></a>搜索设置</h2><p>如果有筒子们被墙无法使用自带的谷歌自定义搜索的话可以参考这篇利用<code>swiftype</code>实现搜索的教程<br><a href="http://www.jerryfu.net/post/search-engine-for-hexo-with-swiftype.html" target="_blank" rel="external">http://www.jerryfu.net/post/search-engine-for-hexo-with-swiftype.html</a></p>
+<h2 id="归档页面右侧列表显示问题"><a href="#归档页面右侧列表显示问题" class="headerlink" title="归档页面右侧列表显示问题"></a><strong>归档页面右侧列表显示问题</strong></h2><ol>
+<li>标准模式下右侧，卡片式显示风格，一行三个，但是我的标题一般很长，会拉伸长度，不美观。我想把它修改成一行，下面是修改的方法</li>
+<li><p>修改css样式属性，文件为<code>pacman\source\css\_partial\index.styl</code><br>修改<code>.archive-part</code>为:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line">.archive-part</div><div class="line">  @media mini</div><div class="line">     min-height 200px</div><div class="line">  @media tablet</div><div class="line">    //width 78% !important</div><div class="line">    float right</div><div class="line">    margin-left 2% !important</div><div class="line">  section.post</div><div class="line">    width 100%</div><div class="line">	time </div><div class="line">	  font-size 1.1em !important</div><div class="line">      float left</div><div class="line">	  @media phonemax</div><div class="line">        width 100%</div><div class="line">      @media phone</div><div class="line">        width 20%</div><div class="line">/*    @media mini</div><div class="line">      float left</div><div class="line">      width 50%</div><div class="line">    @media tablet</div><div class="line">      width 33.333%  */</div></pre></td></tr></table></figure>
+</li>
+<li><p>这种方法的<code>time</code>标签不会自动添加属性<code>float：left</code>，需要把<code>time</code>变成<code>class</code>方法，改变<code>article.ejs</code>中的<code>time</code>标签，添加样式<code>class=&quot;times&quot;</code></p>
+</li>
+<li><p>为了使字体显得好看，缩小<code>a</code>标签的间距和其中字体的大小，在<code>.archive-part</code>上面一行 添加为</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">#archive-page section.post a</div><div class="line">  font-size: .9em;</div><div class="line">  padding: .5em !important;</div></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>这样的显示效果比较好，你可以看一下我的博客</p>
+<h2 id="百度分享"><a href="#百度分享" class="headerlink" title="百度分享"></a>百度分享</h2><ol>
+<li>在<code>pacman\layout\_partial\post</code>中添加<code>bdshare.ejs</code>，复制百分分享的代码，粘贴进去</li>
+<li>在post\article.ejs中添加<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">&lt;%- partial(&apos;bdshare&apos;) %&gt;</div></pre></td></tr></table></figure>
+</li>
+</ol>
+<h2 id="文章下面默认的分享按钮设置"><a href="#文章下面默认的分享按钮设置" class="headerlink" title="文章下面默认的分享按钮设置"></a>文章下面默认的分享按钮设置</h2><p>底部的是导航按钮在_config.yml中配置<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">author:</div><div class="line">weibo:      u/2099761791	## 此处为u/2099761791，才是访问http://weibo.com/u/2099761791</div></pre></td></tr></table></figure></p>
+<h2 id="添加网站ico图标"><a href="#添加网站ico图标" class="headerlink" title="添加网站ico图标"></a>添加网站<code>ico</code>图标</h2><ol>
+<li>在<code>themes/light/layout/_partial/head.ejs</code>里将<code>&lt;link href=&quot;&lt;%- config.root %&gt;favicon.png&quot; rel=&quot;icon&quot;&gt;</code>替换为<code>&lt;link href=&quot;&lt;%- config.root %&gt;favicon.ico&quot; rel=&quot;icon&quot; type=&quot;image/x-ico&quot;&gt;</code>。将<code>favicon.ico</code>图标文件放在<code>source</code>目录下。</li>
+<li>制作图标的网站，可以在<a href="http://www.faviconer.com/" title="faviconer" target="_blank" rel="external">faviconer</a>制作你的ico图标，国内有<a href="www.bitbug.net/" title="bitbug">比特虫</a>。</li>
+</ol>
+<h2 id="为Hexo开发一个网易云音乐的文章插件"><a href="#为Hexo开发一个网易云音乐的文章插件" class="headerlink" title="为Hexo开发一个网易云音乐的文章插件"></a>为Hexo开发一个网易云音乐的文章插件</h2><p>请参考下面的网址<br><a href="http://www.qinyuanpei.com/2015/03/24/NETEasy-CloudMusic-Plugin-in-Hexo/" target="_blank" rel="external">http://www.qinyuanpei.com/2015/03/24/NETEasy-CloudMusic-Plugin-in-Hexo/</a></p>
+<h2 id="百度分析"><a href="#百度分析" class="headerlink" title="百度分析"></a>百度分析</h2><ol>
+<li><p>放在<code>themes/pacman/layout/_partial/head.ejs</code>中<code>head</code>标签的最后一行添加</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">&lt;%- partial(&apos;baidu_tongji&apos;) %&gt;</div></pre></td></tr></table></figure>
+</li>
+<li><p>添加<code>baidu_tongji.ejs</code>，把百度分析获取的代码复制过去</p>
+</li>
+<li>然后在配置文件中配置启用百度分析</li>
+</ol>
+<h2 id="添加七牛图片外链"><a href="#添加七牛图片外链" class="headerlink" title="添加七牛图片外链"></a>添加七牛图片外链</h2><p>参考七牛官方说明：<a href="http://developer.qiniu.com/docs/v6/api/overview/dn/security.html" target="_blank" rel="external">http://developer.qiniu.com/docs/v6/api/overview/dn/security.html</a><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">http://&lt;domain&gt;/&lt;key&gt;</div><div class="line">example:</div><div class="line">http://developer.qiniu.com/resource/flower.jpg</div></pre></td></tr></table></figure></p>
+<p>如果你开启了原图保护则需要加上样式代码<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">http://绑定域名/文件key或相对路径 + 已设定的连接符 + 已设定的操作符规格</div><div class="line">已设定的连接符可以是缩略图分隔符，已设定的操作符规格别名可以是图片样式名</div><div class="line">如配置分隔符为&quot;-&quot;,图片样式名称为&quot;watermarked.jpg&quot;，则以下可访问 http://(Domain)/(Key)-watermarked.jpg</div><div class="line"></div><div class="line">example:</div><div class="line">http://7u2hzu.com1.z0.glb.clouddn.com/test.jpg-logo</div></pre></td></tr></table></figure></p>
+<h2 id="想修改但是还未修改"><a href="#想修改但是还未修改" class="headerlink" title="想修改但是还未修改"></a>想修改但是还未修改</h2><ol>
+<li>自动生成转载声明</li>
+<li>修改<code>fancybox</code>，让它更好的显示.</li>
+</ol>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;本文的目的是为了把&lt;a href=&quot;http://yangjian.me/pacman/hello/introducing-pacman-theme/&quot; title=&quot;Pacman Theme&quot;&gt;Pacman&lt;/a&gt;主题修改成自己想要的样子，记录了我的修改过程，大家可以参考这篇文章，更好的自定义自己的主题。&lt;/p&gt;
+&lt;p&gt;修改历史：&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;2016.05.04 修改hexo升级到3.0以上版本时RSS订阅，站点地图不兼容的问题，增加添加七牛图片外链&lt;/p&gt;
+&lt;/blockquote&gt;
+    
+    </summary>
+    
+      <category term="Hexo" scheme="http://jerrychia.com/categories/Hexo/"/>
+    
+    
+      <category term="Hexo" scheme="http://jerrychia.com/tags/Hexo/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>json，gson数据转换</title>
+    <link href="http://jerrychia.com/2015/03/03/android-gson-study/"/>
+    <id>http://jerrychia.com/2015/03/03/android-gson-study/</id>
+    <published>2015-03-03T11:54:59.000Z</published>
+    <updated>2015-04-13T03:00:35.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>在开发基于网络的Apps，需要客户端与服务器进行数据交互。在Android中常采用的是json数据格式，在服务器将数据转换成json字符串并在客户端对json字符串反解析成数据对象。但是利用jsonObject和jsonArray解析比较麻烦。谷歌提供的Gson和阿里提供的fastjson可以很方便的将下面常用的数据格式的数据转换成json字符串，并能够方便的将其反解析成原数据对象。</p>
+<p>修改：2015.04.13.</p>
+<ol>
+<li>添加类型五：<code>List&lt;JavaBean&gt;</code>，其中<code>JavaBean</code>中含有复杂对象，包括<code>class,List&lt;A&gt;</code>等</li>
+</ol>
+<a id="more"></a> 
+<h2 id="相互转换类型"><a href="#相互转换类型" class="headerlink" title="相互转换类型"></a>相互转换类型</h2><ol>
+<li>类型一: <code>JavaBean</code></li>
+<li>类型二: <code>List&lt;JavaBean&gt;</code></li>
+<li>类型三: <code>List&lt;String&gt;</code></li>
+<li>类型四: <code>List&lt;Map&lt;String,Object&gt;&gt;</code></li>
+<li>类型五: <code>List&lt;ComplexBean&gt;</code></li>
+</ol>
+<h2 id="将上面的四种数据对象转换成json字符串的方法都是一样的"><a href="#将上面的四种数据对象转换成json字符串的方法都是一样的" class="headerlink" title="将上面的四种数据对象转换成json字符串的方法都是一样的"></a>将上面的四种数据对象转换成json字符串的方法都是一样的</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">Gson gson = <span class="keyword">new</span> Gson();</div><div class="line">String jsonString = gson.toJson(obj);</div></pre></td></tr></table></figure>
+<h2 id="将json数据转化为原数据"><a href="#将json数据转化为原数据" class="headerlink" title="将json数据转化为原数据"></a>将json数据转化为原数据</h2><ol>
+<li><p>将json字符串转化成<code>JavaBean</code>对象</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">Person person = <span class="keyword">new</span> Person(<span class="string">"1"</span>,<span class="string">"gson"</span>,<span class="number">1</span>);</div><div class="line">Gson gson = <span class="keyword">new</span> Gson();</div><div class="line"><span class="comment">//这里将javabean转化成json字符串</span></div><div class="line">String jsonString = gson.toJson(person);</div><div class="line">System.out.println(jsonString);</div><div class="line"><span class="comment">//这里将json字符串转化成javabean对象,</span></div><div class="line">person = gson.fromJson(jsonString,Person.class);</div></pre></td></tr></table></figure>
+</li>
+<li><p>将json字符串转化成<code>List&lt;JavaBean&gt;</code>对象</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">Person person1 = <span class="keyword">new</span> Person(<span class="string">"1"</span>,<span class="string">"gson1"</span>,<span class="number">1</span>);</div><div class="line">Person person2 = <span class="keyword">new</span> Person(<span class="string">"2"</span>,<span class="string">"gson2"</span>,<span class="number">2</span>);</div><div class="line">List&lt;Person&gt; persons = <span class="keyword">new</span> ArrayList&lt;Person&gt;();</div><div class="line">persons.add(person1);</div><div class="line">persons.add(person2);</div><div class="line">Gson gson = <span class="keyword">new</span> Gson();</div><div class="line"><span class="comment">//这里将lsit&lt;javabean&gt;转化成json字符串</span></div><div class="line">String jsonString = gson.toJson(persons);</div><div class="line"><span class="comment">//解析json字符串</span></div><div class="line">List&lt;Person&gt; persons2 = </div><div class="line">	gson.fromJson(jsonString, <span class="keyword">new</span> TypeToken&lt;List&lt;Person&gt;&gt;()&#123;&#125;.getType());</div></pre></td></tr></table></figure>
+</li>
+<li><p>将json字符串转化成<code>List&lt;String&gt;</code>对象</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">List&lt;String&gt; list = <span class="keyword">new</span> ArrayList&lt;String&gt;();</div><div class="line">list.add(<span class="string">"gson1"</span>);</div><div class="line">list.add(<span class="string">"gson2"</span>);</div><div class="line">list.add(<span class="string">"gson3"</span>);</div><div class="line">Gson gson = <span class="keyword">new</span> Gson();</div><div class="line">String jsonString = gson.toJson(list);</div><div class="line">System.out.println(<span class="string">"json字符串:"</span>+jsonString);</div><div class="line"><span class="comment">//解析json字符串</span></div><div class="line">List&lt;String&gt; list2 = </div><div class="line">	gson.fromJson(jsonString, <span class="keyword">new</span> TypeToken&lt;List&lt;String&gt;&gt;()&#123;&#125;.getType());</div></pre></td></tr></table></figure>
+</li>
+<li><p>将json字符串转化成<code>List&lt;Map&lt;String,Object&gt;&gt;</code>对象</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">Map&lt;String,Object&gt; map = <span class="keyword">new</span> HashMap&lt;String,Object&gt;();</div><div class="line">map.put(<span class="string">"key1"</span>, <span class="string">"value1"</span>);</div><div class="line">map.put(<span class="string">"key2"</span>, <span class="string">"value2"</span>);</div><div class="line">Map&lt;String,Object&gt; map2 = <span class="keyword">new</span> HashMap&lt;String,Object&gt;();</div><div class="line">map2.put(<span class="string">"key1"</span>, <span class="number">1</span>);</div><div class="line">map2.put(<span class="string">"key2"</span>, <span class="number">2</span>);</div><div class="line">List&lt;Map&lt;String,Object&gt;&gt; list = <span class="keyword">new</span> ArrayList&lt;Map&lt;String,Object&gt;&gt;();</div><div class="line">list.add(map);</div><div class="line">list.add(map2);</div><div class="line">Gson gson =  <span class="keyword">new</span> Gson();</div><div class="line">String jsonString = gson.toJson(list);</div><div class="line">System.out.println(<span class="string">"json字符串:"</span>+jsonString);</div><div class="line"><span class="comment">//解析json字符串</span></div><div class="line">List&lt;Map&lt;String,Object&gt;&gt; list2 = </div><div class="line">	gson.fromJson(jsonString, <span class="keyword">new</span> TypeToken&lt;List&lt;Map&lt;String,Object&gt;&gt;&gt;()&#123;&#125;.getType());</div></pre></td></tr></table></figure>
+</li>
+<li><p>解析<code>List&lt;ComplexBean&gt;</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">//定义部分</div><div class="line">public class A&#123;</div><div class="line">	//属性A,B,C...</div><div class="line">&#125;</div><div class="line">public class B&#123;</div><div class="line">	private A a;</div><div class="line">	private List&lt;A&gt; list;</div><div class="line">	private int id;	</div><div class="line">&#125;</div><div class="line">//解析部分</div><div class="line">List&lt;A&gt; listA = gson.fromJson(sb.toString(), new TypeToken&lt;List&lt;A&gt;&gt;()&#123;&#125;.getType());</div></pre></td></tr></table></figure></li>
+</ol>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;在开发基于网络的Apps，需要客户端与服务器进行数据交互。在Android中常采用的是json数据格式，在服务器将数据转换成json字符串并在客户端对json字符串反解析成数据对象。但是利用jsonObject和jsonArray解析比较麻烦。谷歌提供的Gson和阿里提供的fastjson可以很方便的将下面常用的数据格式的数据转换成json字符串，并能够方便的将其反解析成原数据对象。&lt;/p&gt;
+&lt;p&gt;修改：2015.04.13.&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;添加类型五：&lt;code&gt;List&amp;lt;JavaBean&amp;gt;&lt;/code&gt;，其中&lt;code&gt;JavaBean&lt;/code&gt;中含有复杂对象，包括&lt;code&gt;class,List&amp;lt;A&amp;gt;&lt;/code&gt;等&lt;/li&gt;
+&lt;/ol&gt;
+    
+    </summary>
+    
+      <category term="Android" scheme="http://jerrychia.com/categories/Android/"/>
+    
+    
+      <category term="Android" scheme="http://jerrychia.com/tags/Android/"/>
+    
+  </entry>
+  
+</feed>
